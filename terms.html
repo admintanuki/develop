@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>規約・免責事項 | STARTO CD売上枚数比較サイト</title>
+    <style>
+        /* --- howto.html と共通のカラーパレット --- */
+        :root {
+            --accent-teal: #5D9C9F;
+            --accent-taupe: #8c7e6f;
+            --text-color: #333333;
+            --bg-color: #FFFFFF;
+            --gray-light: #f9f9f9;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            line-height: 1.8;
+            color: var(--text-color);
+            background-color: var(--gray-light);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background: var(--bg-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 40px 20px 30px;
+            text-align: center;
+        }
+
+        .header-inner {
+            display: inline-block;
+            text-align: left;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .header-inner::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 5px;
+            bottom: 5px;
+            width: 4px;
+            background: linear-gradient(to bottom, var(--accent-teal), var(--accent-taupe));
+            border-radius: 2px;
+        }
+
+        .en-title {
+            display: block;
+            color: var(--accent-taupe);
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.25em;
+            margin-bottom: 8px;
+            font-family: 'Georgia', serif;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: bold;
+            color: var(--text-color);
+            letter-spacing: 0.05em;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--accent-teal);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 840px;
+            margin: 40px auto;
+            padding: 0 20px 60px;
+        }
+
+        .policy-card {
+            background: var(--bg-color);
+            border: 1px solid #f0f0f0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+            border-radius: 8px;
+            padding: 50px;
+            margin-bottom: 30px;
+        }
+
+        h2 {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--accent-teal);
+            margin-top: 0;
+            margin-bottom: 25px;
+            border-bottom: 2px solid var(--gray-light);
+            padding-bottom: 10px;
+        }
+
+        p, li {
+            font-size: 15px;
+            margin-bottom: 18px;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        a {
+            color: var(--accent-teal);
+            text-decoration: underline;
+        }
+
+        .section-divider {
+            margin: 40px 0 30px;
+            border: none;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        footer {
+            text-align: center;
+            font-size: 12px;
+            color: var(--accent-taupe);
+            margin-top: 60px;
+            border-top: 1px solid #eee;
+            padding: 30px 0;
+        }
+
+        @media (max-width: 600px) {
+            header h1 { font-size: 24px; }
+            .policy-card { padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="back-link">← グラフに戻る</a>
+        <div style="text-align: center;">
+            <div class="header-inner">
+                <span class="en-title">TERMS & POLICY</span>
+                <h1>規約・免責事項</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="policy-card">
+            <h2>免責事項</h2>
+            <ul>
+                <li>掲載されている売上データは、主にオリコンランキング等の公開情報を元に作成していますが、数値の正確性を保証するものではありません。</li>
+                <li>当サイトの利用により生じた直接的、間接的な損害について、運営者は一切の責任を負いません。</li>
+                <li>データの更新は不定期であり、最新情報との乖離が生じる場合があります。</li>
+            </ul>
+
+            <hr class="section-divider">
+
+            <h2>その他</h2>
+            <p>当サイトでは、Googleによるアクセス解析ツール「Googleアナリティクス（GA4）」を使用しています。</p>
+            <p>このGA4はデータの収集のためにCookieを使用しています。このデータは匿名で収集されており、個人を特定するものではありません。Cookieを無効にすることで収集を拒否することが可能です。お使いのブラウザの設定をご確認ください。</p>
+            <p>詳細はGoogleの<a href="https://policies.google.com/technologies/ads?hl=ja" target="_blank" rel="noopener noreferrer">ポリシーと規約</a>をご覧ください。</p>
+            
+            <p>当サイトでは、アフィリエイトプログラムのリンクが含まれる場合があります。リスト内のリンクをクリックすると、外部の販売サイトへ移動します。</p>
+        </section>
+
+    </main>
+
+    <footer>
+        &copy; 2026 STARTO CD SALES DASHBOARD
+    </footer>
+
+</body>
+</html>
