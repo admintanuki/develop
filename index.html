@@ -197,7 +197,15 @@ if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
 
 const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
 const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv";
-const fixedGroupColors = { "SixTONES": "#555555", "King & Prince": "#fab700", "Aぇ! group": "#5eb3bf", "Hey! Say! JUMP": "#39aeed", "WEST.": "#1d9967", "Snow Man": "#1b489d", "Travis Japan": "#66b27e", "NEWS": "#8170b2", "なにわ男子": "#eba0b8", "A.B.C-Z": "#f0897c", "timelesz": "#de6d6d", "Kis-My-Ft2": "#CFE394", "DOMOTO": "#554435", "SUPER EIGHT": "#F7AF73" };
+
+// カラー定義 & 指定された初期表示順
+const fixedGroupColors = { 
+  "Snow Man": "#1b489d", "timelesz": "#de6d6d", "Aぇ! group": "#5eb3bf", "なにわ男子": "#eba0b8", 
+  "SixTONES": "#555555", "King & Prince": "#fab700", "WEST.": "#1d9967", "Hey! Say! JUMP": "#39aeed", 
+  "DOMOTO": "#554435", "SUPER EIGHT": "#F7AF73", "Travis Japan": "#66b27e", "NEWS": "#8170b2", 
+  "Kis-My-Ft2": "#CFE394", "A.B.C-Z": "#f0897c" 
+};
+const fixedGroupOrder = Object.keys(fixedGroupColors);
 
 let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isFullDataLoaded = false;
 
@@ -236,7 +244,7 @@ function initSettingsByUrl() {
 
 async function loadData() {
   initSettingsByUrl();
-  initGroups(true);
+  renderGroupButtons(true);
   try {
     const [resData, resInfo] = await Promise.all([fetch(SHEET_DATA_URL), fetch(SHEET_INFO_URL)]);
     const rawData = parseCSV(await resData.text());
@@ -250,32 +258,24 @@ async function loadData() {
     else cds = allProcessedData.filter(c => new Date(c.releaseDate) >= new Date("2024-01-01"));
     document.getElementById('loading').style.display = 'none';
     document.getElementById('mainContent').style.display = 'flex';
-    initGroups(false); render();
+    renderGroupButtons(false); render();
     if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
-    if (!isFullDataLoaded) showLoadMoreButtons();
+    if (!isFullDataLoaded && allProcessedData.length > cds.length) showLoadMoreButtons();
   } catch (e) { console.error(e); }
 }
 
 function loadAllRecords() {
   if (isFullDataLoaded) return;
   cds = allProcessedData; isFullDataLoaded = true;
-  document.querySelectorAll('.load-more-text, .load-more-btn').forEach(el => el.remove());
+  const btn = document.querySelector('.load-more-text'); if(btn) btn.remove();
 }
 
 function showLoadMoreButtons() {
   if (isFullDataLoaded) return;
-  const chartArea = document.getElementById('chartBtnArea');
-  const listArea = document.getElementById('listBtnArea');
-  
-  const textLink = document.createElement('button');
-  textLink.className = 'load-more-text'; textLink.textContent = '<< 2024年以前のデータも読み込む';
-  textLink.onclick = () => { loadAllRecords(); render(true); };
-  chartArea.innerHTML = ''; chartArea.appendChild(textLink);
-
-  const bigBtn = document.createElement('button');
-  bigBtn.className = 'load-more-btn'; bigBtn.textContent = '2024年以前のデータも読み込む';
-  bigBtn.onclick = () => { loadAllRecords(); render(true); };
-  listArea.innerHTML = ''; listArea.appendChild(bigBtn);
+  const btn = document.createElement('button');
+  btn.className = 'load-more-text'; btn.textContent = '<< 2024年以前のデータも読み込む';
+  btn.onclick = () => { loadAllRecords(); render(true); };
+  document.getElementById('chartBtnArea').appendChild(btn);
 }
 
 function processInfo(data) {
@@ -286,17 +286,15 @@ function processInfo(data) {
   data.filter(d => d.type === 'analysis').forEach(a => { document.getElementById('analysisText').innerHTML += `<p style="margin-top:12px;">${a.text}</p>`; });
 }
 
-function initGroups(isPreload = false) {
+function renderGroupButtons(isPreload = false) {
   let sortedGroups = [];
-  if (isPreload) sortedGroups = Object.keys(fixedGroupColors);
+  if (isPreload) sortedGroups = fixedGroupOrder;
   else {
     const latestValid = {};
     allProcessedData.forEach(cd => {
       if (cd.category === 'single' && cd.firstWeek !== null) {
         const cur = latestValid[cd.group];
-        if (!cur || new Date(cd.releaseDate) > new Date(cur.date)) {
-          latestValid[cd.group] = { date: cd.releaseDate, sales: cd.firstWeek };
-        }
+        if (!cur || new Date(cd.releaseDate) > new Date(cur.date)) latestValid[cd.group] = { date: cd.releaseDate, sales: cd.firstWeek };
       }
     });
     sortedGroups = [...new Set(allProcessedData.map(c => c.group))].sort((a, b) => (latestValid[b]?.sales || -1) - (latestValid[a]?.sales || -1));
@@ -306,18 +304,19 @@ function initGroups(isPreload = false) {
     const color = fixedGroupColors[g] || "#7f8c8d";
     return `<button class="group-btn ${active?'active':''}" data-group="${g}" style="border-color:${color}; color:${active?'#fff':color}; background:${active?color:'#fff'}">${g}</button>`;
   }).join("");
-  if (!isPreload) {
-      document.querySelectorAll(".group-btn").forEach(btn => {
-        btn.onclick = () => {
-          if(!isFullDataLoaded) loadAllRecords();
-          const g = btn.dataset.group;
-          if (activeGroups.has(g)) activeGroups.delete(g);
-          else if (activeGroups.size < 5) activeGroups.add(g);
-          else return alert("最大5グループまで");
-          initGroups(false); render(true);
-        };
-      });
-  }
+  document.querySelectorAll(".group-btn").forEach(btn => {
+    btn.onclick = () => {
+      if(!isFullDataLoaded) loadAllRecords();
+      const g = btn.dataset.group;
+      if (activeGroups.has(g)) activeGroups.delete(g);
+      else if (activeGroups.size < 5) activeGroups.add(g);
+      else return alert("最大5グループまで");
+      const url = new URL(window.location.href);
+      if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
+      window.history.replaceState({}, '', url);
+      renderGroupButtons(false); render(true);
+    };
+  });
 }
 
 function render(shouldAnimate = false) {
@@ -340,7 +339,7 @@ function render(shouldAnimate = false) {
       labels: chartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
       datasets: [{
         data: chartSource.map(c => c[type]),
-        backgroundColor: isSingle ? color + '33' : chartSource.map(c => getGroupColor(c.group)),
+        backgroundColor: isSingle ? color + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
         borderColor: color || "#5D9C9F",
         borderWidth: isSingle ? 2 : 0, borderRadius: 4, fill: true, tension: 0.3,
         pointBackgroundColor: "#fff", pointBorderColor: color, pointRadius: isSingle ? 4 : 0
@@ -364,12 +363,11 @@ function render(shouldAnimate = false) {
   document.getElementById("cdList").innerHTML = sortedList.map(c => {
     const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
     const color = fixedGroupColors[c.group] || "#7f8c8d";
-    const statusBadge = (days > 0) ? `<span class="countdown">あと${days}日</span>` : (days === 0 ? `<span class="countdown" style="background:#f97316; color:#fff; border:none;">本日</span>` : "");
     const salesDisp = c[type] ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'集計中');
     const content = `
       <div>
         <span class="cd-title" style="color:${color}">${c.title}${c.seller ? '<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg><span class="buy-label">購入はこちら</span>' : ''}</span>
-        <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span> ${statusBadge}</div>
+        <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span> ${days>0?`<span class="countdown">あと${days}日</span>`:days===0?`<span class="countdown" style="background:#f97316;color:#fff;border:none;">本日</span>`:""}</div>
       </div>
       <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDisp}</div>
     `;
@@ -377,7 +375,6 @@ function render(shouldAnimate = false) {
   }).join("");
   document.getElementById("seoText").innerText = allProcessedData.map(c => `${c.group} ${c.title}`).join(", ");
 }
-function getGroupColor(g) { return fixedGroupColors[g] || "#7f8c8d"; }
 [document.getElementById("salesType"), document.getElementById("filter"), document.getElementById("sortOrder")].forEach(el => el.addEventListener("change", () => render(true)));
 window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300); });
 loadData();
