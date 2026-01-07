@@ -39,14 +39,9 @@
 
     html { scroll-behavior: smooth; }
     body { 
-      margin: 0; 
-      padding: 0; 
+      margin: 0; padding: 0; 
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif; 
-      background: var(--bg); 
-      color: var(--text); 
-      padding-bottom: 60px; 
-      overflow-x: hidden; 
-      line-height: 1.6; 
+      background: var(--bg); color: var(--text); padding-bottom: 60px; overflow-x: hidden; line-height: 1.6; 
     }
 
     .utility-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: flex-end; gap: 15px; font-size: 12px; }
@@ -76,18 +71,7 @@
     }
 
     .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; max-width: 800px; margin: 0 auto; }
-    select { 
-      padding: 8px 2px; 
-      border-radius: 6px; 
-      border: 1px solid var(--border); 
-      background: #fff; 
-      width: 100%; 
-      color: var(--text); 
-      font-size: 11px; 
-      font-weight: 600; 
-      cursor: pointer; 
-      font-family: inherit; 
-    }
+    select { padding: 8px 2px; border-radius: 6px; border: 1px solid var(--border); background: #fff; width: 100%; color: var(--text); font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; }
 
     @media (min-width: 768px) {
       .controls { gap: 12px; }
@@ -102,84 +86,21 @@
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
     .chart-body { position: relative; height: 300px; }
     
-    .chart-footer { display: flex; justify-content: flex-start; align-items: center; margin-top: 10px; min-height: 20px; }
-    
+    .chart-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; min-height: 24px; }
+    .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2; }
     .load-more-text { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: underline; }
-    .load-more-text:hover { color: var(--text); }
-
-    .load-more-btn { 
-      background: #fff; 
-      border: 1px solid var(--border); 
-      padding: 10px 24px; 
-      color: var(--text); 
-      font-size: 12px; 
-      font-weight: 700; 
-      cursor: pointer; 
-      border-radius: 99px;
-      transition: all 0.2s ease;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
-    }
-    .load-more-btn:hover { 
-      background: #f1f5f9;
-      border-color: var(--sub);
-    }
-
-    /* ページトップへ戻るボタン */
-    .back-to-top {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background: var(--card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: var(--primary-shadow);
-      cursor: pointer;
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease;
-      text-decoration: none;
-    }
-    .back-to-top.visible {
-      opacity: 1;
-      visibility: visible;
-    }
-    .back-to-top svg { width: 20px; height: 20px; stroke: currentColor; stroke-width: 2.5; fill: none; }
 
     .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
     .cd-list { display: grid; gap: 10px; }
-    
     .cd-item-base { 
-      display: grid; 
-      grid-template-columns: 1fr auto; 
-      gap: 12px; 
-      padding: 14px 16px; 
-      border: 1px solid var(--border); 
-      border-radius: 12px; 
-      text-decoration: none; 
-      color: inherit; 
-      background: #fff; 
-      align-items: center; 
-      transition: all 0.2s ease;
+      display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 14px 16px; 
+      border: 1px solid var(--border); border-radius: 12px; text-decoration: none; 
+      color: inherit; background: #fff; align-items: center; transition: all 0.2s ease;
     }
-
-    a.cd-item-base:hover { 
-      transform: translateY(-2px); 
-      box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.05); 
-    }
-
-    .cd-item-base.no-link {
-      cursor: default;
-    }
-
+    a.cd-item-base:hover { transform: translateY(-2px); box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.05); }
     .cd-item-base.upcoming { border: 1px solid #fed7aa; background-color: #fffaf5; }
     
     .cd-title { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; line-height: 1.4; color: #1e293b; }
@@ -187,8 +108,8 @@
     .badge { font-size: 9px; padding: 1px 5px; border-radius: 4px; color: #fff; font-weight: 700; }
     .countdown { font-size: 10px; font-weight: 700; color: #ea580c; background: #fff7ed; padding: 1px 6px; border-radius: 99px; border: 1px solid #ffedd5; }
     .sales-val { font-weight: 700; font-size: 14px; text-align: right; letter-spacing: -0.02em; }
-    .rank-num { font-size: 11px; color: #94a3b8; margin-right: 3px; }
-    .ext-link-icon { width: 11px; height: 11px; color: #94a3b8; margin-left: 3px; }
+    .ext-link-icon { width: 11px; height: 11px; color: var(--sub); margin-left: 5px; vertical-align: middle; }
+    .buy-label { font-size: 10px; color: var(--sub); font-weight: 600; margin-left: 2px; vertical-align: middle; white-space: nowrap; }
 
     .history-card .card-title, .analysis-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
     .history-list { list-style: none; padding: 0; margin: 0; }
@@ -196,25 +117,27 @@
     .history-date { font-size: 10px; color: var(--sub); display: block; margin-bottom: 2px; font-weight: 600; }
     .history-text { font-size: 12px; line-height: 1.4; color: #334155; }
 
-    .spinner-box { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 60px 20px; }
-    .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top: 3px solid var(--accent-teal); border-radius: 50%; animation: spin 0.8s linear infinite; margin-bottom: 12px; }
+    .back-to-top { position: fixed; bottom: 20px; right: 20px; background: var(--card); border: 1px solid var(--border); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--primary-shadow); cursor: pointer; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s; text-decoration: none; color: var(--text); }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+    .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top: 3px solid var(--accent-teal); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
 
-<a href="#" class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24"><path d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg></a>
+<a href="#" class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2.5;"><path d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg></a>
 
 <div class="utility-bar">
-  <a href="howto.html" class="utility-link"><svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>ガイド</a>
-  <a href="#analysis" class="utility-link"><svg viewBox="0 0 24 24"><path d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>分析</a>
-  <a href="terms.html" class="utility-link"><svg viewBox="0 0 24 24"><path d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>規約</a>
+  <a href="howto.html" class="utility-link">ガイド</a>
+  <a href="#analysis" class="utility-link">分析</a>
+  <a href="terms.html" class="utility-link">規約</a>
 </div>
 
 <header class="sticky-header">
   <div class="header-content">
     <div class="site-title">
-      <h1 style="margin:0; font-size:inherit; font-weight:inherit;">
+      <h1>
         <span class="sub-name">【2026年最新】STARTO ENTERTAINMENT(旧ジャニーズ)</span>
         <span class="main-name">歴代シングル・アルバム売上枚数比較サイト</span>
       </h1>
@@ -229,22 +152,20 @@
 </header>
 
 <div class="container">
+  <div id="seoText" class="sr-only"></div>
   <div class="notice-area" id="noticeArea"><span class="notice-icon">i</span><span id="noticeText"></span></div>
   
-  <div id="loading" class="card">
-    <div class="spinner-box">
-      <div class="spinner"></div>
-      <div style="font-size:13px; color:var(--sub); font-weight:600;">データを取得中...</div>
-    </div>
-  </div>
+  <div id="loading" class="card"><div style="text-align:center; padding:40px;"><div class="spinner"></div>データを取得中...</div></div>
 
   <div id="mainContent" class="content-wrapper" style="display:none;">
     <div class="card">
       <div class="chart-wrapper" id="chartWrapper"><div class="chart-body" id="chartBody"><canvas id="salesChart"></canvas></div></div>
       <div class="chart-footer">
         <div id="chartBtnArea"></div>
+        <button onclick="copyShareUrl()" class="share-btn-mini" id="shareBtn"><svg viewBox="0 0 24 24"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" /></svg>このグラフを共有</button>
       </div>
     </div>
+
     <div class="split-area">
       <div class="card">
         <div class="cd-list" id="cdList"></div>
@@ -256,7 +177,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px; color: #3b82f6;"><path d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
             2026年最新の売上傾向分析
           </div>
-          <div style="font-size: 12px; line-height: 1.7; color: #334155;">
+          <div id="analysisText" style="font-size: 12px; line-height: 1.7; color: #334155;">
             <p style="margin: 0 0 12px 0;"><strong>Snow Man</strong>が直近のアルバムで初週ミリオンを達成するなど、圧倒的な数字を記録しており、固定ファンの強さがグラフにも表れています。</p>
             <p style="margin: 0 0 12px 0;">また、最新シングル『Stargaze』で初週33.0万枚を記録した<strong>SixTONES</strong>、2人体制移行後も30万枚越えの高水準を保つ<strong>King & Prince</strong>、そして『アシンメトリー / Black Nightmare』で前作を上回る推移を見せる<strong>なにわ男子</strong>の3組が、初週30万〜40万枚レンジで推移しています。</p>
             <p style="margin: 0;">ここに、新体制初アルバム『FAM』で61.9万枚という自己最高記録を樹立した<strong>timelesz</strong>や、『Chameleon』で45.5万枚を記録する<strong>Aぇ! group</strong>などの急伸勢が加わり、各グループが次々と自己ベスト級の初動を更新する状況が続いています。</p>
@@ -268,33 +189,29 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
-const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
-const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv";
-
 if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
 
-const fixedGroupColors = { "SixTONES": "#555555", "King & Prince": "#fab700", "Aぇ! group": "#5eb3bf", "Hey! Say! JUMP": "#39aeed", "WEST.": "#1d9967", "Snow Man": "#1b489d", "Travis Japan": "#66b27e", "NEWS": "#8170b2", "嵐": "#fdd303", "なにわ男子": "#eba0b8", "A.B.C-Z": "#f0897c", "timelesz": "#de6d6d" };
-function getGroupColor(g) { return fixedGroupColors[g] || "#7f8c8d"; }
-function hexToRgba(hex, alpha) { let c; if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){ c= hex.substring(1).split(''); if(c.length== 3){ c= [c[0], c[0], c[1], c[1], c[2], c[2]]; } c= '0x'+c.join(''); return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+alpha+')'; } return hex; }
+const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
+const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv";
+const fixedGroupColors = { "SixTONES": "#555555", "King & Prince": "#fab700", "Aぇ! group": "#5eb3bf", "Hey! Say! JUMP": "#39aeed", "WEST.": "#1d9967", "Snow Man": "#1b489d", "Travis Japan": "#66b27e", "NEWS": "#8170b2", "なにわ男子": "#eba0b8", "A.B.C-Z": "#f0897c", "timelesz": "#de6d6d", "Kis-My-Ft2": "#CFE394", "DOMOTO": "#554435", "SUPER EIGHT": "#F7AF73" };
 
-let allProcessedData = []; 
-let cds = []; 
-let activeGroups = new Set();
-let chart;
-let lastWidth = window.innerWidth;
-let isFullDataLoaded = false;
+let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isFullDataLoaded = false;
 
-// ページトップへ戻るボタンの制御
-window.addEventListener('scroll', () => {
-  const btn = document.getElementById('backToTop');
-  if (window.scrollY > 300) {
-    btn.classList.add('visible');
-  } else {
-    btn.classList.remove('visible');
-  }
-});
+function copyShareUrl() {
+  const groups = Array.from(activeGroups).join(',');
+  const type = document.getElementById("salesType").value;
+  const filter = document.getElementById("filter").value;
+  const sort = document.getElementById("sortOrder").value;
+  const url = new URL(window.location.href);
+  if(groups) url.searchParams.set('g', groups); else url.searchParams.delete('g');
+  url.searchParams.set('t', type); url.searchParams.set('f', filter); url.searchParams.set('s', sort);
+  navigator.clipboard.writeText(url.href).then(() => {
+    const btn = document.getElementById('shareBtn');
+    btn.innerText = "コピーしました！";
+    setTimeout(() => btn.innerHTML = '<svg viewBox="0 0 24 24"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" /></svg>このグラフを共有', 2000);
+  });
+}
 
 function parseCSV(text) {
   const lines = text.trim().split('\n'); if (lines.length < 2) return [];
@@ -306,50 +223,48 @@ function parseCSV(text) {
   });
 }
 
-async function loadData() {
-  try {
-    const resData = await fetch(SHEET_DATA_URL);
-    const rawData = parseCSV(await resData.text());
-    allProcessedData = rawData.map(d => ({ ...d, firstDay: isNaN(parseInt(d.firstDay)) ? null : parseInt(d.firstDay), firstWeek: isNaN(parseInt(d.firstWeek)) ? null : parseInt(d.firstWeek), seller: d.seller || "" }));
-    
-    cds = allProcessedData.filter(c => new Date(c.releaseDate) >= new Date("2024-01-01"));
-
-    const resInfo = await fetch(SHEET_INFO_URL);
-    if(resInfo.ok) { processInfo(parseCSV(await resInfo.text())); }
-    
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'flex'; 
-    initGroups(); 
-    render(true); 
-    
-    if (allProcessedData.length > cds.length) { showLoadMoreButtons(); }
-  } catch (e) { document.getElementById('loading').innerHTML = "読み込みエラー"; }
+function initSettingsByUrl() {
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('t')) document.getElementById("salesType").value = params.get('t');
+    if(params.get('f')) document.getElementById("filter").value = params.get('f');
+    if(params.get('s')) document.getElementById("sortOrder").value = params.get('s');
+    if(params.get('g')) { params.get('g').split(',').forEach(g => activeGroups.add(decodeURIComponent(g))); isFullDataLoaded = true; }
 }
 
-function showLoadMoreButtons() {
-  // グラフ下：<<付きテキストリンク
-  const chartBtn = document.createElement('button');
-  chartBtn.className = 'load-more-text';
-  chartBtn.textContent = '<< 2024年以前のデータも読み込む';
-  chartBtn.onclick = () => loadAllRecords();
-  document.getElementById('chartBtnArea').innerHTML = '';
-  document.getElementById('chartBtnArea').appendChild(chartBtn);
-
-  // リスト下：ボタン形式
-  const listBtn = document.createElement('button');
-  listBtn.className = 'load-more-btn';
-  listBtn.textContent = '2024年以前のデータも読み込む';
-  listBtn.onclick = () => loadAllRecords();
-  document.getElementById('listBtnArea').innerHTML = '';
-  document.getElementById('listBtnArea').appendChild(listBtn);
+async function loadData() {
+  initSettingsByUrl();
+  initGroups(true);
+  try {
+    const [resData, resInfo] = await Promise.all([fetch(SHEET_DATA_URL), fetch(SHEET_INFO_URL)]);
+    const rawData = parseCSV(await resData.text());
+    allProcessedData = rawData.map(d => ({ 
+      title: d.title, group: d.group, releaseDate: d.releaseDate, category: d.category,
+      firstDay: isNaN(parseInt(d.firstDay)) ? null : parseInt(d.firstDay),
+      firstWeek: isNaN(parseInt(d.firstWeek)) ? null : parseInt(d.firstWeek),
+      seller: d.seller || ""
+    }));
+    if(isFullDataLoaded) cds = allProcessedData;
+    else cds = allProcessedData.filter(c => new Date(c.releaseDate) >= new Date("2024-01-01"));
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'flex';
+    initGroups(false); render();
+    if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
+    if (!isFullDataLoaded && allProcessedData.length > cds.length) showLoadMoreButtons();
+  } catch (e) { console.error(e); }
 }
 
 function loadAllRecords() {
   if (isFullDataLoaded) return;
-  cds = allProcessedData;
-  isFullDataLoaded = true;
-  document.querySelectorAll('.load-more-text, .load-more-btn').forEach(el => el.remove());
-  render(true);
+  cds = allProcessedData; isFullDataLoaded = true;
+  const btn = document.querySelector('.load-more-text'); if(btn) btn.remove();
+}
+
+function showLoadMoreButtons() {
+  if (isFullDataLoaded) return;
+  const btn = document.createElement('button');
+  btn.className = 'load-more-text'; btn.textContent = '<< 2024年以前のデータも読み込む';
+  btn.onclick = () => { loadAllRecords(); render(true); };
+  document.getElementById('chartBtnArea').appendChild(btn);
 }
 
 function processInfo(data) {
@@ -357,28 +272,41 @@ function processInfo(data) {
   if (notice) { document.getElementById('noticeText').textContent = notice.text; document.getElementById('noticeArea').style.display = 'flex'; }
   const histories = data.filter(d => d.type === 'history');
   document.getElementById('historyList').innerHTML = histories.map(h => `<li class="history-item"><span class="history-date">${h.date}</span><div class="history-text">${h.text}</div></li>`).join("");
+  data.filter(d => d.type === 'analysis').forEach(a => { document.getElementById('analysisText').innerHTML += `<p style="margin-top:12px;">${a.text}</p>`; });
 }
 
-function initGroups() {
-  const dataToUse = allProcessedData; 
-  const latestValid = {};
-  dataToUse.forEach(cd => { if (cd.category === 'single' && cd.firstWeek !== null) { const cur = latestValid[cd.group]; if (!cur || new Date(cd.releaseDate) > new Date(cur.date)) { latestValid[cd.group] = { date: cd.releaseDate, sales: cd.firstWeek }; } } });
-  const sortedGroups = [...new Set(dataToUse.map(c => c.group))].sort((a, b) => (latestValid[b]?.sales || -1) - (latestValid[a]?.sales || -1));
-
-  document.getElementById("groupButtons").innerHTML = sortedGroups.map(g => `<button class="group-btn" data-group="${g}">${g}</button>`).join("");
-  document.querySelectorAll(".group-btn").forEach(btn => {
-    const g = btn.dataset.group; const color = getGroupColor(g);
-    btn.style.borderColor = color; btn.style.color = color;
-    btn.onclick = () => {
-      if (!isFullDataLoaded) loadAllRecords();
-      if (!btn.classList.contains("active") && activeGroups.size >= 5) return alert("最大5グループまで選択可能です");
-      btn.classList.toggle("active");
-      const active = btn.classList.contains("active");
-      btn.style.background = active ? color : "#fff"; btn.style.color = active ? "#fff" : color;
-      active ? activeGroups.add(g) : activeGroups.delete(g);
-      render(true);
-    };
-  });
+function initGroups(isPreload = false) {
+  let sortedGroups = [];
+  if (isPreload) sortedGroups = Object.keys(fixedGroupColors);
+  else {
+    const latestValid = {};
+    allProcessedData.forEach(cd => {
+      if (cd.category === 'single' && cd.firstWeek !== null) {
+        const cur = latestValid[cd.group];
+        if (!cur || new Date(cd.releaseDate) > new Date(cur.date)) {
+          latestValid[cd.group] = { date: cd.releaseDate, sales: cd.firstWeek };
+        }
+      }
+    });
+    sortedGroups = [...new Set(allProcessedData.map(c => c.group))].sort((a, b) => (latestValid[b]?.sales || -1) - (latestValid[a]?.sales || -1));
+  }
+  document.getElementById("groupButtons").innerHTML = sortedGroups.map(g => {
+    const active = activeGroups.has(g);
+    const color = fixedGroupColors[g] || "#7f8c8d";
+    return `<button class="group-btn ${active?'active':''}" data-group="${g}" style="border-color:${color}; color:${active?'#fff':color}; background:${active?color:'#fff'}">${g}</button>`;
+  }).join("");
+  if (!isPreload) {
+      document.querySelectorAll(".group-btn").forEach(btn => {
+        btn.onclick = () => {
+          if(!isFullDataLoaded) loadAllRecords();
+          const g = btn.dataset.group;
+          if (activeGroups.has(g)) activeGroups.delete(g);
+          else if (activeGroups.size < 5) activeGroups.add(g);
+          else return alert("最大5グループまで");
+          initGroups(false); render(true);
+        };
+      });
+  }
 }
 
 function render(shouldAnimate = false) {
@@ -387,70 +315,60 @@ function render(shouldAnimate = false) {
   const s = document.getElementById("sortOrder").value;
   let filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
   let sortedList = [...filtered].sort((a, b) => s === "date" ? b.releaseDate.localeCompare(a.releaseDate) : (b[type] || -1) - (a[type] || -1));
-  let chartSource = filtered.filter(c => c[type] !== null);
+  let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => s === "date" ? a.releaseDate.localeCompare(b.releaseDate) : (b[type] || 0) - (a[type] || 0));
   const isSingle = activeGroups.size === 1;
-  chartSource.sort((a, b) => s === "date" ? a.releaseDate.localeCompare(b.releaseDate) : (b[type] || 0) - (a[type] || 0));
-  
+  const chartWrapper = document.getElementById("chartWrapper");
   const chartBody = document.getElementById("chartBody");
-  const containerWidth = chartBody.parentElement.clientWidth;
-  const finalWidth = Math.max(containerWidth, chartSource.length * (isSingle ? 60 : 45));
+  const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * (isSingle ? 60 : 45));
   chartBody.style.width = `${finalWidth}px`;
-  
   if (chart) chart.destroy();
-  chartBody.innerHTML = '<canvas id="salesChart"></canvas>';
-  const color = isSingle ? getGroupColor([...activeGroups][0]) : null;
-  const datasetConfig = {
-    data: chartSource.map(c => c[type]), borderRadius: 4,
-    datalabels: { display: true, align: 'top', anchor: 'end', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
-  };
-  if (isSingle) {
-    Object.assign(datasetConfig, { type: 'line', borderColor: color, backgroundColor: hexToRgba(color, 0.2), borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: "#fff", pointBorderColor: color });
-  } else {
-    Object.assign(datasetConfig, { type: 'bar', backgroundColor: chartSource.map(c => getGroupColor(c.group)), borderWidth: 0, maxBarThickness: window.innerWidth < 600 ? 18 : 30 });
-  }
+  const color = isSingle ? fixedGroupColors[Array.from(activeGroups)[0]] : null;
   chart = new Chart(document.getElementById("salesChart"), {
-    data: { labels: chartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")), datasets: [datasetConfig] },
+    type: isSingle ? 'line' : 'bar',
+    data: {
+      labels: chartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
+      datasets: [{
+        data: chartSource.map(c => c[type]),
+        backgroundColor: isSingle ? color + '33' : chartSource.map(c => fixedGroupColors[c.group] || "#ddd"),
+        borderColor: color || "#5D9C9F",
+        borderWidth: isSingle ? 2 : 0, borderRadius: 4, fill: true, tension: 0.3,
+        pointBackgroundColor: "#fff", pointBorderColor: color, pointRadius: isSingle ? 4 : 0
+      }]
+    },
     options: {
       responsive: true, maintainAspectRatio: false,
-      animation: shouldAnimate ? { duration: 1000, easing: 'easeOutQuart' } : false,
-      plugins: { legend: { display: false }, tooltip: { callbacks: { title: (items) => { const itm = chartSource[items[0].dataIndex]; return [`[${itm.group}] ${itm.title}`, `(${itm.releaseDate})`]; } } } },
+      animation: shouldAnimate ? { duration: 800 } : false,
+      plugins: { 
+        legend: { display: false },
+        datalabels: { anchor: 'end', align: 'top', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
+      },
       scales: { 
-        y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, suggestedMax: 300000, grace: '10%' }, 
-        x: { ticks: { maxRotation: 45, minRotation: 45, font: {size: 8} }, grid: { display: false } } 
+        y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, grace: '10%' },
+        x: { ticks: { font: {size: 8}, maxRotation: 45, minRotation: 45 }, grid: { display: false } }
       }
     }
   });
-  if (s === "date" && finalWidth > containerWidth) document.getElementById('chartWrapper').scrollLeft = finalWidth;
+  if (finalWidth > chartWrapper.clientWidth) chartWrapper.scrollLeft = finalWidth;
   const today = new Date(); today.setHours(0,0,0,0);
-
-  document.getElementById("cdList").innerHTML = sortedList.map((c, idx) => {
+  document.getElementById("cdList").innerHTML = sortedList.map(c => {
     const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
-    const color = getGroupColor(c.group); 
-    const hasVal = c[type] !== null;
+    const color = fixedGroupColors[c.group] || "#7f8c8d";
     const statusBadge = (days > 0) ? `<span class="countdown">あと${days}日</span>` : (days === 0 ? `<span class="countdown" style="background:#f97316; color:#fff; border:none;">本日</span>` : "");
-    const salesDisplay = hasVal ? (c[type]/10000).toFixed(1) + "万枚" : (days > 0 ? "予約受付中" : "集計中");
-    
-    const innerContent = `
+    const salesDisp = c[type] ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'集計中');
+    const content = `
       <div>
-        <span class="cd-title" style="color:${color}">
-          ${s==='salesDesc'&&hasVal ? `<span class="rank-num">#${idx+1}</span>` : ''}
-          ${c.title}
-          ${c.seller ? '<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>' : ''}
-        </span>
+        <span class="cd-title" style="color:${color}">${c.title}${c.seller ? '<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg><span class="buy-label">購入はこちら</span>' : ''}</span>
         <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span> ${statusBadge}</div>
       </div>
-      <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDisplay}</div>
+      <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDisp}</div>
     `;
-
-    if (c.seller) {
-      return `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${days>0?'upcoming':''}">${innerContent}</a>`;
-    } else {
-      return `<div class="cd-item-base no-link ${days>0?'upcoming':''}">${innerContent}</div>`;
-    }
+    return c.seller ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${days>0?'upcoming':''}">${content}</a>` : `<div class="cd-item-base ${days>0?'upcoming':''}">${content}</div>`;
   }).join("");
+  document.getElementById("seoText").innerText = allProcessedData.map(c => `${c.group} ${c.title}`).join(", ");
 }
+
 [document.getElementById("salesType"), document.getElementById("filter"), document.getElementById("sortOrder")].forEach(el => el.addEventListener("change", () => render(true)));
-window.addEventListener('resize', () => { if (window.innerWidth !== lastWidth) { lastWidth = window.innerWidth; render(false); } });
+window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300); });
 loadData();
 </script>
 </body>
