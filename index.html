@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
+  <link rel="canonical" href="https://fan-chart.com/">
+  
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPEDDGQHPC"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,7 +15,7 @@
   </script>
 
   <title>【2026最新】STARTO(旧ジャニーズ) CD売上枚数比較・歴代グラフ推移 | Snow Man・SixTONES・なにわ男子ほか</title>
-  <meta name="description" content="STARTO(旧ジャニーズ)所属アーティストの最新CD売上データを網羅。Snow Man、SixTONES、King & Prince、なにわ男子などの歴代シングル・アルバム初動枚数をグラフで比較。2026年最新の売上傾向分析も掲載中。">
+  <meta name="description" content="STARTO(旧ジャニーズ)所属アーティストの最新CD売上データを網羅。Snow Man、SixTONES、King & Prince、なにわ男子などの最新および歴代シングル・アルバム初動枚数をグラフで比較。2026年最新の売上傾向分析も掲載中。">
   
   <meta property="og:site_name" content="STARTO CD売上枚数比較サイト">
   <meta property="og:title" content="【2026最新】STARTO(旧ジャニーズ) CD売上枚数比較・歴代グラフ推移">
@@ -155,7 +157,11 @@
 </header>
 
 <div class="container">
-  <div id="seoText" class="sr-only"></div>
+  <div id="seoText" class="sr-only">
+    <h2>STARTO ENTERTAINMENT アーティスト売上データ</h2>
+    <p>Snow Man, SixTONES, なにわ男子, King & Prince, timelesz, Aぇ! group, WEST., Hey! Say! JUMP, SUPER EIGHT, Travis Japan, NEWS, Kis-My-Ft2, A.B.C-Zなど、各グループの最新および歴代シングル・アルバムの初動売上枚数データを網羅しています。2026年の最新売上傾向をグラフで可視化して比較可能です。</p>
+  </div>
+  
   <div class="notice-area" id="noticeArea"><span class="notice-icon">i</span><span id="noticeText"></span></div>
   
   <div id="loading" class="card"><div style="text-align:center; padding:40px;"><div class="spinner"></div>データを取得中...</div></div>
@@ -198,7 +204,6 @@ if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
 const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
 const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv";
 
-// カラー定義 & 指定された初期表示順
 const fixedGroupColors = { 
   "Snow Man": "#1b489d", "timelesz": "#de6d6d", "Aぇ! group": "#5eb3bf", "なにわ男子": "#eba0b8", 
   "SixTONES": "#555555", "King & Prince": "#fab700", "WEST.": "#1d9967", "Hey! Say! JUMP": "#39aeed", 
@@ -373,7 +378,8 @@ function render(shouldAnimate = false) {
     `;
     return c.seller ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${days>0?'upcoming':''}">${content}</a>` : `<div class="cd-item-base ${days>0?'upcoming':''}">${content}</div>`;
   }).join("");
-  document.getElementById("seoText").innerText = allProcessedData.map(c => `${c.group} ${c.title}`).join(", ");
+  // JSによるSEOテキストの流し込みも維持（万が一の時のため）
+  document.getElementById("seoText").innerHTML += " " + allProcessedData.map(c => `${c.group} ${c.title}`).join(", ");
 }
 [document.getElementById("salesType"), document.getElementById("filter"), document.getElementById("sortOrder")].forEach(el => el.addEventListener("change", () => render(true)));
 window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300); });
