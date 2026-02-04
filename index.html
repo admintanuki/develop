@@ -47,12 +47,10 @@
       background: var(--bg); color: var(--text); padding-bottom: 60px; overflow-x: hidden; line-height: 1.6; 
     }
 
-    .utility-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-    .utility-left { display: flex; gap: 15px; }
+    .utility-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: flex-end; align-items: center; font-size: 12px; }
     .utility-right { display: flex; gap: 15px; }
     .utility-link { text-decoration: none; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 4px; }
     .utility-link svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.5; fill: none; }
-    .utility-link.hot { color: var(--accent-hot); }
 
     .sticky-header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
@@ -65,7 +63,7 @@
       .site-title .sub-name { font-size: 15px; }
       .site-title .main-name { font-size: 26px; }
       .utility-bar { padding: 10px 24px; font-size: 13px; }
-      .utility-left, .utility-right { gap: 24px; }
+      .utility-right { gap: 24px; }
     }
     
     .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 12px; padding: 0 4px; }
@@ -89,6 +87,16 @@
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
     .notice-area { background: #eff6ff; border: 1px solid #dbeafe; color: #1e40af; padding: 12px 16px; border-radius: 8px; font-size: 12px; display: none; align-items: center; gap: 10px; margin-bottom: 10px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
+
+    .hot-area { padding: 12px 20px; }
+    .hot-list { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+    .hot-label { font-size: 11px; font-weight: 800; color: var(--accent-hot); display: flex; align-items: center; gap: 4px; white-space: nowrap; border-right: 1px solid var(--border); padding-right: 12px; }
+    .hot-label svg { width: 14px; height: 14px; fill: currentColor; }
+    
+    /* 修正：HOTリンクのフォントを普通（400）に変更 */
+    .hot-item { text-decoration: none; color: var(--text); font-size: 13px; font-weight: 400; transition: color 0.2s; display: flex; align-items: center; }
+    .hot-item:hover { color: var(--accent-hot); }
+    .hot-item::after { content: '>'; margin-left: 4px; font-size: 10px; opacity: 0.5; }
 
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
     .chart-body { position: relative; height: 300px; }
@@ -157,12 +165,6 @@
 <a href="#" class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2.5;"><path d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg></a>
 
 <div class="utility-bar">
-  <div class="utility-left">
-    <a href="https://fan-chart.com/snowman" class="utility-link hot">
-      <svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311L4.5 17c0 3.866 3.134 7 7 7s7-3.134 7-7c0-2.116-1.03-4.03-2.688-5.576zM13.5 0s-4 4.5-4 8c0 1.5 1 3.5 3 4.5.5-2.5 2-4.5 4-4.5.5 5-2.5 9.5-6 11-1-.5-3.5-2.5-3.5-6.5 0-3.5 3.5-12.5 6.5-12.5z"/></svg>
-      HOT: Snow Man 売上詳細データ
-    </a>
-  </div>
   <div class="utility-right">
     <a href="howto.html" class="utility-link"><svg viewBox="0 0 24 24"><path d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>ガイド</a>
     <a href="#analysis" class="utility-link"><svg viewBox="0 0 24 24"><path d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>分析</a>
@@ -206,19 +208,30 @@
       </div>
     </div>
 
+    <div class="card hot-area">
+      <div class="hot-list">
+        <span class="hot-label">
+          <svg viewBox="0 0 24 24"><path d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311L4.5 17c0 3.866 3.134 7 7 7s7-3.134 7-7c0-2.116-1.03-4.03-2.688-5.576zM13.5 0s-4 4.5-4 8c0 1.5 1 3.5 3 4.5.5-2.5 2-4.5 4-4.5.5 5-2.5 9.5-6 11-1-.5-3.5-2.5-3.5-6.5 0-3.5 3.5-12.5 6.5-12.5z"/></svg>
+          HOT
+        </span>
+        <a href="https://fan-chart.com/snowman" class="hot-item">Snow Man 売上詳細データ</a>
+      </div>
+    </div>
+
     <div class="split-area">
       <div class="card">
         <div class="cd-list" id="cdList"></div>
         <div id="listBtnArea" style="text-align:center; margin-top:20px;"></div>
       </div>
+      
       <div class="side-content">
         <section class="card analysis-card" style="margin-bottom: 24px;">
           <div class="card-title">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px; color: #5D9C9F;"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
-            各グループページ
+            各グループページ 売上詳細データ
           </div>
           <div id="groupLinks">
-            <a href="https://fan-chart.com/snowman" class="analysis-btn">Snow Man 売上詳細データ ></a>
+            <a href="https://fan-chart.com/snowman" class="analysis-btn">Snow Manページ ></a>
           </div>
         </section>
 
