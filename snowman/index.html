@@ -32,17 +32,16 @@
     
     .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 8px; }
     
-    /* チェックボックスを右端に寄せるスタイル */
     .checkbox-control { 
       grid-column: span 3; 
       display: flex; 
       align-items: center; 
-      justify-content: flex-end; /* 右寄せ */
+      justify-content: flex-end; 
       gap: 5px; 
       font-size: 12px; 
       color: #64748b; 
       cursor: pointer; 
-      font-weight: 400; /* 太字じゃない */
+      font-weight: 400; 
       margin-top: 2px;
     }
     .checkbox-control input { width: 14px; height: 14px; cursor: pointer; margin: 0; }
@@ -90,7 +89,6 @@
       font-size: 12px; 
       color: #64748b; 
       line-height: 1.6;
-      border-top: 1px solid #f1f5f9;
     }
 
     #pageTopBtn { position: fixed; bottom: 20px; right: 20px; width: 45px; height: 45px; background: var(--accent-sm); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 11px; font-weight: bold; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 1000; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
@@ -194,8 +192,7 @@ async function loadData() {
     
     document.getElementById('loading').style.display = 'none';
     document.getElementById('mainContent').style.display = 'block';
-    render();
-    scrollToEnd();
+    render(false, true);
   } catch (e) { console.error(e); }
 }
 
@@ -204,7 +201,7 @@ function scrollToEnd() {
   setTimeout(() => { wrapper.scrollLeft = wrapper.scrollWidth; }, 150);
 }
 
-function render(shouldAnimate = false) {
+function render(shouldAnimate = false, shouldScroll = false) {
   const type = document.getElementById("salesType").value;
   const f = document.getElementById("filter").value;
   const s = document.getElementById("sortOrder").value;
@@ -274,6 +271,8 @@ function render(shouldAnimate = false) {
     }
   });
 
+  if (shouldScroll) scrollToEnd();
+
   document.getElementById("cdList").innerHTML = listSource.map((c) => `
     <div class="cd-container">
       <a href="${c.seller}" class="cd-item-link" target="_blank" rel="noopener noreferrer">
@@ -282,8 +281,8 @@ function render(shouldAnimate = false) {
           <div><div class="cd-title">${c.title}</div><div style="font-size:10.5px; color:var(--sub); font-weight:700;">${c.releaseDate} | ${c.category.toUpperCase()}</div></div>
           <div class="sales-val">${(c[type]/10000).toFixed(1)}万枚${c.firstWeek >= 1000000 ? '<br><span class="badge-million">MILLION</span>' : ''}</div>
         </div>
+        ${c.comment ? `<div class="admin-comment" style="border-top: 1px solid #f1f5f9;">${c.comment}</div>` : ''}
       </a>
-      ${c.comment ? `<div class="admin-comment">${c.comment}</div>` : ''}
     </div>`).join("");
 }
 
@@ -293,8 +292,10 @@ window.addEventListener('scroll', () => {
   else btn.classList.remove('show');
 });
 
-window.addEventListener('resize', () => { render(); scrollToEnd(); });
-[document.getElementById("salesType"), document.getElementById("filter"), document.getElementById("sortOrder"), document.getElementById("showEvents")].forEach(el => el.addEventListener("change", () => render(true)));
+window.addEventListener('resize', () => { render(false, false); });
+[document.getElementById("salesType"), document.getElementById("filter"), document.getElementById("sortOrder"), document.getElementById("showEvents")].forEach(el => 
+  el.addEventListener("change", () => render(true, true))
+);
 
 loadData();
 </script>
