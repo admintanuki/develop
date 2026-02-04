@@ -30,7 +30,23 @@
     .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); margin-bottom: 24px; border: 1px solid var(--border); overflow: hidden; }
     
-    .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 5px; }
+    .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 8px; }
+    
+    /* チェックボックスを右端に寄せるスタイル */
+    .checkbox-control { 
+      grid-column: span 3; 
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-end; /* 右寄せ */
+      gap: 5px; 
+      font-size: 12px; 
+      color: #64748b; 
+      cursor: pointer; 
+      font-weight: 400; /* 太字じゃない */
+      margin-top: 2px;
+    }
+    .checkbox-control input { width: 14px; height: 14px; cursor: pointer; margin: 0; }
+
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; margin-top: 5px; scroll-behavior: smooth; }
     .chart-body { position: relative; height: 460px; min-width: 100%; }
     
@@ -38,7 +54,6 @@
 
     .section-title { font-weight: 800; color: var(--accent-sm); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 1.1rem; }
     
-    /* 歴史セクション */
     .history-item { position: relative; padding-left: 28px; padding-bottom: 18px; border-left: 2px solid var(--border); margin-left: 6px; }
     .history-item:last-child { border-left: 2px solid transparent; padding-bottom: 0; }
     .history-item::before { 
@@ -49,7 +64,6 @@
     .history-year { font-weight: 800; font-size: 14px; color: var(--accent-sm); margin-bottom: 2px; line-height: 1.4; }
     .history-desc { font-size: 13px; color: #475569; line-height: 1.5; margin: 0; }
 
-    /* CD一覧UI */
     .list-header { font-size: 1.1rem; font-weight: 800; color: var(--accent-sm); margin: 25px 0 15px 5px; }
     .cd-list { display: grid; gap: 15px; }
     
@@ -106,6 +120,10 @@
         <select id="salesType"><option value="firstWeek" selected>初週売上</option><option value="firstDay">初日売上</option></select>
         <select id="filter"><option value="all">全作品</option><option value="single">シングル</option><option value="album">アルバム</option></select>
         <select id="sortOrder"><option value="date" selected>発売日順</option><option value="salesDesc">売上順</option></select>
+        
+        <label class="checkbox-control">
+          <input type="checkbox" id="showEvents" checked> イベントを表示
+        </label>
       </div>
       <div class="chart-wrapper" id="chartWrapper">
         <div class="chart-body" id="chartBody">
@@ -119,7 +137,7 @@
       <div class="history-item"><h3 class="history-year">2012年〜2018年：下積み時代</h3><p class="history-desc">当初6人体制。Jr.としてバックダンサーや舞台で実力を研鑽。</p></div>
       <div class="history-item"><h3 class="history-year">2019年：9人体制へ変更</h3><p class="history-desc">向井、目黒、ラウールが加入し新体制でデビューへ加速。</p></div>
       <div class="history-item"><h3 class="history-year">2020年：デビューとミリオン</h3><p class="history-desc">1/22デビュー。シングル『D.D.』で即ミリオン達成。</p></div>
-      <div class="history-item"><h3 class="history-year">2022年：目黒蓮主演「silent」ヒット</h3><p class="history-desc">ドラマ『silent』が社会現象に。一般層への認知が急上昇。</p></div>
+      <div class="history-item"><h3 class="history-year">2022年：目黒蓮主演「silent」ヒット</h3><p class="history-desc">ドラマ『silent』が社会現象に. 一般層への認知が急上昇。</p></div>
       <div class="history-item"><h3 class="history-year">2023年：それスノゴールデン進出</h3><p class="history-desc">『それスノ』ゴールデン昇格。初の4大ドームツアーを開催。</p></div>
       <div class="history-item"><h3 class="history-year">2024年：初の5大ドーム</h3><p class="history-desc">ドームツアー『RAYS』を開催。国内最大規模の動員を記録。</p></div>
       <div class="history-item"><h3 class="history-year">2025年：5周年＆初スタジアム</h3><p class="history-desc">ベスト盤が初週139.5万枚。初の国立競技場ライブを開催。</p></div>
@@ -190,6 +208,7 @@ function render(shouldAnimate = false) {
   const type = document.getElementById("salesType").value;
   const f = document.getElementById("filter").value;
   const s = document.getElementById("sortOrder").value;
+  const showEvents = document.getElementById("showEvents").checked;
   
   let chartSource = allData.filter(c => (f === "all" || c.category === f) && c[type] !== null)
                            .sort((a,b) => s === "date" ? a.releaseDate.localeCompare(b.releaseDate) : (b[type] || 0) - (a[type] || 0));
@@ -200,7 +219,7 @@ function render(shouldAnimate = false) {
   chartBody.style.width = isMobile ? `${chartSource.length * 60}px` : "100%";
 
   const annotations = {};
-  if(s === "date") {
+  if(s === "date" && showEvents) {
     MANUAL_EVENTS.forEach((ev, i) => {
       const evTime = new Date(ev.date.replace(/\./g, '/')).getTime();
       let exactIdx = -1;
@@ -275,7 +294,7 @@ window.addEventListener('scroll', () => {
 });
 
 window.addEventListener('resize', () => { render(); scrollToEnd(); });
-[document.getElementById("salesType"), document.getElementById("filter"), document.getElementById("sortOrder")].forEach(el => el.addEventListener("change", () => render(true)));
+[document.getElementById("salesType"), document.getElementById("filter"), document.getElementById("sortOrder"), document.getElementById("showEvents")].forEach(el => el.addEventListener("change", () => render(true)));
 
 loadData();
 </script>
