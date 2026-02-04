@@ -53,7 +53,6 @@
     .list-header { font-size: 1.1rem; font-weight: 800; color: var(--accent-sm); margin: 25px 0 15px 5px; }
     .cd-list { display: grid; gap: 15px; }
     
-    /* コンテナをカード形式にし、内部要素がはみ出さないよう調整 */
     .cd-container { 
       background: #fff; border: 1px solid var(--border); border-radius: 14px; 
       overflow: hidden; box-shadow: var(--primary-shadow); transition: all 0.2s ease;
@@ -71,14 +70,13 @@
     .sales-val { font-weight: 800; font-size: 15px; color: var(--accent-sm); text-align: right; }
     .badge-million { background: #f59e0b; color: #fff; font-size: 9px; padding: 2px 5px; border-radius: 4px; font-weight: bold; margin-top: 3px; display: inline-block; }
     
-    /* 運営コメント：縦線なし、薄い背景のみ */
     .admin-comment { 
       padding: 10px 15px 15px 15px; 
-      background: #f9fafb; /* 薄いグレー */
+      background: #f9fafb;
       font-size: 12px; 
       color: #64748b; 
       line-height: 1.6;
-      border-top: 1px solid #f1f5f9; /* 楽曲情報との区切り線 */
+      border-top: 1px solid #f1f5f9;
     }
 
     #pageTopBtn { position: fixed; bottom: 20px; right: 20px; width: 45px; height: 45px; background: var(--accent-sm); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 11px; font-weight: bold; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 1000; flex-direction: column; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
@@ -94,7 +92,7 @@
 
 <header>
   <div class="header-inner">
-    <div class="nav-back"><a href="https://fan-chart.com/" style="color: var(--accent-sm); text-decoration: none; font-weight: bold;">← 全比較サイト</a></div>
+    <div class="nav-back"><a href="https://fan-chart.com/" style="color: var(--accent-sm); text-decoration: none; font-weight: bold;">← 全グループ比較</a></div>
     <h1 class="header-title">Snow Man 歴代売上推移チャート</h1>
   </div>
 </header>
