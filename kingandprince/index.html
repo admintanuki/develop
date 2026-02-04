@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="https://fan-chart.com/kingandprince/">
+  <link rel="canonical" href="https://fan-chart.com/king-and-prince/">
   <title>King & Prince CD売上枚数推移グラフまとめ【2026最新】</title>
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -13,7 +13,7 @@
   <style>
     :root {
       --bg: #f8fafc; --card: #ffffff; --text: #334155; --sub: #94a3b8;
-      --border: #e2e8f0; --accent-sm: #fab802; /* King & Prince メインカラー */
+      --border: #e2e8f0; --accent-sm: #fab802; 
       --primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     }
     body { 
@@ -47,7 +47,7 @@
     .checkbox-control input { width: 14px; height: 14px; cursor: pointer; margin: 0; }
 
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; margin-top: 5px; scroll-behavior: smooth; }
-    .chart-body { position: relative; height: 460px; min-width: 100%; }
+    .chart-body { position: relative; height: 420px; min-width: 100%; }
     
     select { padding: 10px; border-radius: 10px; border: 1px solid var(--border); font-weight: 700; background: #fff; cursor: pointer; color: var(--text); font-size: 12px; }
 
@@ -64,7 +64,7 @@
     .history-desc { font-size: 13px; color: #475569; line-height: 1.5; margin: 0; }
 
     .list-header { font-size: 1.1rem; font-weight: 800; color: var(--accent-sm); margin: 25px 0 15px 5px; }
-    .cd-list { display: grid; gap: 15px; }
+    .cd-list { display: grid; gap: 12px; }
     
     .cd-container { 
       background: #fff; border: 1px solid var(--border); border-radius: 14px; 
@@ -74,19 +74,19 @@
 
     .cd-item-link { text-decoration: none !important; color: inherit !important; display: block; }
     .cd-item-base { 
-      display: grid; grid-template-columns: 90px 1fr auto; gap: 15px; padding: 15px; 
+      display: grid; grid-template-columns: 80px 1fr auto; gap: 12px; padding: 12px; 
       align-items: center; text-decoration: none !important;
     }
-    .cd-thumb { width: 90px; height: 90px; background: #f1f5f9; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .cd-thumb { width: 80px; height: 80px; background: #f1f5f9; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     .cd-thumb img { max-width: 100%; height: auto; display: block; }
-    .cd-title { font-weight: 800; font-size: 14px; color: var(--accent-sm); line-height: 1.4; margin-bottom: 4px; }
-    .sales-val { font-weight: 800; font-size: 15px; color: var(--accent-sm); text-align: right; }
+    .cd-title { font-weight: 800; font-size: 13.5px; color: var(--accent-sm); line-height: 1.4; margin-bottom: 4px; }
+    .sales-val { font-weight: 800; font-size: 14px; color: var(--accent-sm); text-align: right; }
     .badge-million { background: #f59e0b; color: #fff; font-size: 9px; padding: 2px 5px; border-radius: 4px; font-weight: bold; margin-top: 3px; display: inline-block; }
     
     .admin-comment { 
-      padding: 10px 15px 15px 15px; 
+      padding: 10px 15px 12px 15px; 
       background: #f9fafb;
-      font-size: 12px; 
+      font-size: 11.5px; 
       color: #64748b; 
       line-height: 1.6;
     }
@@ -96,6 +96,14 @@
     
     .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top: 3px solid var(--accent-sm); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 40px auto; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    @media (max-width: 768px) {
+      .card { padding: 12px; }
+      .header-title { font-size: 1.1rem; }
+      .cd-item-base { grid-template-columns: 70px 1fr auto; gap: 10px; }
+      .cd-thumb { width: 70px; height: 70px; }
+      .cd-title { font-size: 13px; }
+    }
   </style>
 </head>
 <body>
@@ -243,7 +251,8 @@ function render(shouldAnimate = false, shouldScroll = false) {
   
   const chartBody = document.getElementById("chartBody");
   const isMobile = window.innerWidth <= 768;
-  chartBody.style.width = isMobile ? `${chartSource.length * 60}px` : "100%";
+  // 横幅をさらに詰め、密集度をアップ
+  chartBody.style.width = isMobile ? `${chartSource.length * 45}px` : "100%";
 
   const annotations = {};
   if(s === "date" && showEvents) {
@@ -256,10 +265,11 @@ function render(shouldAnimate = false, shouldScroll = false) {
         if (evTime >= d1 && evTime <= d2) { exactIdx = j + (evTime - d1) / (d2 - d1); break; }
       }
       if (exactIdx !== -1) {
-        const h = (i % 2 === 0) ? -45 : -85;
+        // ラベルの高さを抑える
+        const h = (i % 2 === 0) ? -35 : -70;
         annotations['line' + i] = { 
-          type: 'line', xMin: exactIdx, xMax: exactIdx, borderColor: EVENT_COLOR, borderWidth: 1, borderDash: [3, 3], 
-          label: { display: true, content: ev.label, backgroundColor: EVENT_COLOR, color: '#fff', font: { size: 10, weight: 'bold' }, position: 'end', yAdjust: h, padding: 5, borderRadius: 4 } 
+          type: 'line', xMin: exactIdx, xMax: exactIdx, borderColor: EVENT_COLOR, borderWidth: 1, borderDash: [2, 2], 
+          label: { display: true, content: ev.label, backgroundColor: EVENT_COLOR, color: '#fff', font: { size: 8.5, weight: 'bold' }, position: 'end', yAdjust: h, padding: 3, borderRadius: 3 } 
         };
       }
     });
@@ -274,29 +284,29 @@ function render(shouldAnimate = false, shouldScroll = false) {
         data: chartSource.map(c => c[type]),
         borderColor: '#fab802', backgroundColor: '#fab80222',
         borderWidth: 2, fill: true, tension: 0.3, pointBackgroundColor: "#fff",
-        pointBorderColor: '#fab802', pointRadius: 5
+        pointBorderColor: '#fab802', pointRadius: 3.5
       }]
     },
     options: {
       animation: shouldAnimate ? { duration: 800 } : false,
       responsive: true, maintainAspectRatio: false, clip: false,
-      layout: { padding: { top: 120 } },
+      layout: { padding: { top: 90 } }, // 余白を減らす
       plugins: {
         legend: { display: false },
         datalabels: {
-          anchor: 'end', align: 'top', offset: 6,
+          anchor: 'end', align: 'top', offset: 4,
           formatter: (v, ctx) => {
             const label = (v / 10000).toFixed(1) + "万";
             return v >= 1000000 ? '👑' + label : label;
           },
           color: (ctx) => ctx.dataset.data[ctx.dataIndex] >= 1000000 ? '#f59e0b' : '#64748b', 
-          font: { size: 10, weight: 'bold' }
+          font: { size: 8.5, weight: 'bold' }
         },
         annotation: { annotations: annotations }
       },
       scales: {
-        y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, grace: '30%', grid: { color: '#f1f5f9' } },
-        x: { grid: { display: false }, ticks: { font: {size: 10, weight: '700'}, maxRotation: 45, minRotation: 45, autoSkip: !isMobile } }
+        y: { ticks: { callback: v => (v/10000) + "万", font: {size: 8.5} }, grace: '20%', grid: { color: '#f1f5f9' } },
+        x: { grid: { display: false }, ticks: { font: {size: 9, weight: '700'}, maxRotation: 45, minRotation: 45, autoSkip: !isMobile } }
       }
     }
   });
@@ -308,7 +318,7 @@ function render(shouldAnimate = false, shouldScroll = false) {
       <a href="${c.seller}" class="cd-item-link" target="_blank" rel="noopener noreferrer">
         <div class="cd-item-base">
           <div class="cd-thumb">${c.affiliate ? `<img src="${c.affiliate}">` : ''}</div>
-          <div><div class="cd-title">${c.title}</div><div style="font-size:10.5px; color:var(--sub); font-weight:700;">${c.releaseDate} | ${c.category.toUpperCase()}</div></div>
+          <div><div class="cd-title">${c.title}</div><div style="font-size:10px; color:var(--sub); font-weight:700;">${c.releaseDate} | ${c.category.toUpperCase()}</div></div>
           <div class="sales-val">${(c[type]/10000).toFixed(1)}万枚${c.firstWeek >= 1000000 ? '<br><span class="badge-million">MILLION</span>' : ''}</div>
         </div>
         ${c.comment ? `<div class="admin-comment" style="border-top: 1px solid #f1f5f9;">${c.comment}</div>` : ''}
