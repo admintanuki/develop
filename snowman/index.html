@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="canonical" href="https://fan-chart.com/snowman/">
+  
+  <title>Snow Man CD売上枚数推移グラフまとめ【2026最新】ミリオン記録と成長分析</title>
+  <meta name="description" content="Snow Manの最新売上データを可視化。2025年ベストアルバム初週139.5万枚の令和最高記録から2026年最新作まで、デビューからの軌跡をグラフで分析。">
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1"></script>
+  
+  <style>
+    :root {
+      --bg: #f8fafc; --card: #ffffff; --text: #334155; --sub: #94a3b8;
+      --border: #e2e8f0; --accent-sm: #1b489d;
+      --primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    body { 
+      margin: 0; padding: 0; 
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif; 
+      background: var(--bg); color: var(--text); padding-bottom: 60px; line-height: 1.6; 
+      scroll-behavior: smooth;
+    }
+    header { background: #fff; border-bottom: 3px solid var(--accent-sm); padding: 1rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .header-inner { max-width: 900px; margin: 0 auto; }
+    .nav-back { text-align: left; font-size: 11px; margin-bottom: 3px; }
+    .header-title { font-size: 1.1rem; margin: 0; font-weight: 800; text-align: center; }
+
+    /* コンテナ上部の余白を戻す */
+    .container { max-width: 900px; margin: 0 auto; padding: 15px; }
+    .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); margin-bottom: 24px; border: 1px solid var(--border); }
+    
+    /* 青い分析ボックス：上部の余白のみを縮小 */
+    .analysis-box { 
+      background: #eff6ff; border-left: 5px solid var(--accent-sm); border-radius: 8px; 
+      padding: 8px 15px 15px 15px; /* 上だけ8pxに。指示通りここを詰めました */
+      margin-bottom: 5px; 
+    }
+    .section-title { font-weight: 800; color: var(--accent-sm); display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 1.1rem; }
+    
+    .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; margin-top: 15px; scroll-behavior: smooth; }
+    .chart-body { position: relative; height: 460px; min-width: 100%; }
+    
+    /* プルダウン上の余白を戻す */
+    .controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; margin-top: 15px; }
+    select { padding: 10px; border-radius: 10px; border: 1px solid var(--border); font-weight: 700; background: #fff; cursor: pointer; color: var(--text); font-size: 13px; }
+
+    /* 歴史セクション：点と線のズレを修正 */
+    .history-item { position: relative; padding-left: 28px; padding-bottom: 18px; border-left: 2px solid var(--border); margin-left: 6px; }
+    .history-item:last-child { border-left: 2px solid transparent; padding-bottom: 0; }
+    .history-item::before { 
+      content: ""; position: absolute; 
+      left: -7px; /* 線の中心に合わせる */
+      top: 7px;  /* 文字の1行目中央に合わせる */
+      width: 12px; height: 12px; border-radius: 50%; background: var(--accent-sm); border: 2px solid #fff; 
+      box-shadow: 0 0 0 1px var(--bg); /* 線との重なりを綺麗に見せる */
+    }
+    .history-year { font-weight: 800; font-size: 14px; color: var(--accent-sm); margin-bottom: 2px; line-height: 1.4; }
+    .history-desc { font-size: 13px; color: #475569; line-height: 1.5; margin: 0; }
+
+    .cd-list { display: grid; gap: 12px; }
+    .cd-item-link { text-decoration: none; color: inherit; display: block; }
+    .cd-item-base { 
+      display: grid; grid-template-columns: 90px 1fr auto; gap: 12px; padding: 12px; 
+      border: 1px solid var(--border); border-radius: 14px; background: #fff; align-items: center;
+      transition: all 0.2s ease;
+    }
+    .cd-item-link:hover .cd-item-base { transform: translateY(-3px); box-shadow: 0 10px 20px -5px rgba(0,0,0,0.1); border-color: var(--accent-sm); }
+    .cd-thumb { width: 90px; height: 90px; display: flex; align-items: center; justify-content: center; background: #f1f5f9; border-radius: 8px; overflow: hidden; }
+    .cd-thumb img { max-width: 100%; height: auto; display: block; }
+    .cd-title { font-weight: 800; font-size: 14px; color: var(--accent-sm); line-height: 1.3; margin-bottom: 3px; }
+    .sales-val { font-weight: 800; font-size: 15px; color: var(--accent-sm); text-align: right; }
+    .badge-million { background: #f59e0b; color: #fff; font-size: 9px; padding: 2px 5px; border-radius: 4px; font-weight: bold; margin-top: 3px; display: inline-block; }
+    
+    #pageTopBtn {
+      position: fixed; bottom: 20px; right: 20px;
+      width: 45px; height: 45px; background: var(--accent-sm);
+      color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      text-decoration: none; font-size: 11px; font-weight: bold;
+      opacity: 0; visibility: hidden; transition: all 0.3s ease;
+      z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.3); flex-direction: column;
+    }
+    #pageTopBtn.show { opacity: 1; visibility: visible; }
+
+    .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top: 3px solid var(--accent-sm); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 40px auto; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+
+<div id="top"></div>
+
+<header>
+  <div class="header-inner">
+    <div class="nav-back"><a href="https://fan-chart.com/" style="color: var(--accent-sm); text-decoration: none; font-weight: bold;">← 全グループ比較サイトへ</a></div>
+    <h1 class="header-title">Snow Man 歴代売上推移チャート</h1>
+  </div>
+</header>
+
+<div class="container">
+  <div id="loading"><div class="spinner"></div></div>
+  <div id="mainContent" style="display:none;">
+    
+    <article class="card">
+      <div class="analysis-box">
+        <h2 class="section-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+          最新の売上状況
+        </h2>
+        <p style="font-size: 14px; line-height: 1.6; color: #1e293b; margin: 0;">
+          Snow Manは、2025年ベストアルバムが初週139.5万枚（令和最高）記録という金字塔を打ち立てた、STARTO社を代表するグループです。2026年は目黒蓮さんの活動休止を乗り越え、さらなる高みへ向かうグループの軌跡をふりかえります。
+        </p>
+      </div>
+
+      <div class="controls">
+        <select id="salesType"><option value="firstWeek" selected>初週売上推移</option><option value="firstDay">初日売上（フラゲ）</option></select>
+        <select id="filter"><option value="all" selected>シングル＆アルバム</option><option value="single">シングル</option><option value="album">アルバム</option></select>
+      </div>
+      <div class="chart-wrapper" id="chartWrapper">
+        <div class="chart-body" id="chartBody">
+          <canvas id="salesChart"></canvas>
+        </div>
+      </div>
+    </article>
+
+    <section class="card">
+      <h2 class="section-title" style="color: #475569; border-bottom: 1px solid var(--border); padding-bottom: 8px; margin-bottom: 12px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        Snow Man 売上の軌跡と歩み
+      </h2>
+      
+      <div class="history-item">
+        <h3 class="history-year">2012年〜2018年：下積み時代</h3>
+        <p class="history-desc">当初6人体制。Jr.としてバックダンサーや舞台で実力を研鑽。</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2019年：9人体制へ変更</h3>
+        <p class="history-desc">向井、目黒、ラウールが加入し新体制でデビューへ加速。</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2020年：デビューとミリオン</h3>
+        <p class="history-desc">1/22デビュー。シングル『D.D.』で即ミリオン達成。</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2022年：『silent』でブレイク</h3>
+        <p class="history-desc">ドラマ『silent』が社会現象に。一般層への認知が急上昇。</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2023年：ゴールデン進出＆初ドーム</h3>
+        <p class="history-desc">『それスノ』ゴールデン昇格。初の4大ドームツアーを開催。</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2024年：初の5大ドーム</h3>
+        <p class="history-desc">ドームツアー『RAYS』を開催。国内最大級の動員を記録。</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2025年：5周年＆初スタジアム</h3>
+        <p class="history-desc">ベスト盤が初週139.5万枚。初の国立競技場ライブを開催。</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2026年：一時8人体制での挑戦</h3>
+        <p class="history-desc">目黒蓮が海外ドラマ出演のため休止。8人で活動継続中。</p>
+      </div>
+    </section>
+
+    <div id="cdList" class="cd-list"></div>
+  </div>
+</div>
+
+<a href="#top" id="pageTopBtn"><span>▲</span>TOP</a>
+
+<script>
+Chart.register(ChartDataLabels);
+
+const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
+
+const MANUAL_EVENTS = [
+  { date: "2022.10.06", label: "『silent』社会現象的ヒット" },
+  { date: "2023.04.28", label: "「それスノ」ゴールデン進出" },
+  { date: "2024.11.09", label: "初の5大ドームツアー開始" },
+  { date: "2025.04.19", label: "初の国立ライブ" }
+];
+
+let allData = [], chart = null;
+
+function parseCSV(text) {
+  const result = [];
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  const headers = lines[0].split(',').map(h => h.trim());
+  for (let i = 1; i < lines.length; i++) {
+    const row = []; let current = ''; let inQuotes = false; const line = lines[i];
+    for (let j = 0; j < line.length; j++) {
+      const char = line[j];
+      if (char === '"') inQuotes = !inQuotes;
+      else if (char === ',' && !inQuotes) { row.push(current); current = ''; } else { current += char; }
+    }
+    row.push(current);
+    const obj = {};
+    headers.forEach((h, idx) => {
+      let val = row[idx] ? row[idx].trim() : "";
+      if (val.startsWith('"') && val.endsWith('"')) val = val.substring(1, val.length - 1);
+      obj[h] = val;
+    });
+    result.push(obj);
+  }
+  return result;
+}
+
+async function loadData() {
+  try {
+    const res = await fetch(SHEET_DATA_URL);
+    const raw = parseCSV(await res.text());
+    allData = raw.map(d => ({
+      releaseDate: d.releaseDate,
+      group: d.group,
+      title: d.title,
+      category: d.category,
+      firstDay: parseInt(d.firstDay) || null,
+      firstWeek: parseInt(d.firstWeek) || null,
+      seller: d.seller || "#",
+      affiliate: d.affiliate || ""
+    })).filter(c => c.group === "Snow Man");
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    render();
+    scrollToEnd();
+  } catch (e) { console.error(e); }
+}
+
+function scrollToEnd() {
+  const wrapper = document.getElementById('chartWrapper');
+  setTimeout(() => { wrapper.scrollLeft = wrapper.scrollWidth; }, 150);
+}
+
+function render() {
+  const type = document.getElementById("salesType").value;
+  const f = document.getElementById("filter").value;
+  let chartSource = allData.filter(c => (f === "all" || c.category === f) && c[type] !== null)
+                           .sort((a,b) => a.releaseDate.localeCompare(b.releaseDate));
+  let listSource = [...chartSource].sort((a,b) => b.releaseDate.localeCompare(a.releaseDate));
+
+  const chartWrapper = document.getElementById("chartWrapper");
+  const chartBody = document.getElementById("chartBody");
+  const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * 85);
+  chartBody.style.width = `${finalWidth}px`;
+
+  const annotations = {};
+  MANUAL_EVENTS.forEach((ev, i) => {
+    const evTime = new Date(ev.date.replace(/\./g, '/')).getTime();
+    let exactIdx = -1;
+    for (let j = 0; j < chartSource.length - 1; j++) {
+      const d1 = new Date(chartSource[j].releaseDate.replace(/\./g, '/')).getTime();
+      const d2 = new Date(chartSource[j+1].releaseDate.replace(/\./g, '/')).getTime();
+      if (evTime >= d1 && evTime <= d2) {
+        exactIdx = j + (evTime - d1) / (d2 - d1);
+        break;
+      }
+    }
+    if (exactIdx === -1) {
+       if(evTime > new Date(chartSource[chartSource.length-1].releaseDate.replace(/\./g, '/')).getTime()) {
+         exactIdx = chartSource.length - 0.5;
+       } else if (evTime < new Date(chartSource[0].releaseDate.replace(/\./g, '/')).getTime()) {
+         exactIdx = -0.5;
+       }
+    }
+
+    if (exactIdx !== -1) {
+      const heightStep = (i % 2 === 0) ? -40 : -75;
+      annotations['line' + i] = {
+        type: 'line', xMin: exactIdx, xMax: exactIdx,
+        borderColor: '#e11d48', borderWidth: 2, borderDash: [4, 4],
+        label: {
+          display: true, content: ev.label, backgroundColor: '#e11d48', color: '#fff',
+          font: { size: 10, weight: 'bold' }, position: 'end', yAdjust: heightStep, padding: 5, borderRadius: 4
+        }
+      };
+    }
+  });
+
+  if (chart) chart.destroy();
+  chart = new Chart(document.getElementById("salesChart"), {
+    type: 'line',
+    data: {
+      labels: chartSource.map(c => c.title.substring(0, 8) + (c.title.length > 8 ? ".." : "")),
+      datasets: [{
+        data: chartSource.map(c => c[type]),
+        borderColor: '#1b489d', backgroundColor: '#1b489d22',
+        borderWidth: 2, fill: true, tension: 0.3, pointBackgroundColor: "#fff",
+        pointBorderColor: '#1b489d', pointRadius: 5
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, clip: false,
+      layout: { padding: { top: 120 } },
+      plugins: {
+        legend: { display: false },
+        datalabels: {
+          anchor: 'end', align: 'top', offset: 6,
+          formatter: (v, ctx) => {
+            const label = (v / 10000).toFixed(1) + "万";
+            return v >= 1000000 ? '👑' + label : label;
+          },
+          color: (ctx) => ctx.dataset.data[ctx.dataIndex] >= 1000000 ? '#f59e0b' : '#64748b', 
+          font: { size: 10, weight: 'bold' }
+        },
+        annotation: { annotations: annotations }
+      },
+      scales: {
+        y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, grace: '25%', grid: { color: '#f1f5f9' } },
+        x: { grid: { display: false }, ticks: { font: {size: 10, weight: '700'}, maxRotation: 45, minRotation: 45 } }
+      }
+    }
+  });
+
+  document.getElementById("cdList").innerHTML = listSource.map(c => `
+    <a href="${c.seller}" class="cd-item-link" target="_blank" rel="noopener noreferrer">
+      <div class="cd-item-base">
+        <div class="cd-thumb">${c.affiliate ? `<img src="${c.affiliate}">` : ''}</div>
+        <div>
+          <div class="cd-title">${c.title}</div>
+          <div style="font-size:10.5px; color:var(--sub); font-weight:700;">${c.releaseDate} | ${c.category.toUpperCase()}</div>
+        </div>
+        <div class="sales-val">${(c[type]/10000).toFixed(1)}万枚${c.firstWeek >= 1000000 ? '<br><span class="badge-million">MILLION</span>' : ''}</div>
+      </div>
+    </a>`).join("");
+}
+
+window.addEventListener('scroll', () => {
+  const btn = document.getElementById('pageTopBtn');
+  if (window.pageYOffset > 300) btn.classList.add('show');
+  else btn.classList.remove('show');
+});
+
+window.addEventListener('resize', () => { render(); scrollToEnd(); });
+document.getElementById("salesType").addEventListener("change", render);
+document.getElementById("filter").addEventListener("change", render);
+loadData();
+</script>
+</body>
+</html>
