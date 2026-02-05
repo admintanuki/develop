@@ -23,9 +23,55 @@
       background: var(--bg); color: var(--text); padding-bottom: 60px; line-height: 1.6; 
       scroll-behavior: smooth;
     }
-    header { background: #fff; border-bottom: 3px solid var(--accent-sm); padding: 1rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+
+    /* --- ユーティリティバー（Snow Manページと統一） --- */
+    .utility-bar { 
+      background: #fff; 
+      border-bottom: 1px solid var(--border); 
+      padding: 10px 15px; 
+      display: flex; 
+      justify-content: center;
+    }
+    
+    .utility-inner {
+      width: 100%;
+      max-width: 1000px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+    }
+    
+    .breadcrumb { display: flex; gap: 6px; align-items: center; color: var(--sub); font-weight: 600; }
+    .breadcrumb a { color: var(--accent-sm); text-decoration: none; }
+    .breadcrumb span { opacity: 0.5; font-size: 10px; }
+
+    .utility-right { display: flex; gap: 15px; }
+    .utility-link { text-decoration: none; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 4px; position: relative; cursor: pointer; }
+    
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown::before { content: ""; position: absolute; top: 100%; right: 0; width: 100%; height: 10px; display: block; z-index: 100; }
+    
+    .dropdown-content {
+      display: none; position: absolute; right: 0; background-color: #fff; min-width: 140px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); z-index: 101; border: 1px solid var(--border);
+      border-radius: 8px; margin-top: 8px;
+    }
+    @media (min-width: 1025px) { .dropdown:hover .dropdown-content { display: block; } }
+    .dropdown-content.is-active { display: block; }
+    .dropdown-content a { color: var(--text); padding: 10px 16px; text-decoration: none; display: block; font-size: 12px; border-bottom: 1px solid var(--border); }
+    .dropdown-content a:last-child { border-bottom: none; }
+    .dropdown-content a:hover { background-color: #f1f5f9; }
+
+    /* --- ヘッダー：固定なし (Snow Manページと統一) --- */
+    header { 
+      background: #fff; 
+      border-bottom: 3px solid var(--accent-sm); 
+      padding: 1rem; 
+      z-index: 100; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+    }
     .header-inner { max-width: 1100px; margin: 0 auto; }
-    .nav-back { text-align: left; font-size: 11px; margin-bottom: 3px; }
     .header-title { font-size: 1.2rem; margin: 0; font-weight: 800; text-align: center; }
 
     .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; }
@@ -114,9 +160,28 @@
 
 <div id="top"></div>
 
+<div class="utility-bar">
+  <div class="utility-inner">
+    <nav class="breadcrumb">
+      <a href="https://fan-chart.com/">TOP</a> <span>/</span> King & Prince
+    </nav>
+
+    <div class="utility-right">
+      <div class="dropdown" id="groupDropdown">
+        <span class="utility-link">グループ別 ▾</span>
+        <div class="dropdown-content">
+          <a href="https://fan-chart.com/snowman/">Snow Man</a>
+          <a href="https://fan-chart.com/sixtones/">SixTONES</a>
+          <a href="https://fan-chart.com/king-and-prince/">King & Prince</a>
+          <a href="https://fan-chart.com/naniwa-danshi/">なにわ男子</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <header>
   <div class="header-inner">
-    <div class="nav-back"><a href="https://fan-chart.com/" style="color: var(--accent-sm); text-decoration: none; font-weight: bold;">← 全グループ比較</a></div>
     <h1 class="header-title">King & Prince 歴代売上推移チャート</h1>
   </div>
 </header>
@@ -144,42 +209,15 @@
 
     <section class="card">
       <h2 class="section-title">King & Prince 売上の軌跡と歩み</h2>
-      <div class="history-item">
-        <h3 class="history-year">2015年〜2017年：期間限定ユニットとグループの結成</h3>
-        <p class="history-desc">テレビ朝日の夏イベント応援サポーターとして、平野紫耀・永瀬廉・髙橋海人の「Mr.KING」と、岸優太・神宮寺勇太・岩橋玄樹の「Mr.Prince」による期間限定ユニット「Mr.King vs Mr.Prince」が結成。その後、メンバー自らがジャニー喜多川氏へ「6人でデビューしたい」と直談判したことで、2018年のデビューが決定</p>
-      </div>
-      <div class="history-item">
-        <h3 class="history-year">2018年：鮮烈なデビュー</h3>
-        <p class="history-desc">5月23日『シンデレラガール』でCDデビュー。初週57.7万枚を記録し、一躍トップアイドルへ</p>
-      </div>
-      <div class="history-item">
-        <h3 class="history-year">2019年 - 2022年：国民的グループへの階段</h3>
-        <p class="history-desc">数々のヒット曲を連発し、2021年には『24時間テレビ』のメインパーソナリティーに抜擢。また、全編英語詞の『Magic Touch』など、海外進出を視野に入れた高いダンススキルの追求も話題に</p>
-      </div>
-      <div class="history-item">
-        <h3 class="history-year">2022年4月：悲願のドーム公演</h3>
-        <p class="history-desc">初の4大ドームツアー『Mr.』を開催 デビュー当時からの夢であったドームのステージに立つ</p>
-      </div>
-      <div class="history-item">
-        <h3 class="history-year">2022年11月：突然の脱退発表</h3>
-        <p class="history-desc">11月4日活動方針の相違から、岸・平野・神宮寺の脱退が発表され、日本中に衝撃が走る<br>発表を受け、ファンによる『ツキヨミ / 彩り』の購買運動（通称：追いツキヨミ）が行われる</p>
-      </div>
-      <div class="history-item">
-        <h3 class="history-year">2023年5月：2人体制でのリスタート</h3>
-        <p class="history-desc">5周年の記念日より、永瀬廉・髙橋海人の2人での活動をスタート。シングル『なにもの』のリリースやファンミーティングを積極的に開催</p>
-      </div>
-      <div class="history-item">
-        <h3 class="history-year">2024年：2人体制初のアリーナツアー</h3>
-        <p class="history-desc">2人体制初のアリーナツアーを成功させる。約1万発以上の花火とライブが融合したイベント『King & Princeとうちあげ花火』も話題に</p>
-      </div>
-      <div class="history-item">
-        <h3 class="history-year">2025年5月：2人体制初のドーム</h3>
-        <p class="history-desc">CDデビュー6周年記念日に「King & Prince株式会社」を設立。またアリーナツアーの追加公演として新体制として初の3大ドームツアーを完遂</p>
-      </div>
-      <div class="history-item">
-        <h3 class="history-year">2026年：音楽性のさらなる追求と新展開</h3>
-        <p class="history-desc">アルバム『STARRING』のリード曲『Theater』がSNSで大きな話題に。 1月からは『King & Prince DOME TOUR 2026 STARRING』4大ドームツアーを開催</p>
-      </div>
+      <div class="history-item"><h3 class="history-year">2015年〜2017年：期間限定ユニットとグループの結成</h3><p class="history-desc">テレビ朝日の夏イベント応援サポーターとして、Mr.KINGとMr.Princeが結成。メンバー自らがジャニー氏へ直談判しデビュー決定</p></div>
+      <div class="history-item"><h3 class="history-year">2018年：鮮烈なデビュー</h3><p class="history-desc">5月23日『シンデレラガール』でCDデビュー。初週57.7万枚を記録し、一躍トップアイドルへ</p></div>
+      <div class="history-item"><h3 class="history-year">2019年 - 2022年：国民的グループへの階段</h3><p class="history-desc">ヒット曲を連発し『24時間テレビ』メインパーソナリティーにも抜擢。高いダンススキルでも話題に</p></div>
+      <div class="history-item"><h3 class="history-year">2022年4月：悲願のドーム公演</h3><p class="history-desc">初の4大ドームツアー『Mr.』を開催。デビュー当時からの夢であったドームのステージに立つ</p></div>
+      <div class="history-item"><h3 class="history-year">2022年11月：突然の脱退発表</h3><p class="history-desc">活動方針の相違から岸・平野・神宮寺の脱退が発表。ファンによる『ツキヨミ / 彩り』の購買運動が起きる</p></div>
+      <div class="history-item"><h3 class="history-year">2023年5月：2人体制でのリスタート</h3><p class="history-desc">永瀬廉・髙橋海人の2人での活動をスタート。シングル『なにもの』のリリースなど精力的に活動</p></div>
+      <div class="history-item"><h3 class="history-year">2024年：2人体制初のアリーナツアー</h3><p class="history-desc">ツアー成功に加え、花火とライブが融合した『King & Princeとうちあげ花火』も話題に</p></div>
+      <div class="history-item"><h3 class="history-year">2025年5月：2人体制初のドーム</h3><p class="history-desc">「King & Prince株式会社」を設立。新体制として初の3大ドームツアーを完遂</p></div>
+      <div class="history-item"><h3 class="history-year">2026年：音楽性のさらなる追求と新展開</h3><p class="history-desc">1月からは『King & Prince DOME TOUR 2026 STARRING』4大ドームツアーを開催</p></div>
     </section>
 
     <h2 class="list-header">King & Prince 歴代リリース作品一覧</h2>
@@ -192,6 +230,17 @@
 <script>
 Chart.register(ChartDataLabels);
 const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
+
+/* ドロップダウン制御 */
+const groupDropdown = document.getElementById('groupDropdown');
+const dropdownContent = groupDropdown.querySelector('.dropdown-content');
+groupDropdown.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownContent.classList.toggle('is-active');
+});
+window.addEventListener('click', () => {
+  dropdownContent.classList.remove('is-active');
+});
 
 const MANUAL_EVENTS = [
   { date: "2022.04.02", label: "初の4大ドームツアー" },
@@ -253,11 +302,9 @@ function render(shouldAnimate = false, shouldScroll = false) {
   const today = new Date();
   today.setHours(0,0,0,0);
   
-  // 1. グラフ用：売上データが存在するもののみ抽出
   let chartSource = allData.filter(c => (f === "all" || c.category === f) && c[type] !== null)
                            .sort((a,b) => s === "date" ? a.releaseDate.localeCompare(b.releaseDate) : (b[type] || 0) - (a[type] || 0));
   
-  // 2. リスト用：フィルタに一致する全作品を表示（新着順に固定）
   let listSource = allData.filter(c => (f === "all" || c.category === f))
                           .sort((a,b) => b.releaseDate.localeCompare(a.releaseDate));
   

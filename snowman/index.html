@@ -24,18 +24,18 @@
       scroll-behavior: smooth;
     }
 
-    /* --- ユーティリティバー：中央寄せの調整 --- */
+    /* --- ユーティリティバー --- */
     .utility-bar { 
       background: #fff; 
       border-bottom: 1px solid var(--border); 
       padding: 10px 15px; 
       display: flex; 
-      justify-content: center; /* バー全体の中身を中央へ */
+      justify-content: center;
     }
     
     .utility-inner {
       width: 100%;
-      max-width: 1000px; /* ここの数値を小さくすると、より中心に寄ります */
+      max-width: 1000px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -63,7 +63,14 @@
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
-    header { background: #fff; border-bottom: 3px solid var(--accent-sm); padding: 1rem; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    /* --- ヘッダー：固定解除 (position: stickyを削除) --- */
+    header { 
+      background: #fff; 
+      border-bottom: 3px solid var(--accent-sm); 
+      padding: 1rem; 
+      z-index: 100; 
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+    }
     .header-inner { max-width: 1100px; margin: 0 auto; }
     .header-title { font-size: 1.2rem; margin: 0; font-weight: 800; text-align: center; }
 
