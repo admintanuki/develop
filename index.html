@@ -57,8 +57,55 @@
 
     .utility-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: flex-end; align-items: center; font-size: 12px; }
     .utility-right { display: flex; gap: 15px; }
-    .utility-link { text-decoration: none; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 4px; }
-    .utility-link svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 1.5; fill: none; }
+    .utility-link { text-decoration: none; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 4px; position: relative; cursor: pointer; }
+    
+    /* --- ドロップダウン修正箇所 --- */
+    .dropdown { position: relative; display: inline-block; }
+    
+    /* ホバーが途切れないための「見えない橋」 */
+    .dropdown::before {
+      content: "";
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 100%;
+      height: 10px;
+      display: block;
+      z-index: 100;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      right: 0;
+      background-color: #fff;
+      min-width: 140px;
+      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+      z-index: 101;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-top: 8px; /* 隙間をあけつつ橋で繋ぐ */
+    }
+
+    /* PCでの表示制御 */
+    @media (min-width: 1025px) {
+      .dropdown:hover .dropdown-content { display: block; }
+    }
+    
+    /* JS制御用のクラス */
+    .dropdown-content.is-active { display: block; }
+    /* -------------------------- */
+
+    .dropdown-content a {
+      color: var(--text);
+      padding: 10px 16px;
+      text-decoration: none;
+      display: block;
+      font-size: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dropdown-content a:last-child { border-bottom: none; }
+    .dropdown-content a:hover { background-color: #f1f5f9; }
 
     .sticky-header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
@@ -72,6 +119,7 @@
       .site-title .main-name { font-size: 26px; }
       .utility-bar { padding: 10px 24px; font-size: 13px; }
       .utility-right { gap: 24px; }
+      .dropdown-content a { font-size: 13px; }
     }
     
     .group-buttons-wrapper {
@@ -195,8 +243,16 @@
 
 <div class="utility-bar">
   <div class="utility-right">
-    <a href="#group-nav" class="utility-link"><svg viewBox="0 0 24 24"><path d="M15 19.128a9.38 9.38 0 002.625.372 9.337 9.337 0 004.121-.952 4.125 4.125 0 00-2.122-7.53 4.125 4.125 0 00-3.375 3.375M15 19.128a9.376 9.376 0 01-2.625.372 9.337 9.337 0 01-4.121-.952 4.125 4.125 0 012.122-7.53 4.125 4.125 0 013.375 3.375M15 19.128v-3.375" /></svg>グループ別</a>
-    <a href="#analysis" class="utility-link"><svg viewBox="0 0 24 24"><path d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>分析</a>
+    <div class="dropdown" id="groupDropdown">
+      <span class="utility-link">グループ別</span>
+      <div class="dropdown-content">
+        <a href="https://fan-chart.com/snowman">Snow Man</a>
+        <a href="https://fan-chart.com/sixtones">SixTONES</a>
+        <a href="https://fan-chart.com/king-and-prince">King & Prince</a>
+        <a href="https://fan-chart.com/naniwa-danshi">なにわ男子</a>
+      </div>
+    </div>
+    <a href="#analysis" class="utility-link">分析</a>
     <a href="howto.html" class="utility-link">ガイド</a>
     <a href="terms.html" class="utility-link">規約</a>
   </div>
@@ -221,7 +277,7 @@
 <div class="container">
   <div id="seoText" class="sr-only">
     <h2>STARTO ENTERTAINMENT アーティスト売上データ</h2>
-    <p>Snow Man, SixTONES, なにわ男子, King & Prince, timelesz, Aぇ! group, WEST., Hey! Say! JUMP, SUPER EIGHT, Travis Japan, NEWS, Kis-My-Ft2, A.B.C-Zなど、各グループの最新および歴代シングル・アルバムの初動売上枚数データを網羅しています。2026年の最新売上傾向をグラフで可視化して比較可能です。</p>
+    <p>Snow Man, SixTONES, なにわ男子, King & Prince, timelesz, Aぇ! group, WEST., Hey! Say! JUMP, SUPER EIGHT, Travis Japan, NEWS, Kis-My-Ft2, A.B.C-Zなど, 各グループの最新および歴代シングル・アルバムの初動売上枚数データを網羅しています。2026年の最新売上傾向をグラフで可視化して比較可能です。</p>
   </div>
   
   <div class="notice-area" id="noticeArea"><span class="notice-icon">i</span><span id="noticeText"></span></div>
@@ -231,7 +287,7 @@
   <div id="mainContent" class="content-wrapper" style="display:none;">
     <div class="card">
       <div class="group-buttons-wrapper">
-        <div style="font-size: 12px; font-weight: 700; color: #64748b; margin-bottom: 10px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
+        <div style="font-size: 12px; font-weight: 400; color: #334155; margin-bottom: 10px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
         <div class="group-buttons" id="groupButtons"></div>
       </div>
       
@@ -312,6 +368,20 @@ const fixedGroupColors = {
 const fixedGroupOrder = Object.keys(fixedGroupColors);
 
 let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isFullDataLoaded = false;
+
+/* --- ドロップダウン操作のスクリプト --- */
+const groupDropdown = document.getElementById('groupDropdown');
+const dropdownContent = groupDropdown.querySelector('.dropdown-content');
+
+groupDropdown.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownContent.classList.toggle('is-active');
+});
+
+window.addEventListener('click', () => {
+  dropdownContent.classList.remove('is-active');
+});
+/* ---------------------------------- */
 
 function copyShareUrl() {
   const groups = Array.from(activeGroups).join(',');
