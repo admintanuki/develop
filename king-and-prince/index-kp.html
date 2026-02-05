@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="canonical" href="https://fan-chart.com/snowman/">
-  <title>Snow Man CD売上枚数推移グラフまとめ【2026最新】</title>
+  <link rel="canonical" href="https://fan-chart.com/king-and-prince/">
+  <title>King & Prince CD売上枚数推移グラフまとめ【2026最新】</title>
   
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
@@ -13,7 +13,7 @@
   <style>
     :root {
       --bg: #f8fafc; --card: #ffffff; --text: #334155; --sub: #94a3b8;
-      --border: #e2e8f0; --accent-sm: #1b489d;
+      --border: #e2e8f0; --accent-sm: #fab802; 
       --primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
       --accent-upcoming: #ea580c;
     }
@@ -48,7 +48,7 @@
     .checkbox-control input { width: 14px; height: 14px; cursor: pointer; margin: 0; }
 
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; margin-top: 5px; scroll-behavior: smooth; }
-    .chart-body { position: relative; height: 460px; min-width: 100%; }
+    .chart-body { position: relative; height: 420px; min-width: 100%; }
     
     select { padding: 10px; border-radius: 10px; border: 1px solid var(--border); font-weight: 700; background: #fff; cursor: pointer; color: var(--text); font-size: 12px; }
 
@@ -65,7 +65,7 @@
     .history-desc { font-size: 13px; color: #475569; line-height: 1.5; margin: 0; }
 
     .list-header { font-size: 1.1rem; font-weight: 800; color: var(--accent-sm); margin: 25px 0 15px 5px; }
-    .cd-list { display: grid; gap: 15px; }
+    .cd-list { display: grid; gap: 12px; }
     
     .cd-container { 
       background: #fff; border: 1px solid var(--border); border-radius: 14px; 
@@ -76,21 +76,21 @@
 
     .cd-item-link { text-decoration: none !important; color: inherit !important; display: block; }
     .cd-item-base { 
-      display: grid; grid-template-columns: 90px 1fr auto; gap: 15px; padding: 15px; 
+      display: grid; grid-template-columns: 80px 1fr auto; gap: 12px; padding: 12px; 
       align-items: center; text-decoration: none !important;
     }
-    .cd-thumb { width: 90px; height: 90px; background: #f1f5f9; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .cd-thumb { width: 80px; height: 80px; background: #f1f5f9; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     .cd-thumb img { max-width: 100%; height: auto; display: block; }
-    .cd-title { font-weight: 800; font-size: 14px; color: var(--accent-sm); line-height: 1.4; margin-bottom: 4px; }
-    .sales-val { font-weight: 800; font-size: 15px; color: var(--accent-sm); text-align: right; }
+    .cd-title { font-weight: 800; font-size: 13.5px; color: var(--accent-sm); line-height: 1.4; margin-bottom: 4px; }
+    .sales-val { font-weight: 800; font-size: 14px; color: var(--accent-sm); text-align: right; }
     .badge-million { background: #f59e0b; color: #fff; font-size: 9px; padding: 2px 5px; border-radius: 4px; font-weight: bold; margin-top: 3px; display: inline-block; }
     
     .countdown { font-size: 10px; font-weight: 700; color: var(--accent-upcoming); background: #fff7ed; padding: 1px 6px; border-radius: 99px; border: 1px solid #ffedd5; margin-left: 5px; }
 
     .admin-comment { 
-      padding: 10px 15px 15px 15px; 
+      padding: 10px 15px 12px 15px; 
       background: #f9fafb;
-      font-size: 12px; 
+      font-size: 11.5px; 
       color: #64748b; 
       line-height: 1.6;
     }
@@ -100,6 +100,14 @@
     
     .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top: 3px solid var(--accent-sm); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 40px auto; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    @media (max-width: 768px) {
+      .card { padding: 12px; }
+      .header-title { font-size: 1.1rem; }
+      .cd-item-base { grid-template-columns: 70px 1fr auto; gap: 10px; }
+      .cd-thumb { width: 70px; height: 70px; }
+      .cd-title { font-size: 13px; }
+    }
   </style>
 </head>
 <body>
@@ -109,7 +117,7 @@
 <header>
   <div class="header-inner">
     <div class="nav-back"><a href="https://fan-chart.com/" style="color: var(--accent-sm); text-decoration: none; font-weight: bold;">← 全グループ比較</a></div>
-    <h1 class="header-title">Snow Man 歴代売上推移チャート</h1>
+    <h1 class="header-title">King & Prince 歴代売上推移チャート</h1>
   </div>
 </header>
 
@@ -135,18 +143,46 @@
     </article>
 
     <section class="card">
-      <h2 class="section-title">Snow Man 売上の軌跡と歩み</h2>
-      <div class="history-item"><h3 class="history-year">2012年〜2018年：下積み時代</h3><p class="history-desc">当初6人体制。Jr.としてバックダンサーや「滝沢歌舞伎」等の舞台で実力を研鑽</p></div>
-      <div class="history-item"><h3 class="history-year">2019年：9人体制へ変更</h3><p class="history-desc">向井、目黒、ラウールが加入し6人から9人の新体制へ</p></div>
-      <div class="history-item"><h3 class="history-year">2020年：デビューとミリオン</h3><p class="history-desc">1/22、SixTONESとともにデビュー。シングル『D.D.』でミリオン達成</p></div>
-      <div class="history-item"><h3 class="history-year">2022年：目黒蓮主演「silent」ヒット</h3><p class="history-desc">ドラマ『silent』が社会現象に。一般層への認知が急上昇</p></div>
-      <div class="history-item"><h3 class="history-year">2023年：それスノゴールデン進出</h3><p class="history-desc">冠番組『それSnow Manにやらせて下さい』がゴールデン帯（全国ネット）に昇格。初の4大ドームツアーを開催</p></div>
-      <div class="history-item"><h3 class="history-year">2024年：初の5大ドーム</h3><p class="history-desc">5大ドームツアー『RAYS』を開催。国内最大規模の動員を記録</p></div>
-      <div class="history-item"><h3 class="history-year">2025年：5周年＆初スタジアム</h3><p class="history-desc">ベスト盤が初週139.5万枚を記録。初の国立競技場ライブを開催</p></div>
-      <div class="history-item"><h3 class="history-year">2026年：一時8人体制での挑戦</h3><p class="history-desc">目黒蓮が1月より海外ドラマ『SHOGUN 将軍』シーズン2撮影のため活動を休止。8人で活動継続中</p></div>
+      <h2 class="section-title">King & Prince 売上の軌跡と歩み</h2>
+      <div class="history-item">
+        <h3 class="history-year">2015年〜2017年：期間限定ユニットとグループの結成</h3>
+        <p class="history-desc">テレビ朝日の夏イベント応援サポーターとして、平野紫耀・永瀬廉・髙橋海人の「Mr.KING」と、岸優太・神宮寺勇太・岩橋玄樹の「Mr.Prince」による期間限定ユニット「Mr.King vs Mr.Prince」が結成。その後、メンバー自らがジャニー喜多川氏へ「6人でデビューしたい」と直談判したことで、2018年のデビューが決定</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2018年：鮮烈なデビュー</h3>
+        <p class="history-desc">5月23日『シンデレラガール』でCDデビュー。初週57.7万枚を記録し、一躍トップアイドルへ</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2019年 - 2022年：国民的グループへの階段</h3>
+        <p class="history-desc">数々のヒット曲を連発し、2021年には『24時間テレビ』のメインパーソナリティーに抜擢。また、全編英語詞の『Magic Touch』など、海外進出を視野に入れた高いダンススキルの追求も話題に</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2022年4月：悲願のドーム公演</h3>
+        <p class="history-desc">初の4大ドームツアー『Mr.』を開催 デビュー当時からの夢であったドームのステージに立つ</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2022年11月：突然の脱退発表</h3>
+        <p class="history-desc">11月4日活動方針の相違から、岸・平野・神宮寺の脱退が発表され、日本中に衝撃が走る<br>発表を受け、ファンによる『ツキヨミ / 彩り』の購買運動（通称：追いツキヨミ）が行われる</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2023年5月：2人体制でのリスタート</h3>
+        <p class="history-desc">5周年の記念日より、永瀬廉・髙橋海人の2人での活動をスタート。シングル『なにもの』のリリースやファンミーティングを積極的に開催</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2024年：2人体制初のアリーナツアー</h3>
+        <p class="history-desc">2人体制初のアリーナツアーを成功させる。約1万発以上の花火とライブが融合したイベント『King & Princeとうちあげ花火』も話題に</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2025年5月：2人体制初のドーム</h3>
+        <p class="history-desc">CDデビュー6周年記念日に「King & Prince株式会社」を設立。またアリーナツアーの追加公演として新体制として初の3大ドームツアーを完遂</p>
+      </div>
+      <div class="history-item">
+        <h3 class="history-year">2026年：音楽性のさらなる追求と新展開</h3>
+        <p class="history-desc">アルバム『STARRING』のリード曲『Theater』がSNSで大きな話題に。 1月からは『King & Prince DOME TOUR 2026 STARRING』4大ドームツアーを開催</p>
+      </div>
     </section>
 
-    <h2 class="list-header">Snow Man 歴代リリース作品一覧</h2>
+    <h2 class="list-header">King & Prince 歴代リリース作品一覧</h2>
     <div id="cdList" class="cd-list"></div>
   </div>
 </div>
@@ -158,11 +194,14 @@ Chart.register(ChartDataLabels);
 const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
 
 const MANUAL_EVENTS = [
-  { date: "2022.10.06", label: "目黒蓮主演「silent」ヒット" },
-  { date: "2023.04.28", label: "それスノゴールデン進出" },
-  { date: "2024.11.09", label: "初の5大ドームツアー開始" },
-  { date: "2025.04.19", label: "初の国立ライブ" }
+  { date: "2022.04.02", label: "初の4大ドームツアー" },
+  { date: "2022.11.04", label: "3人の脱退発表" },
+  { date: "2023.05.23", label: "2人体制スタート" },
+  { date: "2025.05.10", label: "2人体制初のドームツアー" },
+  { date: "2026.01.17", label: "4大ドームツアー開始" }
 ];
+
+const EVENT_COLOR = "#eba0b9"; 
 
 let allData = [], chart = null;
 
@@ -193,7 +232,7 @@ async function loadData() {
       firstWeek: isNaN(parseInt(d.firstWeek)) ? null : parseInt(d.firstWeek),
       seller: d.seller || "#", affiliate: d.affiliate || "", 
       comment: d.comment || "" 
-    })).filter(c => c.group === "Snow Man");
+    })).filter(c => c.group === "King & Prince");
     
     document.getElementById('loading').style.display = 'none';
     document.getElementById('mainContent').style.display = 'block';
@@ -218,13 +257,13 @@ function render(shouldAnimate = false, shouldScroll = false) {
   let chartSource = allData.filter(c => (f === "all" || c.category === f) && c[type] !== null)
                            .sort((a,b) => s === "date" ? a.releaseDate.localeCompare(b.releaseDate) : (b[type] || 0) - (a[type] || 0));
   
-  // 2. リスト用：全作品を表示（新着順に固定）
+  // 2. リスト用：フィルタに一致する全作品を表示（新着順に固定）
   let listSource = allData.filter(c => (f === "all" || c.category === f))
                           .sort((a,b) => b.releaseDate.localeCompare(a.releaseDate));
   
   const chartBody = document.getElementById("chartBody");
   const isMobile = window.innerWidth <= 768;
-  chartBody.style.width = isMobile ? `${chartSource.length * 60}px` : "100%";
+  chartBody.style.width = isMobile ? `${chartSource.length * 45}px` : "100%";
 
   const annotations = {};
   if(s === "date" && showEvents) {
@@ -237,10 +276,10 @@ function render(shouldAnimate = false, shouldScroll = false) {
         if (evTime >= d1 && evTime <= d2) { exactIdx = j + (evTime - d1) / (d2 - d1); break; }
       }
       if (exactIdx !== -1) {
-        const h = (i % 2 === 0) ? -40 : -75;
+        const h = (i % 2 === 0) ? -35 : -70;
         annotations['line' + i] = { 
-          type: 'line', xMin: exactIdx, xMax: exactIdx, borderColor: '#e11d48', borderWidth: 2, borderDash: [4, 4], 
-          label: { display: true, content: ev.label, backgroundColor: '#e11d48', color: '#fff', font: { size: 10, weight: 'bold' }, position: 'end', yAdjust: h, padding: 5, borderRadius: 4 } 
+          type: 'line', xMin: exactIdx, xMax: exactIdx, borderColor: EVENT_COLOR, borderWidth: 1, borderDash: [2, 2], 
+          label: { display: true, content: ev.label, backgroundColor: EVENT_COLOR, color: '#fff', font: { size: 8.5, weight: 'bold' }, position: 'end', yAdjust: h, padding: 3, borderRadius: 3 } 
         };
       }
     });
@@ -253,31 +292,31 @@ function render(shouldAnimate = false, shouldScroll = false) {
       labels: chartSource.map(c => c.title.substring(0, 8) + (c.title.length > 8 ? ".." : "")),
       datasets: [{
         data: chartSource.map(c => c[type]),
-        borderColor: '#1b489d', backgroundColor: '#1b489d22',
+        borderColor: '#fab802', backgroundColor: '#fab80222',
         borderWidth: 2, fill: true, tension: 0.3, pointBackgroundColor: "#fff",
-        pointBorderColor: '#1b489d', pointRadius: 5
+        pointBorderColor: '#fab802', pointRadius: 3.5
       }]
     },
     options: {
       animation: shouldAnimate ? { duration: 800 } : false,
       responsive: true, maintainAspectRatio: false, clip: false,
-      layout: { padding: { top: 110 } },
+      layout: { padding: { top: 90 } }, 
       plugins: {
         legend: { display: false },
         datalabels: {
-          anchor: 'end', align: 'top', offset: 6,
+          anchor: 'end', align: 'top', offset: 4,
           formatter: (v, ctx) => {
             const label = (v / 10000).toFixed(1) + "万";
             return v >= 1000000 ? '👑' + label : label;
           },
           color: (ctx) => ctx.dataset.data[ctx.dataIndex] >= 1000000 ? '#f59e0b' : '#64748b', 
-          font: { size: 10, weight: 'bold' }
+          font: { size: 8.5, weight: 'bold' }
         },
         annotation: { annotations: annotations }
       },
       scales: {
-        y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, grace: '30%', grid: { color: '#f1f5f9' } },
-        x: { grid: { display: false }, ticks: { font: {size: 10, weight: '700'}, maxRotation: 45, minRotation: 45, autoSkip: !isMobile } }
+        y: { ticks: { callback: v => (v/10000) + "万", font: {size: 8.5} }, grace: '20%', grid: { color: '#f1f5f9' } },
+        x: { grid: { display: false }, ticks: { font: {size: 9, weight: '700'}, maxRotation: 45, minRotation: 45, autoSkip: !isMobile } }
       }
     }
   });
@@ -303,7 +342,7 @@ function render(shouldAnimate = false, shouldScroll = false) {
           <div class="cd-thumb">${c.affiliate ? `<img src="${c.affiliate}">` : ''}</div>
           <div>
             <div class="cd-title">${c.title}</div>
-            <div style="font-size:10.5px; color:var(--sub); font-weight:700;">
+            <div style="font-size:10px; color:var(--sub); font-weight:700;">
               ${c.releaseDate} | ${c.category.toUpperCase()}
               ${days > 0 ? `<span class="countdown">あと${days}日</span>` : days === 0 ? `<span class="countdown" style="background:#f97316;color:#fff;border:none;">本日発売</span>` : ""}
             </div>
