@@ -42,11 +42,7 @@
 
     html { 
       scroll-behavior: smooth; 
-      scroll-padding-top: 210px; 
-    }
-    
-    @media (max-width: 767px) {
-      html { scroll-padding-top: 180px; } 
+      /* 固定ヘッダー解除に伴いスクロール位置調整を削除 */
     }
 
     body { 
@@ -59,10 +55,8 @@
     .utility-right { display: flex; gap: 15px; }
     .utility-link { text-decoration: none; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 4px; position: relative; cursor: pointer; }
     
-    /* --- ドロップダウン修正箇所 --- */
     .dropdown { position: relative; display: inline-block; }
     
-    /* ホバーが途切れないための「見えない橋」 */
     .dropdown::before {
       content: "";
       position: absolute;
@@ -84,17 +78,14 @@
       z-index: 101;
       border: 1px solid var(--border);
       border-radius: 8px;
-      margin-top: 8px; /* 隙間をあけつつ橋で繋ぐ */
+      margin-top: 8px;
     }
 
-    /* PCでの表示制御 */
     @media (min-width: 1025px) {
       .dropdown:hover .dropdown-content { display: block; }
     }
     
-    /* JS制御用のクラス */
     .dropdown-content.is-active { display: block; }
-    /* -------------------------- */
 
     .dropdown-content a {
       color: var(--text);
@@ -107,7 +98,8 @@
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
-    .sticky-header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
+    /* 修正箇所: stickyを解除 */
+    .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
     
     .site-title { text-align: center; margin-bottom: 15px; }
