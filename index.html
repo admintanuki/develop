@@ -40,84 +40,86 @@
       --primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
 
-    html { 
-      scroll-behavior: smooth; 
-      /* 固定ヘッダー解除に伴いスクロール位置調整を削除 */
-    }
+    html { scroll-behavior: smooth; }
 
     body { 
       margin: 0; padding: 0; 
       font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif; 
       background: var(--bg); color: var(--text); padding-bottom: 60px; overflow-x: hidden; line-height: 1.6; 
+      position: relative;
     }
+
+    /* --- 装飾要素 (Floating Decorations) --- */
+    .bg-deco {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: -1; overflow: hidden;
+    }
+    .deco-item {
+      position: absolute; opacity: 0.4; animation: float 15s infinite linear;
+    }
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.4; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+    /* 個別の装飾（色と配置は大人女子を意識したニュアンスカラー） */
+    .deco-note { color: #d1d5db; font-size: 24px; } /* 音符 */
+    .deco-star { color: #fef3c7; font-size: 20px; } /* キラキラ */
+    .deco-heart { color: #fae8ff; font-size: 18px; } /* ハート */
 
     .utility-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: flex-end; align-items: center; font-size: 12px; }
     .utility-right { display: flex; gap: 15px; }
     .utility-link { text-decoration: none; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 4px; position: relative; cursor: pointer; }
     
     .dropdown { position: relative; display: inline-block; }
-    
-    .dropdown::before {
-      content: "";
-      position: absolute;
-      top: 100%;
-      right: 0;
-      width: 100%;
-      height: 10px;
-      display: block;
-      z-index: 100;
-    }
-
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      right: 0;
-      background-color: #fff;
-      min-width: 140px;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
-      z-index: 101;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      margin-top: 8px;
-    }
-
-    @media (min-width: 1025px) {
-      .dropdown:hover .dropdown-content { display: block; }
-    }
-    
+    .dropdown::before { content: ""; position: absolute; top: 100%; right: 0; width: 100%; height: 10px; display: block; z-index: 100; }
+    .dropdown-content { display: none; position: absolute; right: 0; background-color: #fff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); z-index: 101; border: 1px solid var(--border); border-radius: 8px; margin-top: 8px; }
+    @media (min-width: 1025px) { .dropdown:hover .dropdown-content { display: block; } }
     .dropdown-content.is-active { display: block; }
-
-    .dropdown-content a {
-      color: var(--text);
-      padding: 10px 16px;
-      text-decoration: none;
-      display: block;
-      font-size: 12px;
-      border-bottom: 1px solid var(--border);
-    }
+    .dropdown-content a { color: var(--text); padding: 10px 16px; text-decoration: none; display: block; font-size: 12px; border-bottom: 1px solid var(--border); }
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
-    /* 修正箇所: stickyを解除 */
     .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
-    .header-content { max-width: 1100px; margin: 0 auto; }
+    .header-content { max-width: 1100px; margin: 0 auto; position: relative; }
     
-    .site-title { text-align: center; margin-bottom: 15px; }
-    .site-title .sub-name { display: block; font-size: 12px; color: #64748b; font-weight: 600; margin-bottom: 2px; }
-    .site-title .main-name { display: block; font-size: 17px; font-weight: 800; color: #1e293b; line-height: 1.2; }
+    /* タイトル周りの装飾アイコン */
+    .title-deco-left { position: absolute; left: 0; top: 0; font-size: 24px; color: #eba0b8; opacity: 0.6; transform: rotate(-15deg); }
+    .title-deco-right { position: absolute; right: 0; top: 10px; font-size: 20px; color: #b794f4; opacity: 0.6; transform: rotate(10deg); }
+
+    .site-title { text-align: center; margin-bottom: 12px; }
+    .site-title h1 { margin: 0; padding: 0; }
+    .site-title .sub-name { display: block; font-size: 13px; color: #eba0b8; font-weight: 800; margin-bottom: 0px; letter-spacing: 0.02em; }
+    .site-title .main-logo { display: block; font-family: "Georgia", serif; font-size: 32px; font-weight: 900; font-style: italic; color: #333; line-height: 1.1; margin: 2px 0 4px 0; }
+    .site-title .main-name { display: block; font-size: 12px; font-weight: 700; color: #64748b; line-height: 1.2; }
 
     @media (min-width: 768px) {
       .site-title .sub-name { font-size: 15px; }
-      .site-title .main-name { font-size: 26px; }
+      .site-title .main-logo { font-size: 48px; }
+      .site-title .main-name { font-size: 15px; }
+      .sticky-header { padding: 16px 10px; }
       .utility-bar { padding: 10px 24px; font-size: 13px; }
-      .utility-right { gap: 24px; }
-      .dropdown-content a { font-size: 13px; }
     }
     
-    .group-buttons-wrapper {
-      margin-bottom: 16px;
+    .controls { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; max-width: 800px; margin: 0 auto; }
+    select { padding: 8px 2px; border-radius: 6px; border: 1px solid var(--border); background: #fff; width: 100%; color: var(--text); font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; }
+
+    @media (min-width: 768px) {
+      .controls { gap: 12px; }
+      select { padding: 10px 12px; font-size: 13px; border-radius: 8px; }
     }
 
+    .chart-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 15px; padding-left: 5px; }
+    .chart-tab { padding: 8px 16px; font-size: 13px; font-weight: 700; color: var(--sub); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
+    .chart-tab.is-active { color: var(--text); border-bottom: 2px solid var(--text); }
+
+    .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px; }
+    .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
+    .notice-area { background: #eff6ff; border: 1px solid #dbeafe; color: #1e40af; padding: 12px 16px; border-radius: 8px; font-size: 12px; display: none; align-items: center; gap: 10px; margin-bottom: 10px; }
+    .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; position: relative; }
+
+    .group-buttons-wrapper { margin-bottom: 16px; }
     .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 12px; padding: 0 4px; }
     .group-btn { padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
     .group-btn.active { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
@@ -127,68 +129,33 @@
       .group-buttons::-webkit-scrollbar { display: none; }
     }
 
-    .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; max-width: 800px; margin: 0 auto; }
-    select { padding: 8px 2px; border-radius: 6px; border: 1px solid var(--border); background: #fff; width: 100%; color: var(--text); font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; }
-
-    @media (min-width: 768px) {
-      .controls { gap: 12px; }
-      select { padding: 10px 12px; font-size: 13px; border-radius: 8px; }
-    }
-
-    .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px; }
-    .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
-    .notice-area { background: #eff6ff; border: 1px solid #dbeafe; color: #1e40af; padding: 12px 16px; border-radius: 8px; font-size: 12px; display: none; align-items: center; gap: 10px; margin-bottom: 10px; }
-    .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
-
-    .hot-area { padding: 12px 20px; }
-    .hot-list { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
-    .hot-label { font-size: 11px; font-weight: 800; color: var(--accent-hot); display: flex; align-items: center; gap: 4px; white-space: nowrap; border-right: 1px solid var(--border); padding-right: 12px; }
-    .hot-label svg { width: 14px; height: 14px; fill: currentColor; }
-    
-    .hot-item { text-decoration: none; color: var(--text); font-size: 13px; font-weight: 400; transition: color 0.2s; display: flex; align-items: center; }
-    .hot-item:hover { color: var(--accent-hot); }
-    .hot-item::after { content: '>'; margin-left: 4px; font-size: 10px; opacity: 0.5; }
-
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
-    .chart-body { position: relative; height: 300px; }
+    .chart-body { position: relative; height: 300px; min-width: 100%; }
     
     .chart-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; min-height: 24px; }
     .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
     .load-more-text { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: underline; }
-    .load-more-btn { background: #fff; border: 1px solid var(--border); padding: 10px 24px; color: var(--text); font-size: 12px; font-weight: 700; cursor: pointer; border-radius: 99px; transition: all 0.2s ease; box-shadow: 0 1px 2px rgba(0,0,0,0.05); }
-    .load-more-btn:hover { background: #f1f5f9; border-color: var(--sub); }
+
+    .hot-area { padding: 12px 20px; }
+    .hot-list { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+    .hot-label { font-size: 11px; font-weight: 800; color: var(--accent-hot); display: flex; align-items: center; gap: 4px; white-space: nowrap; border-right: 1px solid var(--border); padding-right: 12px; }
+    .hot-label svg { width: 14px; height: 14px; fill: currentColor; }
+    .hot-item { text-decoration: none; color: var(--text); font-size: 13px; font-weight: 400; transition: color 0.2s; display: flex; align-items: center; }
+    .hot-item:hover { color: var(--accent-hot); }
+    .hot-item::after { content: '>'; margin-left: 4px; font-size: 10px; opacity: 0.5; }
 
     .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
     .cd-list { display: grid; gap: 10px; }
-    
-    .cd-item-base { 
-      display: grid; 
-      grid-template-columns: 1fr auto; 
-      gap: 12px; padding: 14px 16px; 
-      border: 1px solid var(--border); border-radius: 12px; text-decoration: none; 
-      color: inherit; background: #fff; align-items: center; transition: all 0.2s ease;
-    }
-    
-    .cd-item-base.upcoming { 
-      grid-template-columns: 64px 1fr auto; 
-      border: 1px solid #fed7aa; 
-      background-color: #fffaf5; 
-    }
-    
-    @media (max-width: 767px) {
-      .cd-item-base.upcoming { grid-template-columns: 50px 1fr auto; padding: 10px 12px; }
-    }
-    
+    .cd-item-base { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: inherit; background: #fff; align-items: center; transition: all 0.2s ease; }
+    .cd-item-base.upcoming { grid-template-columns: 64px 1fr auto; border: 1px solid #fed7aa; background-color: #fffaf5; }
+    @media (max-width: 767px) { .cd-item-base.upcoming { grid-template-columns: 50px 1fr auto; padding: 10px 12px; } }
     a.cd-item-base:hover { transform: translateY(-2px); box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.05); }
     
     .cd-thumb { width: 64px; height: 64px; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-    @media (max-width: 767px) {
-      .cd-thumb { width: 50px; height: 50px; }
-    }
     .cd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; border: 1px solid var(--border); border-radius: 6px; }
 
     .cd-title { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; line-height: 1.4; color: #1e293b; }
@@ -199,7 +166,7 @@
     .ext-link-icon { width: 11px; height: 11px; color: var(--sub); margin-left: 5px; vertical-align: middle; }
     .buy-label { font-size: 10px; color: var(--sub); font-weight: 600; margin-left: 2px; vertical-align: middle; white-space: nowrap; }
 
-    .history-card .card-title, .analysis-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
+    .analysis-card .card-title, .history-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
     .history-list { list-style: none; padding: 0; margin: 0; }
     .history-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dotted var(--border); }
     .history-date { font-size: 10px; color: var(--sub); display: block; margin-bottom: 2px; font-weight: 600; }
@@ -211,25 +178,26 @@
     .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top: 3px solid var(--accent-teal); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
     @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-    .analysis-btn {
-      text-decoration: none;
-      padding: 10px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      text-align: center;
-      transition: all 0.2s;
-      display: block;
-      border: 1px solid;
-    }
-    .analysis-btn:hover {
-      opacity: 0.8;
-      transform: translateY(-1px);
-    }
+    .analysis-btn { text-decoration: none; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 700; text-align: center; transition: all 0.2s; display: block; border: 1px solid; }
+    .analysis-btn:hover { opacity: 0.8; transform: translateY(-1px); }
     .group-links-container { display: flex; flex-direction: column; gap: 8px; }
+
+    /* 追加：マスキングテープ装飾 */
+    .deco-tape { position: relative; }
+    .deco-tape::before {
+      content: ""; position: absolute; top: -10px; left: -10px; width: 70px; height: 22px;
+      background-color: rgba(235, 160, 184, 0.4); transform: rotate(-25deg); z-index: 10;
+      clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+    }
+    .deco-tape::after {
+      content: ""; position: absolute; bottom: -8px; right: -8px; width: 50px; height: 18px;
+      background-color: rgba(235, 160, 184, 0.3); transform: rotate(-10deg); z-index: 10;
+      clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+    }
   </style>
 </head>
 <body>
+
 
 <a href="#" class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2.5;"><path d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg></a>
 
@@ -252,32 +220,33 @@
 
 <header class="sticky-header">
   <div class="header-content">
+    <span class="title-deco-left">♪</span>
+    <span class="title-deco-right">♫</span>
     <div class="site-title">
       <h1>
         <span class="sub-name">【2026年最新】STARTO ENTERTAINMENT(旧ジャニーズ)</span>
+        <span class="main-logo">Fan Chart</span>
         <span class="main-name">歴代シングル・アルバム売上枚数比較サイト</span>
       </h1>
     </div>
     <div class="controls">
-      <select id="salesType"><option value="firstDay">初日</option><option value="firstWeek" selected>初週</option></select>
+      <select id="salesType"><option value="firstWeek" selected>初週</option><option value="firstDay">初日</option></select>
       <select id="filter"><option value="all">シングル&アルバム</option><option value="single">シングル</option><option value="album">アルバム</option></select>
-      <select id="sortOrder"><option value="date" selected>発売日順</option><option value="salesDesc">売上順</option></select>
+      <select id="sortOrder" style="display:none;"><option value="date" selected>発売日順</option><option value="salesDesc">売上順</option></select>
     </div>
   </div>
 </header>
 
 <div class="container">
-  <div id="seoText" class="sr-only">
-    <h2>STARTO ENTERTAINMENT アーティスト売上データ</h2>
-    <p>Snow Man, SixTONES, なにわ男子, King & Prince, timelesz, Aぇ! group, WEST., Hey! Say! JUMP, SUPER EIGHT, Travis Japan, NEWS, Kis-My-Ft2, A.B.C-Zなど, 各グループの最新および歴代シングル・アルバムの初動売上枚数データを網羅しています。2026年の最新売上傾向をグラフで可視化して比較可能です。</p>
-  </div>
-  
-  <div class="notice-area" id="noticeArea"><span class="notice-icon">i</span><span id="noticeText"></span></div>
-  
   <div id="loading" class="card"><div style="text-align:center; padding:40px;"><div class="spinner"></div>データを取得中...</div></div>
 
   <div id="mainContent" class="content-wrapper" style="display:none;">
     <div class="card">
+      <div class="chart-tabs">
+        <div class="chart-tab is-active" data-sort="date">発売日順</div>
+        <div class="chart-tab" data-sort="salesDesc">売上順</div>
+      </div>
+
       <div class="group-buttons-wrapper">
         <div style="font-size: 12px; font-weight: 400; color: #334155; margin-bottom: 10px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
         <div class="group-buttons" id="groupButtons"></div>
@@ -287,9 +256,7 @@
       <div class="chart-footer">
         <div id="chartBtnArea"></div>
         <button onclick="copyShareUrl()" class="share-btn-mini" id="shareBtn">
-          <svg viewBox="0 0 24 24" id="shareIcon">
-            <path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" fill="currentColor"/>
-          </svg>
+          <svg viewBox="0 0 24 24" id="shareIcon"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" fill="currentColor"/></svg>
           <span id="shareBtnText">このグラフを共有</span>
         </button>
       </div>
@@ -297,10 +264,7 @@
 
     <div class="card hot-area">
       <div class="hot-list">
-        <span class="hot-label">
-          <svg viewBox="0 0 24 24"><path d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311L4.5 17c0 3.866 3.134 7 7 7s7-3.134 7-7c0-2.116-1.03-4.03-2.688-5.576zM13.5 0s-4 4.5-4 8c0 1.5 1 3.5 3 4.5.5-2.5 2-4.5 4-4.5.5 5-2.5 9.5-6 11-1-.5-3.5-2.5-3.5-6.5 0-3.5 3.5-12.5 6.5-12.5z"/></svg>
-          HOT
-        </span>
+        <span class="hot-label"><svg viewBox="0 0 24 24"><path d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311L4.5 17c0 3.866 3.134 7 7 7s7-3.134 7-7c0-2.116-1.03-4.03-2.688-5.576zM13.5 0s-4 4.5-4 8c0 1.5 1 3.5 3 4.5.5-2.5 2-4.5 4-4.5.5 5-2.5 9.5-6 11-1-.5-3.5-2.5-3.5-6.5 0-3.5 3.5-12.5 6.5-12.5z"/></svg>HOT</span>
         <a href="https://fan-chart.com/snowman" class="hot-item">Snow Man</a>
         <a href="https://fan-chart.com/sixtones" class="hot-item">SixTONES</a>
         <a href="https://fan-chart.com/king-and-prince" class="hot-item">King & Prince</a>
@@ -315,20 +279,7 @@
       </div>
       
       <div class="side-content">
-        <section id="group-nav" class="card analysis-card" style="margin-bottom: 24px;">
-          <div class="card-title">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px; color: #5D9C9F;"><path d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
-            各グループ別 売上詳細データ
-          </div>
-          <div id="groupLinks" class="group-links-container">
-            <a href="https://fan-chart.com/snowman" class="analysis-btn" style="color: #1b489d; border-color: rgba(27, 72, 157, 0.3); background: rgba(27, 72, 157, 0.05);">Snow Man ページ ></a>
-            <a href="https://fan-chart.com/sixtones" class="analysis-btn" style="color: #555555; border-color: rgba(85, 85, 85, 0.3); background: rgba(85, 85, 85, 0.05);">SixTONES ページ ></a>
-            <a href="https://fan-chart.com/king-and-prince" class="analysis-btn" style="color: #fab700; border-color: rgba(250, 183, 0, 0.3); background: rgba(250, 183, 0, 0.05);">King & Prince ページ ></a>
-            <a href="https://fan-chart.com/naniwa-danshi" class="analysis-btn" style="color: #eba0b8; border-color: rgba(235, 160, 184, 0.3); background: rgba(235, 160, 184, 0.05);">なにわ男子 ページ ></a>
-          </div>
-        </section>
-
-        <section id="analysis" class="card analysis-card" style="margin-bottom: 24px;">
+        <section id="analysis" class="card analysis-card deco-tape" style="margin-bottom: 24px;">
           <div class="card-title">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px; color: #3b82f6;"><path d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
             2026年最新の売上傾向分析
@@ -337,6 +288,16 @@
             <p style="margin: 0 0 12px 0;"><strong>Snow Man</strong>が直近のアルバムで初週ミリオンを達成するなど、圧倒的な数字を記録しており、固定ファンの強さがグラフにも表れています。</p>
             <p style="margin: 0 0 12px 0;">また、最新シングル『Stargaze』で初週33.0万枚を記録した<strong>SixTONES</strong>、2人体制移行後も30万枚越えの高水準を保つ<strong>King & Prince</strong>、そして『アシンメトリー / Black Nightmare』で前作を上回る推移を見せる<strong>なにわ男子</strong>の3組が、初週30万〜40万枚レンジで推移しています。</p>
             <p style="margin: 0;">ここに、新体制初アルバム『FAM』で61.9万枚という自己最高記録を樹立した<strong>timelesz</strong>や、『Chameleon』で45.5万枚を記録する<strong>Aぇ! group</strong>などの急伸勢が加わり、各グループが次々と自己ベスト級の初動を更新する状況が続いています。</p>
+          </div>
+        </section>
+
+        <section id="group-nav" class="card analysis-card deco-tape" style="margin-bottom: 24px;">
+          <div class="card-title">各グループ別 売上詳細データ</div>
+          <div id="groupLinks" class="group-links-container">
+            <a href="https://fan-chart.com/snowman" class="analysis-btn" style="color: #1b489d; border-color: rgba(27, 72, 157, 0.3); background: rgba(27, 72, 157, 0.05);">Snow Man ページ ></a>
+            <a href="https://fan-chart.com/sixtones" class="analysis-btn" style="color: #555555; border-color: rgba(85, 85, 85, 0.3); background: rgba(85, 85, 85, 0.05);">SixTONES ページ ></a>
+            <a href="https://fan-chart.com/king-and-prince" class="analysis-btn" style="color: #fab700; border-color: rgba(250, 183, 0, 0.3); background: rgba(250, 183, 0, 0.05);">King & Prince ページ ></a>
+            <a href="https://fan-chart.com/naniwa-danshi" class="analysis-btn" style="color: #eba0b8; border-color: rgba(235, 160, 184, 0.3); background: rgba(235, 160, 184, 0.05);">なにわ男子 ページ ></a>
           </div>
         </section>
         <aside class="card history-card"><div class="card-title">更新履歴</div><ul class="history-list" id="historyList"></ul></aside>
@@ -351,29 +312,24 @@ if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
 const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
 const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv";
 
-const fixedGroupColors = { 
-  "Snow Man": "#1b489d", "timelesz": "#de6d6d", "Aぇ! group": "#5eb3bf", "なにわ男子": "#eba0b8", 
-  "SixTONES": "#555555", "King & Prince": "#fab700", "WEST.": "#1d9967", "Hey! Say! JUMP": "#39aeed", 
-  "DOMOTO": "#554435", "SUPER EIGHT": "#F7AF73", "Travis Japan": "#66b27e", "NEWS": "#8170b2", 
-  "Kis-My-Ft2": "#CFE394", "A.B.C-Z": "#f0897c" 
-};
+const fixedGroupColors = { "Snow Man": "#1b489d", "timelesz": "#de6d6d", "Aぇ! group": "#5eb3bf", "なにわ男子": "#eba0b8", "SixTONES": "#555555", "King & Prince": "#fab700", "WEST.": "#1d9967", "Hey! Say! JUMP": "#39aeed", "DOMOTO": "#554435", "SUPER EIGHT": "#F7AF73", "Travis Japan": "#66b27e", "NEWS": "#8170b2", "Kis-My-Ft2": "#CFE394", "A.B.C-Z": "#f0897c" };
 const fixedGroupOrder = Object.keys(fixedGroupColors);
 
 let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isFullDataLoaded = false;
 
-/* --- ドロップダウン操作のスクリプト --- */
+document.querySelectorAll('.chart-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+    document.getElementById('sortOrder').value = tab.dataset.sort;
+    render(true);
+  });
+});
+
 const groupDropdown = document.getElementById('groupDropdown');
 const dropdownContent = groupDropdown.querySelector('.dropdown-content');
-
-groupDropdown.addEventListener('click', (e) => {
-  e.stopPropagation();
-  dropdownContent.classList.toggle('is-active');
-});
-
-window.addEventListener('click', () => {
-  dropdownContent.classList.remove('is-active');
-});
-/* ---------------------------------- */
+groupDropdown.addEventListener('click', (e) => { e.stopPropagation(); dropdownContent.classList.toggle('is-active'); });
+window.addEventListener('click', () => { dropdownContent.classList.remove('is-active'); });
 
 function copyShareUrl() {
   const groups = Array.from(activeGroups).join(',');
@@ -381,10 +337,8 @@ function copyShareUrl() {
   const filter = document.getElementById("filter").value;
   const sort = document.getElementById("sortOrder").value;
   const url = new URL(window.location.href);
-  
   if(groups) url.searchParams.set('g', groups); else url.searchParams.delete('g');
   url.searchParams.set('t', type); url.searchParams.set('f', filter); url.searchParams.set('s', sort);
-  
   navigator.clipboard.writeText(url.href).then(() => {
     const btnText = document.getElementById('shareBtnText');
     const originalText = btnText.innerText;
@@ -407,7 +361,11 @@ function initSettingsByUrl() {
     const params = new URLSearchParams(window.location.search);
     if(params.get('t')) document.getElementById("salesType").value = params.get('t');
     if(params.get('f')) document.getElementById("filter").value = params.get('f');
-    if(params.get('s')) document.getElementById("sortOrder").value = params.get('s');
+    if(params.get('s')) {
+      const s = params.get('s');
+      document.getElementById("sortOrder").value = s;
+      document.querySelectorAll('.chart-tab').forEach(t => { t.classList.toggle('is-active', t.dataset.sort === s); });
+    }
     if(params.get('g')) { params.get('g').split(',').forEach(g => activeGroups.add(decodeURIComponent(g))); isFullDataLoaded = true; }
 }
 
@@ -481,9 +439,6 @@ function renderGroupButtons(isPreload = false) {
       if (activeGroups.has(g)) activeGroups.delete(g);
       else if (activeGroups.size < 5) activeGroups.add(g);
       else return alert("最大5グループまで");
-      const url = new URL(window.location.href);
-      if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
-      window.history.replaceState({}, '', url);
       renderGroupButtons(false); render(true);
     };
   });
@@ -495,11 +450,19 @@ function render(shouldAnimate = false) {
   const s = document.getElementById("sortOrder").value;
   let filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
   let sortedList = [...filtered].sort((a, b) => s === "date" ? b.releaseDate.localeCompare(a.releaseDate) : (b[type] || -1) - (a[type] || -1));
-  let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => s === "date" ? a.releaseDate.localeCompare(b.releaseDate) : (b[type] || 0) - (a[type] || 0));
+  
+  let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
+    if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
+    return (a[type] || 0) - (b[type] || 0);
+  });
+  
   const isSingle = activeGroups.size === 1;
   const chartWrapper = document.getElementById("chartWrapper");
   const chartBody = document.getElementById("chartBody");
-  const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * (isSingle ? 60 : 45));
+  const minWidth = chartWrapper.clientWidth;
+  const calculatedWidth = chartSource.length * (isSingle ? 60 : 45);
+  const finalWidth = Math.max(minWidth, calculatedWidth);
+  
   chartBody.style.width = `${finalWidth}px`;
   if (chart) chart.destroy();
   const color = isSingle ? fixedGroupColors[Array.from(activeGroups)[0]] : null;
@@ -511,7 +474,7 @@ function render(shouldAnimate = false) {
         data: chartSource.map(c => c[type]),
         backgroundColor: isSingle ? color + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
         borderColor: color || "#5D9C9F",
-        borderWidth: isSingle ? 2 : 0, borderRadius: 4, fill: true, tension: 0.3,
+        borderWidth: isSingle ? 2 : 0, borderRadius: 4, fill: true, tension: 0.3, 
         pointBackgroundColor: "#fff", pointBorderColor: color, pointRadius: isSingle ? 4 : 0
       }]
     },
@@ -520,6 +483,15 @@ function render(shouldAnimate = false) {
       animation: shouldAnimate ? { duration: 800 } : false,
       plugins: { 
         legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: (context) => {
+              const d = chartSource[context[0].dataIndex];
+              return `${d.group} / ${d.title}`; 
+            },
+            label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
+          }
+        },
         datalabels: { anchor: 'end', align: 'top', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
       },
       scales: { 
@@ -528,9 +500,10 @@ function render(shouldAnimate = false) {
       }
     }
   });
-  if (finalWidth > chartWrapper.clientWidth) chartWrapper.scrollLeft = finalWidth;
-  const today = new Date(); today.setHours(0,0,0,0);
   
+  chartWrapper.scrollLeft = finalWidth;
+  const today = new Date(); today.setHours(0,0,0,0);
+
   document.getElementById("cdList").innerHTML = sortedList.map(c => {
     const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
     const color = fixedGroupColors[c.group] || "#7f8c8d";
@@ -547,17 +520,17 @@ function render(shouldAnimate = false) {
             <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
             </svg>
-            ${isUpcomingLayout ? '<span class="buy-label">購入はこちら</span>' : ''}
+            ${isUpcomingLayout ? '<span class=\"buy-label\">購入はこちら</span>' : ''}
           ` : ''}
         </span>
-        <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span> ${days>0?`<span class="countdown">あと${days}日</span>`:days===0?`<span class="countdown" style="background:#f97316;color:#fff;border:none;">本日</span>`:""}</div>
+        <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span> ${days>0?`<span class=\"countdown\">あと${days}日</span>`:days===0?`<span class=\"countdown\" style=\"background:#f97316;color:#fff;border:none;\">本日</span>`:""}</div>
       </div>
       <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDisp}</div>
     `;
     return c.seller ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</a>` : `<div class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</div>`;
   }).join("");
 }
-[document.getElementById("salesType"), document.getElementById("filter"), document.getElementById("sortOrder")].forEach(el => el.addEventListener("change", () => render(true)));
+[document.getElementById("salesType"), document.getElementById("filter")].forEach(el => el.addEventListener("change", () => render(true)));
 window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300); });
 loadData();
 </script>
