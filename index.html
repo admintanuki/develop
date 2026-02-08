@@ -30,6 +30,7 @@
   
   <style>
     :root {
+      /* 背景色を少し濃いめに調整 */
       --bg: #f1f5f9; 
       --card: #ffffff;
       --text: #334155;
@@ -61,6 +62,7 @@
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
+    /* ヘッダー固定解除 */
     .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
     
@@ -92,25 +94,14 @@
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
 
-    /* --- グループボタンを常時複数行（2行〜）で表示する設定 --- */
     .group-buttons-wrapper { margin-bottom: 8px; }
-    .group-buttons { 
-      display: flex; 
-      flex-wrap: wrap; /* 常時折り返しを許可 */
-      justify-content: center; 
-      gap: 6px 8px; /* 縦と横の隙間 */
-      margin-bottom: 4px; padding: 0 4px; 
-    }
+    .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 4px; padding: 0 4px; }
     .group-btn { padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
     .group-btn.active { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
-    /* モバイルでのスクロールを解除し、2行表示にする */
     @media (max-width: 767px) {
-      .group-buttons { 
-        flex-wrap: wrap; 
-        overflow-x: visible; 
-        -webkit-overflow-scrolling: auto; 
-      }
+      .group-buttons { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+      .group-buttons::-webkit-scrollbar { display: none; }
     }
 
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
@@ -133,6 +124,7 @@
     .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
+    /* 一覧UI（3カラム固定） */
     .cd-list { display: grid; gap: 10px; }
     .cd-item-base { 
       display: grid; grid-template-columns: 1fr 90px; gap: 16px; padding: 14px 16px; 
@@ -260,7 +252,7 @@
         <section id="analysis" class="card analysis-card" style="margin-bottom: 24px;">
           <div class="card-title">2026年最新の売上傾向分析</div>
           <div id="analysisText" style="font-size: 12px; line-height: 1.7; color: #334155;">
-            <p style="margin: 0 0 12px 0;"><strong>Snow Man</strong>がミリオンを達成するなど、圧倒的な数字を記録しており、固定ファンの強さがグラフにも表れています。</p>
+            <p style="margin: 0 0 12px 0;"><strong>Snow Man</strong>が直近のアルバムでミリオンを達成するなど、圧倒的な数字を記録しており、固定ファンの強さがグラフにも表れています。</p>
             <p style="margin: 0 0 12px 0;">また、最新シングル『Stargaze』で初週33.0万枚を記録した<strong>SixTONES</strong>、2人体制移行後も30万枚越えの高水準を保つ<strong>King & Prince</strong>、そして『アシンメトリー / Black Nightmare』で前作を上回る推移を見せる<strong>なにわ男子</strong>の3組が、初動水準を保っています。</p>
           </div>
         </section>
