@@ -30,7 +30,6 @@
   
   <style>
     :root {
-      /* 背景色を少し濃いめに調整 */
       --bg: #f1f5f9; 
       --card: #ffffff;
       --text: #334155;
@@ -62,7 +61,6 @@
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
-    /* ヘッダー固定解除 */
     .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
     
@@ -88,11 +86,15 @@
 
     .chart-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 15px; padding-left: 5px; }
     .chart-tab { padding: 8px 16px; font-size: 13px; font-weight: 700; color: var(--sub); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
-    .chart-tab.is-active { color: var(--text); border-bottom: 2px solid var(--text); }
+    .chart-tab.is-active { color: #eba0b8; border-bottom: 2px solid #eba0b8; }
 
     .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px; }
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
+
+    /* タイトル見出しの太字を解除 */
+    .card-section-title { font-size: 15px; font-weight: 600; color: #475569; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .card-section-title::before { content: ""; width: 4px; height: 16px; background: #eba0b8; border-radius: 2px; }
 
     .group-buttons-wrapper { margin-bottom: 8px; }
     .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 4px; padding: 0 4px; }
@@ -124,8 +126,8 @@
     .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
-    /* 一覧UI（3カラム固定） */
     .cd-list { display: grid; gap: 10px; }
+    .no-data-msg { font-size: 12px; color: var(--sub); text-align: center; padding: 20px 0; }
     .cd-item-base { 
       display: grid; grid-template-columns: 1fr 90px; gap: 16px; padding: 14px 16px; 
       border: 1px solid var(--border); border-radius: 12px; text-decoration: none; 
@@ -243,9 +245,17 @@
     </div>
 
     <div class="split-area">
-      <div class="card">
-        <div class="cd-list" id="cdList"></div>
-        <div id="listBtnArea" style="text-align:center; margin-top:20px;"></div>
+      <div class="list-container" style="display:flex; flex-direction:column; gap:24px;">
+        <div class="card" id="upcomingCard">
+          <div class="card-section-title">これから発売（予約受付中）</div>
+          <div class="cd-list" id="upcomingList"></div>
+        </div>
+        
+        <div class="card" id="historyCard">
+          <div class="card-section-title">歴代シングル・アルバム売上</div>
+          <div class="cd-list" id="cdList"></div>
+          <div id="listBtnArea" style="text-align:center; margin-top:20px;"></div>
+        </div>
       </div>
       
       <div class="side-content">
@@ -422,66 +432,64 @@ function render(shouldAnimate = false) {
   if (!cds.length) return;
 
   let filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
-  let sortedList = [...filtered].sort((a, b) => s === "date" ? b.releaseDate.localeCompare(a.releaseDate) : (b[type] || -1) - (a[type] || -1));
   
   let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
     if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
     return (a[type] || 0) - (b[type] || 0);
   });
   
+  const today = new Date(); today.setHours(0,0,0,0);
+  const upcoming = filtered.filter(c => c[type] === null);
+  const history = filtered.filter(c => c[type] !== null).sort((a, b) => s === "date" ? b.releaseDate.localeCompare(a.releaseDate) : (b[type] || -1) - (a[type] || -1));
+
   const isSingle = activeGroups.size === 1;
   const chartWrapper = document.getElementById("chartWrapper");
   const chartBody = document.getElementById("chartBody");
   const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * (isSingle ? 60 : 45));
   chartBody.style.width = `${finalWidth}px`;
-  
   if (chart) chart.destroy();
-  
   let singleColor = "#5D9C9F";
   if (isSingle) {
     const groupName = Array.from(activeGroups)[0];
     singleColor = fixedGroupColors[groupName] || "#5D9C9F";
   }
-
   const ctx = document.getElementById("salesChart");
-  if (!ctx) return;
-
-  chart = new Chart(ctx, {
-    type: isSingle ? 'line' : 'bar',
-    data: {
-      labels: chartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
-      datasets: [{
-        data: chartSource.map(c => c[type]),
-        backgroundColor: isSingle ? singleColor + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
-        borderColor: singleColor,
-        borderWidth: isSingle ? 2 : 0, borderRadius: 4, fill: true, tension: 0.3, 
-        pointBackgroundColor: "#fff", pointBorderColor: singleColor, pointRadius: isSingle ? 4 : 0
-      }]
-    },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      animation: shouldAnimate ? { duration: 800 } : false,
-      plugins: { 
-        legend: { display: false },
-        tooltip: {
-          callbacks: {
-            title: (context) => { const d = chartSource[context[0].dataIndex]; return `${d.group} / ${d.title}`; },
-            label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
-          }
-        },
-        datalabels: { anchor: 'end', align: 'top', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
+  if (ctx) {
+    chart = new Chart(ctx, {
+      type: isSingle ? 'line' : 'bar',
+      data: {
+        labels: chartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
+        datasets: [{
+          data: chartSource.map(c => c[type]),
+          backgroundColor: isSingle ? singleColor + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
+          borderColor: singleColor,
+          borderWidth: isSingle ? 2 : 0, borderRadius: 4, fill: true, tension: 0.3, 
+          pointBackgroundColor: "#fff", pointBorderColor: singleColor, pointRadius: isSingle ? 4 : 0
+        }]
       },
-      scales: { 
-        y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, grace: '10%' },
-        x: { ticks: { font: {size: 8}, maxRotation: 45, minRotation: 45 }, grid: { display: false } }
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        animation: shouldAnimate ? { duration: 800 } : false,
+        plugins: { 
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: (context) => { const d = chartSource[context[0].dataIndex]; return `${d.group} / ${d.title}`; },
+              label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
+            }
+          },
+          datalabels: { anchor: 'end', align: 'top', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
+        },
+        scales: { 
+          y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, grace: '10%' },
+          x: { ticks: { font: {size: 8}, maxRotation: 45, minRotation: 45 }, grid: { display: false } }
+        }
       }
-    }
-  });
-  
+    });
+  }
   if (finalWidth > chartWrapper.clientWidth) chartWrapper.scrollLeft = finalWidth;
-  const today = new Date(); today.setHours(0,0,0,0);
 
-  document.getElementById("cdList").innerHTML = sortedList.map(c => {
+  const getListItemHtml = (c) => {
     const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
     const color = fixedGroupColors[c.group] || "#7f8c8d";
     const salesValExists = c[type] !== null;
@@ -504,7 +512,10 @@ function render(shouldAnimate = false) {
       </div>
     `;
     return c.seller ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</a>` : `<div class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</div>`;
-  }).join("");
+  };
+
+  document.getElementById("upcomingList").innerHTML = upcoming.length ? upcoming.map(getListItemHtml).join("") : '<div class="no-data-msg">現在、発売予定の作品はありません</div>';
+  document.getElementById("cdList").innerHTML = history.length ? history.map(getListItemHtml).join("") : '<div class="no-data-msg">該当するデータがありません</div>';
 }
 
 [document.getElementById("salesType"), document.getElementById("filter")].forEach(el => el.addEventListener("change", () => render(true)));
