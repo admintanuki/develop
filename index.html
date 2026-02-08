@@ -61,11 +61,13 @@
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
+    /* ヘッダー固定解除 */
     .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
     
     .site-title { text-align: center; margin-bottom: 12px; }
     .site-title h1 { margin: 0; padding: 0; }
+    /* 文言変更適用 */
     .site-title .sub-name { display: block; font-size: 13px; color: #eba0b8; font-weight: 800; margin-bottom: 0px; letter-spacing: 0.02em; }
     .site-title .main-logo { display: block; font-family: "Georgia", serif; font-size: 32px; font-weight: 900; font-style: italic; color: #333; line-height: 1.1; margin: 2px 0 4px 0; }
     .site-title .main-name { display: block; font-size: 12px; font-weight: 700; color: #64748b; line-height: 1.2; }
@@ -92,7 +94,22 @@
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
 
-    /* 余白を縮小 */
+    /* --- グラフのレインボー枠デザイン --- */
+    .chart-card {
+      position: relative;
+      background: #fff;
+      padding: 3px; /* 枠の太さ */
+      border-radius: 20px;
+      background: linear-gradient(135deg, #e0e7ff 0%, #fae8ff 25%, #fef3c7 50%, #d1fae5 75%, #e0f2fe 100%);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+    }
+    .chart-card-inner {
+      background: #fff;
+      border-radius: 18px;
+      padding: 20px;
+    }
+
+    /* ボタンとグラフを近づける修正 */
     .group-buttons-wrapper { margin-bottom: 8px; }
     .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 4px; padding: 0 4px; }
     .group-btn { padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
@@ -110,6 +127,7 @@
     .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
+    /* 読み込みUI復帰適用 */
     .load-more-text { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: underline; margin-bottom: 4px; }
 
     .hot-area { padding: 12px 20px; }
@@ -123,6 +141,7 @@
     .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
+    /* --- 一覧UI修正 (3カラム固定) --- */
     .cd-list { display: grid; gap: 10px; }
     .cd-item-base { 
       display: grid; grid-template-columns: 1fr 90px; gap: 16px; padding: 14px 16px; 
@@ -143,10 +162,11 @@
     .cd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; border: 1px solid var(--border); border-radius: 6px; }
 
     .cd-info-main { min-width: 0; } 
-    .cd-title { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; line-height: 1.4; color: #1e293b; word-break: break-all; overflow-wrap: break-word; }
+    .cd-title { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; line-height: 1.4; color: #1e293b; word-break: break-all; }
     .meta { font-size: 10.5px; color: var(--sub); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
     .badge { font-size: 9px; padding: 1px 5px; border-radius: 4px; color: #fff; font-weight: 700; }
     
+    /* 予約中カウントダウン位置修正 */
     .sales-box { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; flex-shrink: 0; }
     .sales-val { font-weight: 700; font-size: 14px; letter-spacing: -0.02em; white-space: nowrap; }
     .countdown { font-size: 10px; font-weight: 700; color: #ea580c; background: #fff7ed; padding: 1px 6px; border-radius: 99px; border: 1px solid #ffedd5; width: fit-content; white-space: nowrap; }
@@ -210,24 +230,26 @@
   <div id="loading" class="card"><div style="text-align:center; padding:40px;"><div class="spinner"></div>データを取得中...</div></div>
 
   <div id="mainContent" class="content-wrapper" style="display:none;">
-    <div class="card">
-      <div class="chart-tabs">
-        <div class="chart-tab is-active" data-sort="date">発売日順</div>
-        <div class="chart-tab" data-sort="salesDesc">売上順</div>
-      </div>
+    <div class="chart-card">
+      <div class="chart-card-inner">
+        <div class="chart-tabs">
+          <div class="chart-tab is-active" data-sort="date">発売日順</div>
+          <div class="chart-tab" data-sort="salesDesc">売上順</div>
+        </div>
 
-      <div class="group-buttons-wrapper">
-        <div style="font-size: 12px; font-weight: 400; color: #334155; margin-bottom: 4px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
-        <div class="group-buttons" id="groupButtons"></div>
-      </div>
-      
-      <div class="chart-wrapper" id="chartWrapper"><div class="chart-body" id="chartBody"><canvas id="salesChart"></canvas></div></div>
-      <div class="chart-footer">
-        <div id="chartBtnArea"></div>
-        <button onclick="copyShareUrl()" class="share-btn-mini" id="shareBtn">
-          <svg viewBox="0 0 24 24" id="shareIcon"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" fill="currentColor"/></svg>
-          <span id="shareBtnText">このグラフを共有</span>
-        </button>
+        <div class="group-buttons-wrapper">
+          <div style="font-size: 11px; font-weight: 400; color: #64748b; margin-bottom: 6px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
+          <div class="group-buttons" id="groupButtons"></div>
+        </div>
+        
+        <div class="chart-wrapper" id="chartWrapper"><div class="chart-body" id="chartBody"><canvas id="salesChart"></canvas></div></div>
+        <div class="chart-footer">
+          <div id="chartBtnArea"></div>
+          <button onclick="copyShareUrl()" class="share-btn-mini" id="shareBtn">
+            <svg viewBox="0 0 24 24" id="shareIcon"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" fill="currentColor"/></svg>
+            <span id="shareBtnText">このグラフを共有</span>
+          </button>
+        </div>
       </div>
     </div>
 
