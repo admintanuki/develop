@@ -48,6 +48,7 @@
       background: var(--bg); color: var(--text); padding-bottom: 60px; overflow-x: hidden; line-height: 1.6; 
     }
 
+    /* ユーティリティバー */
     .utility-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: flex-end; align-items: center; font-size: 12px; }
     .utility-right { display: flex; gap: 15px; }
     .utility-link { text-decoration: none; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 4px; position: relative; cursor: pointer; }
@@ -61,24 +62,34 @@
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
-    .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
+    /* 背景固定を解除 (sticky-headerをrelativeに変更) */
+    .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 24px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
     
-    .site-title { text-align: center; margin-bottom: 12px; }
+    /* サイトタイトル周りのデザイン修正 */
+    .site-title { text-align: center; margin-bottom: 18px; }
     .site-title h1 { margin: 0; padding: 0; }
-    .site-title .sub-name { display: block; font-size: 13px; color: #eba0b8; font-weight: 800; margin-bottom: 0px; letter-spacing: 0.02em; }
-    .site-title .main-logo { display: block; font-family: "Georgia", serif; font-size: 32px; font-weight: 900; font-style: italic; color: #333; line-height: 1.1; margin: 2px 0 4px 0; }
-    .site-title .main-name { display: block; font-size: 12px; font-weight: 700; color: #64748b; line-height: 1.2; }
+    .site-title .sub-name { display: block; font-size: 13px; color: #64748b; font-weight: 700; margin-bottom: 6px; letter-spacing: 0.02em; }
+    
+    /* メインロゴをおしゃれなフォントとアイコン風演出に変更 */
+    .site-title .main-logo { 
+      display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+      font-family: "Georgia", serif; font-size: 38px; font-weight: 900; font-style: italic; color: #1e293b; line-height: 1.1; margin: 2px 0 6px 0;
+    }
+    .site-title .main-logo::before {
+      content: "📊"; font-style: normal; font-size: 32px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+    }
+    .site-title .main-name { display: block; font-size: 15px; font-weight: 800; color: #475569; line-height: 1.2; }
 
     @media (min-width: 768px) {
-      .site-title .sub-name { font-size: 15px; }
-      .site-title .main-logo { font-size: 48px; }
-      .site-title .main-name { font-size: 15px; }
-      .sticky-header { padding: 16px 10px; }
-      .utility-bar { padding: 10px 24px; font-size: 13px; }
+      .site-title .sub-name { font-size: 16px; }
+      .site-title .main-logo { font-size: 52px; }
+      .site-title .main-logo::before { font-size: 44px; }
+      .site-title .main-name { font-size: 18px; }
+      .sticky-header { padding: 32px 10px; }
     }
     
-    .controls { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; max-width: 800px; margin: 0 auto; }
+    .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; max-width: 800px; margin: 0 auto; }
     select { padding: 8px 2px; border-radius: 6px; border: 1px solid var(--border); background: #fff; width: 100%; color: var(--text); font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; }
 
     @media (min-width: 768px) {
@@ -86,15 +97,12 @@
       select { padding: 10px 12px; font-size: 13px; border-radius: 8px; }
     }
 
-    .chart-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 15px; padding-left: 5px; }
-    .chart-tab { padding: 8px 16px; font-size: 13px; font-weight: 700; color: var(--sub); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
-    .chart-tab.is-active { color: var(--text); border-bottom: 2px solid var(--text); }
-
+    /* コンテナ・カード */
     .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px; }
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
-    .notice-area { background: #eff6ff; border: 1px solid #dbeafe; color: #1e40af; padding: 12px 16px; border-radius: 8px; font-size: 12px; display: none; align-items: center; gap: 10px; margin-bottom: 10px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
 
+    /* グループ選択ボタン */
     .group-buttons-wrapper { margin-bottom: 16px; }
     .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 12px; padding: 0 4px; }
     .group-btn { padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
@@ -105,15 +113,15 @@
       .group-buttons::-webkit-scrollbar { display: none; }
     }
 
+    /* グラフ */
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
-    .chart-body { position: relative; height: 300px; min-width: 100%; }
-    
+    .chart-body { position: relative; height: 320px; min-width: 100%; }
     .chart-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; min-height: 24px; }
     .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
-
     .load-more-text { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: underline; }
 
+    /* HOTエリア */
     .hot-area { padding: 12px 20px; }
     .hot-list { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
     .hot-label { font-size: 11px; font-weight: 800; color: var(--accent-hot); display: flex; align-items: center; gap: 4px; white-space: nowrap; border-right: 1px solid var(--border); padding-right: 12px; }
@@ -122,16 +130,27 @@
     .hot-item:hover { color: var(--accent-hot); }
     .hot-item::after { content: '>'; margin-left: 4px; font-size: 10px; opacity: 0.5; }
 
+    /* 2カラムレイアウト */
     .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
+    /* --- 一覧UI崩れ修正 (index0206の構成を適用) --- */
     .cd-list { display: grid; gap: 10px; }
-    .cd-item-base { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: inherit; background: #fff; align-items: center; transition: all 0.2s ease; }
+    .cd-item-base { 
+      display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 14px 16px; 
+      border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: inherit; background: #fff; align-items: center; transition: all 0.2s ease; 
+    }
+    
+    /* ジャケット画像あり(予約中)のアイテムのレイアウト */
     .cd-item-base.upcoming { grid-template-columns: 64px 1fr auto; border: 1px solid #fed7aa; background-color: #fffaf5; }
-    @media (max-width: 767px) { .cd-item-base.upcoming { grid-template-columns: 50px 1fr auto; padding: 10px 12px; } }
+    @media (max-width: 767px) { 
+      .cd-item-base.upcoming { grid-template-columns: 50px 1fr auto; padding: 10px 12px; } 
+    }
+    
     a.cd-item-base:hover { transform: translateY(-2px); box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.05); }
     
-    .cd-thumb { width: 64px; height: 64px; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+    .cd-thumb { width: 64px; height: 64px; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; background: #eee; }
+    @media (max-width: 767px) { .cd-thumb { width: 50px; height: 50px; } }
     .cd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; border: 1px solid var(--border); border-radius: 6px; }
 
     .cd-title { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; line-height: 1.4; color: #1e293b; }
@@ -142,21 +161,21 @@
     .ext-link-icon { width: 11px; height: 11px; color: var(--sub); margin-left: 5px; vertical-align: middle; }
     .buy-label { font-size: 10px; color: var(--sub); font-weight: 600; margin-left: 2px; vertical-align: middle; white-space: nowrap; }
 
+    /* サイドバー・分析 */
     .analysis-card .card-title, .history-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
     .history-list { list-style: none; padding: 0; margin: 0; }
     .history-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dotted var(--border); }
     .history-date { font-size: 10px; color: var(--sub); display: block; margin-bottom: 2px; font-weight: 600; }
     .history-text { font-size: 12px; line-height: 1.4; color: #334155; }
-
-    .back-to-top { position: fixed; bottom: 20px; right: 20px; background: var(--card); border: 1px solid var(--border); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--primary-shadow); cursor: pointer; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s; text-decoration: none; color: var(--text); }
-    .back-to-top.visible { opacity: 1; visibility: visible; }
-    .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
-    .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top: 3px solid var(--accent-teal); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-
     .analysis-btn { text-decoration: none; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 700; text-align: center; transition: all 0.2s; display: block; border: 1px solid; }
     .analysis-btn:hover { opacity: 0.8; transform: translateY(-1px); }
     .group-links-container { display: flex; flex-direction: column; gap: 8px; }
+
+    /* その他 */
+    .back-to-top { position: fixed; bottom: 20px; right: 20px; background: var(--card); border: 1px solid var(--border); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--primary-shadow); cursor: pointer; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s; text-decoration: none; color: var(--text); }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top: 3px solid var(--accent-teal); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
   </style>
 </head>
 <body>
@@ -190,9 +209,9 @@
       </h1>
     </div>
     <div class="controls">
-      <select id="salesType"><option value="firstWeek" selected>初週</option><option value="firstDay">初日</option></select>
+      <select id="salesType"><option value="firstDay">初日</option><option value="firstWeek" selected>初週</option></select>
       <select id="filter"><option value="all">シングル&アルバム</option><option value="single">シングル</option><option value="album">アルバム</option></select>
-      <select id="sortOrder" style="display:none;"><option value="date" selected>発売日順</option><option value="salesDesc">売上順</option></select>
+      <select id="sortOrder"><option value="date" selected>発売日順</option><option value="salesDesc">売上順</option></select>
     </div>
   </div>
 </header>
@@ -202,11 +221,6 @@
 
   <div id="mainContent" class="content-wrapper" style="display:none;">
     <div class="card">
-      <div class="chart-tabs">
-        <div class="chart-tab is-active" data-sort="date">発売日順</div>
-        <div class="chart-tab" data-sort="salesDesc">売上順</div>
-      </div>
-
       <div class="group-buttons-wrapper">
         <div style="font-size: 12px; font-weight: 400; color: #334155; margin-bottom: 10px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
         <div class="group-buttons" id="groupButtons"></div>
@@ -239,18 +253,6 @@
       </div>
       
       <div class="side-content">
-        <section id="analysis" class="card analysis-card" style="margin-bottom: 24px;">
-          <div class="card-title">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px; color: #3b82f6;"><path d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
-            2026年最新の売上傾向分析
-          </div>
-          <div id="analysisText" style="font-size: 12px; line-height: 1.7; color: #334155;">
-            <p style="margin: 0 0 12px 0;"><strong>Snow Man</strong>が直近のアルバムで初週ミリオンを達成するなど、圧倒的な数字を記録しており、固定ファンの強さがグラフにも表れています。</p>
-            <p style="margin: 0 0 12px 0;">また、最新シングル『Stargaze』で初週33.0万枚を記録した<strong>SixTONES</strong>、2人体制移行後も30万枚越えの高水準を保つ<strong>King & Prince</strong>、そして『アシンメトリー / Black Nightmare』で前作を上回る推移を見せる<strong>なにわ男子</strong>の3組が、初週30万〜40万枚レンジで推移しています。</p>
-            <p style="margin: 0;">ここに、新体制初アルバム『FAM』で61.9万枚という自己最高記録を樹立した<strong>timelesz</strong>や、『Chameleon』で45.5万枚を記録する<strong>Aぇ! group</strong>などの急伸勢が加わり、各グループが次々と自己ベスト級の初動を更新する状況が続いています。</p>
-          </div>
-        </section>
-
         <section id="group-nav" class="card analysis-card" style="margin-bottom: 24px;">
           <div class="card-title">各グループ別 売上詳細データ</div>
           <div id="groupLinks" class="group-links-container">
@@ -258,6 +260,18 @@
             <a href="https://fan-chart.com/sixtones" class="analysis-btn" style="color: #555555; border-color: rgba(85, 85, 85, 0.3); background: rgba(85, 85, 85, 0.05);">SixTONES ページ ></a>
             <a href="https://fan-chart.com/king-and-prince" class="analysis-btn" style="color: #fab700; border-color: rgba(250, 183, 0, 0.3); background: rgba(250, 183, 0, 0.05);">King & Prince ページ ></a>
             <a href="https://fan-chart.com/naniwa-danshi" class="analysis-btn" style="color: #eba0b8; border-color: rgba(235, 160, 184, 0.3); background: rgba(235, 160, 184, 0.05);">なにわ男子 ページ ></a>
+          </div>
+        </section>
+
+        <section id="analysis" class="card analysis-card" style="margin-bottom: 24px;">
+          <div class="card-title">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px; color: #3b82f6;"><path d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
+            2026年最新の売上傾向分析
+          </div>
+          <div id="analysisText" style="font-size: 12px; line-height: 1.7; color: #334155;">
+            <p style="margin: 0 0 12px 0;"><strong>Snow Man</strong>が直近のアルバムでミリオンを達成するなど、圧倒的な数字を記録しており、固定ファンの強さがグラフにも表れています。</p>
+            <p style="margin: 0 0 12px 0;">また、最新シングル『Stargaze』で初週33.0万枚を記録した<strong>SixTONES</strong>、2人体制移行後も30万枚越えの高水準を保つ<strong>King & Prince</strong>、そして『アシンメトリー / Black Nightmare』で前作を上回る推移を見せる<strong>なにわ男子</strong>の3組が、初週30万〜40万枚レンジで推移しています。</p>
+            <p style="margin: 0;">各グループが次々と自己ベスト級の初動を更新する状況が続いています。</p>
           </div>
         </section>
         <aside class="card history-card"><div class="card-title">更新履歴</div><ul class="history-list" id="historyList"></ul></aside>
@@ -277,19 +291,18 @@ const fixedGroupOrder = Object.keys(fixedGroupColors);
 
 let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isFullDataLoaded = false;
 
-document.querySelectorAll('.chart-tab').forEach(tab => {
-  tab.addEventListener('click', () => {
-    document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('is-active'));
-    tab.classList.add('is-active');
-    document.getElementById('sortOrder').value = tab.dataset.sort;
-    render(true);
-  });
-});
-
+/* --- ドロップダウン操作のスクリプト --- */
 const groupDropdown = document.getElementById('groupDropdown');
 const dropdownContent = groupDropdown.querySelector('.dropdown-content');
-groupDropdown.addEventListener('click', (e) => { e.stopPropagation(); dropdownContent.classList.toggle('is-active'); });
-window.addEventListener('click', () => { dropdownContent.classList.remove('is-active'); });
+
+groupDropdown.addEventListener('click', (e) => {
+  e.stopPropagation();
+  dropdownContent.classList.toggle('is-active');
+});
+
+window.addEventListener('click', () => {
+  dropdownContent.classList.remove('is-active');
+});
 
 function copyShareUrl() {
   const groups = Array.from(activeGroups).join(',');
@@ -321,11 +334,7 @@ function initSettingsByUrl() {
     const params = new URLSearchParams(window.location.search);
     if(params.get('t')) document.getElementById("salesType").value = params.get('t');
     if(params.get('f')) document.getElementById("filter").value = params.get('f');
-    if(params.get('s')) {
-      const s = params.get('s');
-      document.getElementById("sortOrder").value = s;
-      document.querySelectorAll('.chart-tab').forEach(t => { t.classList.toggle('is-active', t.dataset.sort === s); });
-    }
+    if(params.get('s')) document.getElementById("sortOrder").value = params.get('s');
     if(params.get('g')) { params.get('g').split(',').forEach(g => activeGroups.add(decodeURIComponent(g))); isFullDataLoaded = true; }
 }
 
@@ -353,7 +362,6 @@ async function loadData() {
   } catch (e) { console.error(e); }
 }
 
-// 2024年以前のデータを読み込む機能
 function loadAllRecords() {
   if (isFullDataLoaded) return;
   cds = allProcessedData; isFullDataLoaded = true;
@@ -369,8 +377,6 @@ function showLoadMoreButtons() {
 }
 
 function processInfo(data) {
-  const notice = data.find(d => d.type === 'notice' && d.text);
-  if (notice) { document.getElementById('noticeText').textContent = notice.text; document.getElementById('noticeArea').style.display = 'flex'; }
   const histories = data.filter(d => d.type === 'history');
   document.getElementById('historyList').innerHTML = histories.map(h => `<li class="history-item"><span class="history-date">${h.date}</span><div class="history-text">${h.text}</div></li>`).join("");
 }
@@ -400,6 +406,9 @@ function renderGroupButtons(isPreload = false) {
       if (activeGroups.has(g)) activeGroups.delete(g);
       else if (activeGroups.size < 5) activeGroups.add(g);
       else return alert("最大5グループまで");
+      const url = new URL(window.location.href);
+      if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
+      window.history.replaceState({}, '', url);
       renderGroupButtons(false); render(true);
     };
   });
@@ -411,19 +420,11 @@ function render(shouldAnimate = false) {
   const s = document.getElementById("sortOrder").value;
   let filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
   let sortedList = [...filtered].sort((a, b) => s === "date" ? b.releaseDate.localeCompare(a.releaseDate) : (b[type] || -1) - (a[type] || -1));
-  
-  let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
-    if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
-    return (a[type] || 0) - (b[type] || 0);
-  });
-  
+  let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => s === "date" ? a.releaseDate.localeCompare(b.releaseDate) : (b[type] || 0) - (a[type] || 0));
   const isSingle = activeGroups.size === 1;
   const chartWrapper = document.getElementById("chartWrapper");
   const chartBody = document.getElementById("chartBody");
-  const minWidth = chartWrapper.clientWidth;
-  const calculatedWidth = chartSource.length * (isSingle ? 60 : 45);
-  const finalWidth = Math.max(minWidth, calculatedWidth);
-  
+  const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * (isSingle ? 60 : 45));
   chartBody.style.width = `${finalWidth}px`;
   if (chart) chart.destroy();
   const color = isSingle ? fixedGroupColors[Array.from(activeGroups)[0]] : null;
@@ -435,7 +436,7 @@ function render(shouldAnimate = false) {
         data: chartSource.map(c => c[type]),
         backgroundColor: isSingle ? color + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
         borderColor: color || "#5D9C9F",
-        borderWidth: isSingle ? 2 : 0, borderRadius: 4, fill: true, tension: 0.3, 
+        borderWidth: isSingle ? 2 : 0, borderRadius: 4, fill: true, tension: 0.3,
         pointBackgroundColor: "#fff", pointBorderColor: color, pointRadius: isSingle ? 4 : 0
       }]
     },
@@ -444,15 +445,6 @@ function render(shouldAnimate = false) {
       animation: shouldAnimate ? { duration: 800 } : false,
       plugins: { 
         legend: { display: false },
-        tooltip: {
-          callbacks: {
-            title: (context) => {
-              const d = chartSource[context[0].dataIndex];
-              return `${d.group} / ${d.title}`; 
-            },
-            label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
-          }
-        },
         datalabels: { anchor: 'end', align: 'top', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
       },
       scales: { 
@@ -461,10 +453,9 @@ function render(shouldAnimate = false) {
       }
     }
   });
-  
-  chartWrapper.scrollLeft = finalWidth;
+  if (finalWidth > chartWrapper.clientWidth) chartWrapper.scrollLeft = finalWidth;
   const today = new Date(); today.setHours(0,0,0,0);
-
+  
   document.getElementById("cdList").innerHTML = sortedList.map(c => {
     const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
     const color = fixedGroupColors[c.group] || "#7f8c8d";
@@ -481,17 +472,17 @@ function render(shouldAnimate = false) {
             <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
             </svg>
-            ${isUpcomingLayout ? '<span class=\"buy-label\">購入はこちら</span>' : ''}
+            ${isUpcomingLayout ? '<span class="buy-label">購入はこちら</span>' : ''}
           ` : ''}
         </span>
-        <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span> ${days>0?`<span class=\"countdown\">あと${days}日</span>`:days===0?`<span class=\"countdown\" style=\"background:#f97316;color:#fff;border:none;\">本日</span>`:""}</div>
+        <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span> ${days>0?`<span class="countdown">あと${days}日</span>`:days===0?`<span class="countdown" style="background:#f97316;color:#fff;border:none;">本日</span>`:""}</div>
       </div>
       <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDisp}</div>
     `;
     return c.seller ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</a>` : `<div class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</div>`;
   }).join("");
 }
-[document.getElementById("salesType"), document.getElementById("filter")].forEach(el => el.addEventListener("change", () => render(true)));
+[document.getElementById("salesType"), document.getElementById("filter"), document.getElementById("sortOrder")].forEach(el => el.addEventListener("change", () => render(true)));
 window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300); });
 loadData();
 </script>
