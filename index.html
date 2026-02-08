@@ -30,7 +30,7 @@
   
   <style>
     :root {
-      --bg: #f8fafc;
+      --bg: #f1f5f9; 
       --card: #ffffff;
       --text: #334155;
       --sub: #94a3b8;
@@ -38,9 +38,6 @@
       --accent-teal: #5D9C9F;
       --accent-hot: #f97316;
       --primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
-      /* 動的枠線のデフォルト色 */
-      --dynamic-border-from: #fce7f3;
-      --dynamic-border-to: #f3e8ff;
     }
 
     html { scroll-behavior: smooth; }
@@ -95,26 +92,25 @@
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
 
-    /* --- 動的カラー対応のグラフ枠 --- */
-    .chart-card {
-      position: relative;
-      background: #fff;
-      padding: 3px;
-      border-radius: 20px;
-      background: linear-gradient(135deg, var(--dynamic-border-from) 0%, var(--dynamic-border-to) 100%);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-      transition: background 0.4s ease;
-    }
-    .chart-card-inner { background: #fff; border-radius: 18px; padding: 20px; }
-
+    /* --- グループボタンを常時複数行（2行〜）で表示する設定 --- */
     .group-buttons-wrapper { margin-bottom: 8px; }
-    .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 4px; padding: 0 4px; }
+    .group-buttons { 
+      display: flex; 
+      flex-wrap: wrap; /* 常時折り返しを許可 */
+      justify-content: center; 
+      gap: 6px 8px; /* 縦と横の隙間 */
+      margin-bottom: 4px; padding: 0 4px; 
+    }
     .group-btn { padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
     .group-btn.active { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
 
+    /* モバイルでのスクロールを解除し、2行表示にする */
     @media (max-width: 767px) {
-      .group-buttons { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-      .group-buttons::-webkit-scrollbar { display: none; }
+      .group-buttons { 
+        flex-wrap: wrap; 
+        overflow-x: visible; 
+        -webkit-overflow-scrolling: auto; 
+      }
     }
 
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
@@ -223,26 +219,24 @@
   <div id="loading" class="card"><div style="text-align:center; padding:40px;"><div class="spinner"></div>データを取得中...</div></div>
 
   <div id="mainContent" class="content-wrapper" style="display:none;">
-    <div id="chartCardElement" class="chart-card">
-      <div class="chart-card-inner">
-        <div class="chart-tabs">
-          <div class="chart-tab is-active" data-sort="date">発売日順</div>
-          <div class="chart-tab" data-sort="salesDesc">売上順</div>
-        </div>
+    <div class="card">
+      <div class="chart-tabs">
+        <div class="chart-tab is-active" data-sort="date">発売日順</div>
+        <div class="chart-tab" data-sort="salesDesc">売上順</div>
+      </div>
 
-        <div class="group-buttons-wrapper">
-          <div style="font-size: 11px; font-weight: 400; color: #64748b; margin-bottom: 6px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
-          <div class="group-buttons" id="groupButtons"></div>
-        </div>
-        
-        <div class="chart-wrapper" id="chartWrapper"><div class="chart-body" id="chartBody"><canvas id="salesChart"></canvas></div></div>
-        <div class="chart-footer">
-          <div id="chartBtnArea"></div>
-          <button onclick="copyShareUrl()" class="share-btn-mini" id="shareBtn">
-            <svg viewBox="0 0 24 24" id="shareIcon"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" fill="currentColor"/></svg>
-            <span id="shareBtnText">このグラフを共有</span>
-          </button>
-        </div>
+      <div class="group-buttons-wrapper">
+        <div style="font-size: 11px; font-weight: 400; color: #64748b; margin-bottom: 6px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
+        <div class="group-buttons" id="groupButtons"></div>
+      </div>
+      
+      <div class="chart-wrapper" id="chartWrapper"><div class="chart-body" id="chartBody"><canvas id="salesChart"></canvas></div></div>
+      <div class="chart-footer">
+        <div id="chartBtnArea"></div>
+        <button onclick="copyShareUrl()" class="share-btn-mini" id="shareBtn">
+          <svg viewBox="0 0 24 24" id="shareIcon"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" fill="currentColor"/></svg>
+          <span id="shareBtnText">このグラフを共有</span>
+        </button>
       </div>
     </div>
 
@@ -369,7 +363,6 @@ async function loadData() {
     else cds = allProcessedData.filter(c => new Date(c.releaseDate) >= new Date("2024-01-01"));
     document.getElementById('loading').style.display = 'none';
     document.getElementById('mainContent').style.display = 'flex';
-    updateDynamicBorder();
     renderGroupButtons(false); 
     render();
     if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
@@ -394,20 +387,6 @@ function showLoadMoreButtons() {
 function processInfo(data) {
   const histories = data.filter(d => d.type === 'history');
   document.getElementById('historyList').innerHTML = histories.map(h => `<li class="history-item"><span class="history-date">${h.date}</span><div class="history-text">${h.text}</div></li>`).join("");
-}
-
-// 枠線の色を動的に更新する関数
-function updateDynamicBorder() {
-  const root = document.documentElement;
-  if (activeGroups.size === 0) {
-    root.style.setProperty('--dynamic-border-from', '#fce7f3');
-    root.style.setProperty('--dynamic-border-to', '#f3e8ff');
-    return;
-  }
-  const lastSelected = Array.from(activeGroups).pop();
-  const color = fixedGroupColors[lastSelected] || "#cbd5e1";
-  root.style.setProperty('--dynamic-border-from', color + "33"); // 20% opacity
-  root.style.setProperty('--dynamic-border-to', color + "11"); // 7% opacity
 }
 
 function renderGroupButtons(isPreload = false) {
@@ -438,7 +417,6 @@ function renderGroupButtons(isPreload = false) {
       const url = new URL(window.location.href);
       if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
       window.history.replaceState({}, '', url);
-      updateDynamicBorder();
       renderGroupButtons(false); render(true);
     };
   });
@@ -448,6 +426,9 @@ function render(shouldAnimate = false) {
   const type = document.getElementById("salesType").value;
   const f = document.getElementById("filter").value;
   const s = document.getElementById("sortOrder").value;
+  
+  if (!cds.length) return;
+
   let filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
   let sortedList = [...filtered].sort((a, b) => s === "date" ? b.releaseDate.localeCompare(a.releaseDate) : (b[type] || -1) - (a[type] || -1));
   
@@ -461,18 +442,28 @@ function render(shouldAnimate = false) {
   const chartBody = document.getElementById("chartBody");
   const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * (isSingle ? 60 : 45));
   chartBody.style.width = `${finalWidth}px`;
+  
   if (chart) chart.destroy();
-  const color = isSingle ? fixedGroupColors[Array.from(activeGroups)[0]] : null;
-  chart = new Chart(document.getElementById("salesChart"), {
+  
+  let singleColor = "#5D9C9F";
+  if (isSingle) {
+    const groupName = Array.from(activeGroups)[0];
+    singleColor = fixedGroupColors[groupName] || "#5D9C9F";
+  }
+
+  const ctx = document.getElementById("salesChart");
+  if (!ctx) return;
+
+  chart = new Chart(ctx, {
     type: isSingle ? 'line' : 'bar',
     data: {
       labels: chartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
       datasets: [{
         data: chartSource.map(c => c[type]),
-        backgroundColor: isSingle ? color + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
-        borderColor: color || "#5D9C9F",
+        backgroundColor: isSingle ? singleColor + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
+        borderColor: singleColor,
         borderWidth: isSingle ? 2 : 0, borderRadius: 4, fill: true, tension: 0.3, 
-        pointBackgroundColor: "#fff", pointBorderColor: color, pointRadius: isSingle ? 4 : 0
+        pointBackgroundColor: "#fff", pointBorderColor: singleColor, pointRadius: isSingle ? 4 : 0
       }]
     },
     options: {
@@ -494,6 +485,7 @@ function render(shouldAnimate = false) {
       }
     }
   });
+  
   if (finalWidth > chartWrapper.clientWidth) chartWrapper.scrollLeft = finalWidth;
   const today = new Date(); today.setHours(0,0,0,0);
 
@@ -522,6 +514,7 @@ function render(shouldAnimate = false) {
     return c.seller ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</a>` : `<div class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</div>`;
   }).join("");
 }
+
 [document.getElementById("salesType"), document.getElementById("filter")].forEach(el => el.addEventListener("change", () => render(true)));
 window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300); });
 loadData();
