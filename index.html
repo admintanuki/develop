@@ -38,6 +38,9 @@
       --accent-teal: #5D9C9F;
       --accent-hot: #f97316;
       --primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      /* 動的枠線のデフォルト色 */
+      --dynamic-border-from: #fce7f3;
+      --dynamic-border-to: #f3e8ff;
     }
 
     html { scroll-behavior: smooth; }
@@ -61,13 +64,11 @@
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
-    /* ヘッダー固定解除 */
     .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
     
     .site-title { text-align: center; margin-bottom: 12px; }
     .site-title h1 { margin: 0; padding: 0; }
-    /* 文言変更箇所 */
     .site-title .sub-name { display: block; font-size: 13px; color: #eba0b8; font-weight: 800; margin-bottom: 0px; letter-spacing: 0.02em; }
     .site-title .main-logo { display: block; font-family: "Georgia", serif; font-size: 32px; font-weight: 900; font-style: italic; color: #333; line-height: 1.1; margin: 2px 0 4px 0; }
     .site-title .main-name { display: block; font-size: 12px; font-weight: 700; color: #64748b; line-height: 1.2; }
@@ -94,23 +95,18 @@
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
 
-    /* --- グラフのパステルピンク＆紫枠デザイン --- */
+    /* --- 動的カラー対応のグラフ枠 --- */
     .chart-card {
       position: relative;
       background: #fff;
-      padding: 3px; /* 枠の太さ */
+      padding: 3px;
       border-radius: 20px;
-      /* パステルピンクと紫をメインにしたグラデーション */
-      background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 25%, #f5d0fe 50%, #e9d5ff 75%, #f3e8ff 100%);
+      background: linear-gradient(135deg, var(--dynamic-border-from) 0%, var(--dynamic-border-to) 100%);
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      transition: background 0.4s ease;
     }
-    .chart-card-inner {
-      background: #fff;
-      border-radius: 18px;
-      padding: 20px;
-    }
+    .chart-card-inner { background: #fff; border-radius: 18px; padding: 20px; }
 
-    /* ボタンとグラフの距離を詰める */
     .group-buttons-wrapper { margin-bottom: 8px; }
     .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 4px; padding: 0 4px; }
     .group-btn { padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
@@ -128,7 +124,6 @@
     .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
-    /* 2024以前読み込みUI復帰 */
     .load-more-text { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: underline; margin-bottom: 4px; }
 
     .hot-area { padding: 12px 20px; }
@@ -142,7 +137,6 @@
     .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
-    /* 一覧UI（3カラム固定） */
     .cd-list { display: grid; gap: 10px; }
     .cd-item-base { 
       display: grid; grid-template-columns: 1fr 90px; gap: 16px; padding: 14px 16px; 
@@ -229,7 +223,7 @@
   <div id="loading" class="card"><div style="text-align:center; padding:40px;"><div class="spinner"></div>データを取得中...</div></div>
 
   <div id="mainContent" class="content-wrapper" style="display:none;">
-    <div class="chart-card">
+    <div id="chartCardElement" class="chart-card">
       <div class="chart-card-inner">
         <div class="chart-tabs">
           <div class="chart-tab is-active" data-sort="date">発売日順</div>
@@ -272,7 +266,7 @@
         <section id="analysis" class="card analysis-card" style="margin-bottom: 24px;">
           <div class="card-title">2026年最新の売上傾向分析</div>
           <div id="analysisText" style="font-size: 12px; line-height: 1.7; color: #334155;">
-            <p style="margin: 0 0 12px 0;"><strong>Snow Man</strong>が直近のアルバムでミリオンを達成するなど、圧倒的な数字を記録しており、固定ファンの強さがグラフにも表れています。</p>
+            <p style="margin: 0 0 12px 0;"><strong>Snow Man</strong>がミリオンを達成するなど、圧倒的な数字を記録しており、固定ファンの強さがグラフにも表れています。</p>
             <p style="margin: 0 0 12px 0;">また、最新シングル『Stargaze』で初週33.0万枚を記録した<strong>SixTONES</strong>、2人体制移行後も30万枚越えの高水準を保つ<strong>King & Prince</strong>、そして『アシンメトリー / Black Nightmare』で前作を上回る推移を見せる<strong>なにわ男子</strong>の3組が、初動水準を保っています。</p>
           </div>
         </section>
@@ -375,6 +369,7 @@ async function loadData() {
     else cds = allProcessedData.filter(c => new Date(c.releaseDate) >= new Date("2024-01-01"));
     document.getElementById('loading').style.display = 'none';
     document.getElementById('mainContent').style.display = 'flex';
+    updateDynamicBorder();
     renderGroupButtons(false); 
     render();
     if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
@@ -399,6 +394,20 @@ function showLoadMoreButtons() {
 function processInfo(data) {
   const histories = data.filter(d => d.type === 'history');
   document.getElementById('historyList').innerHTML = histories.map(h => `<li class="history-item"><span class="history-date">${h.date}</span><div class="history-text">${h.text}</div></li>`).join("");
+}
+
+// 枠線の色を動的に更新する関数
+function updateDynamicBorder() {
+  const root = document.documentElement;
+  if (activeGroups.size === 0) {
+    root.style.setProperty('--dynamic-border-from', '#fce7f3');
+    root.style.setProperty('--dynamic-border-to', '#f3e8ff');
+    return;
+  }
+  const lastSelected = Array.from(activeGroups).pop();
+  const color = fixedGroupColors[lastSelected] || "#cbd5e1";
+  root.style.setProperty('--dynamic-border-from', color + "33"); // 20% opacity
+  root.style.setProperty('--dynamic-border-to', color + "11"); // 7% opacity
 }
 
 function renderGroupButtons(isPreload = false) {
@@ -429,6 +438,7 @@ function renderGroupButtons(isPreload = false) {
       const url = new URL(window.location.href);
       if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
       window.history.replaceState({}, '', url);
+      updateDynamicBorder();
       renderGroupButtons(false); render(true);
     };
   });
@@ -472,10 +482,7 @@ function render(shouldAnimate = false) {
         legend: { display: false },
         tooltip: {
           callbacks: {
-            title: (context) => {
-              const d = chartSource[context[0].dataIndex];
-              return `${d.group} / ${d.title}`; 
-            },
+            title: (context) => { const d = chartSource[context[0].dataIndex]; return `${d.group} / ${d.title}`; },
             label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
           }
         },
@@ -496,7 +503,6 @@ function render(shouldAnimate = false) {
     const salesValExists = c[type] !== null;
     const salesDisp = salesValExists ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'集計中');
     const isUpcomingLayout = !salesValExists;
-    
     const countdownHtml = days>0 ? `<div class="countdown">あと${days}日</div>` : days===0 ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` : "";
 
     const content = `
@@ -504,12 +510,7 @@ function render(shouldAnimate = false) {
       <div class="cd-info-main">
         <span class="cd-title" style="color:${color}">
           ${c.title}
-          ${c.seller ? `
-            <svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
-            </svg>
-            ${isUpcomingLayout ? '<span class=\"buy-label\">購入はこちら</span>' : ''}
-          ` : ''}
+          ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>${isUpcomingLayout ? '<span class=\"buy-label\">購入はこちら</span>' : ''}` : ''}
         </span>
         <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span></div>
       </div>
