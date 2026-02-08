@@ -61,7 +61,8 @@
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
-    .sticky-header { position: sticky; top: 0; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
+    /* ヘッダーの固定を解除 (sticky -> relative) */
+    .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
     
     .site-title { text-align: center; margin-bottom: 12px; }
@@ -104,7 +105,7 @@
     .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
-    /* 2024以前データ読み込み (スクリーンショットのUIを再現) */
+    /* 2024以前データ読み込み (元のテキストリンク形式に復帰) */
     .load-more-text { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: underline; margin-bottom: 4px; }
 
     .hot-area { padding: 12px 20px; }
@@ -120,7 +121,6 @@
 
     /* --- 一覧UI修正 (重なり防止3カラム固定) --- */
     .cd-list { display: grid; gap: 10px; }
-    
     .cd-item-base { 
       display: grid; 
       grid-template-columns: 1fr 90px; 
@@ -128,13 +128,10 @@
       border: 1px solid var(--border); border-radius: 12px; text-decoration: none; 
       color: inherit; background: #fff; align-items: center; transition: all 0.2s ease; 
     }
-    
-    /* 予約中: 画像 / タイトル / 売上 の3カラムを厳密に定義 */
     .cd-item-base.upcoming { 
       grid-template-columns: 64px 1fr 90px; 
       border: 1px solid #fed7aa; background-color: #fffaf5;
     }
-    
     @media (max-width: 767px) {
       .cd-item-base { grid-template-columns: 1fr 80px; padding: 10px 12px; gap: 10px; }
       .cd-item-base.upcoming { grid-template-columns: 50px 1fr 80px; }
@@ -146,13 +143,11 @@
     @media (max-width: 767px) { .cd-thumb { width: 50px; height: 50px; } }
     .cd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; border: 1px solid var(--border); border-radius: 6px; }
 
-    /* 重なりを防ぐため padding-left を削除し grid に任せる */
     .cd-info-main { min-width: 0; } 
     .cd-title { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; line-height: 1.4; color: #1e293b; word-break: break-all; overflow-wrap: break-word; }
     .meta { font-size: 10.5px; color: var(--sub); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
     .badge { font-size: 9px; padding: 1px 5px; border-radius: 4px; color: #fff; font-weight: 700; }
     
-    /* 売上・カウントダウン (右側縦並び) */
     .sales-box { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; flex-shrink: 0; }
     .sales-val { font-weight: 700; font-size: 14px; letter-spacing: -0.02em; white-space: nowrap; }
     .countdown { font-size: 10px; font-weight: 700; color: #ea580c; background: #fff7ed; padding: 1px 6px; border-radius: 99px; border: 1px solid #ffedd5; width: fit-content; white-space: nowrap; }
@@ -160,7 +155,6 @@
     .ext-link-icon { width: 11px; height: 11px; color: var(--sub); margin-left: 5px; vertical-align: middle; }
     .buy-label { font-size: 10px; color: var(--sub); font-weight: 600; margin-left: 2px; vertical-align: middle; white-space: nowrap; }
 
-    /* その他パーツ */
     .analysis-card .card-title, .history-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
     .history-list { list-style: none; padding: 0; margin: 0; }
     .history-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dotted var(--border); }
@@ -483,7 +477,6 @@ function render(shouldAnimate = false) {
     const salesDisp = salesValExists ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'集計中');
     const isUpcomingLayout = !salesValExists;
     
-    // カウントダウンHTML
     const countdownHtml = days>0 ? `<div class="countdown">あと${days}日</div>` : days===0 ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` : "";
 
     const content = `
