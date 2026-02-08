@@ -67,7 +67,7 @@
     
     .site-title { text-align: center; margin-bottom: 12px; }
     .site-title h1 { margin: 0; padding: 0; }
-    /* 文言変更適用 */
+    /* 文言変更箇所 */
     .site-title .sub-name { display: block; font-size: 13px; color: #eba0b8; font-weight: 800; margin-bottom: 0px; letter-spacing: 0.02em; }
     .site-title .main-logo { display: block; font-family: "Georgia", serif; font-size: 32px; font-weight: 900; font-style: italic; color: #333; line-height: 1.1; margin: 2px 0 4px 0; }
     .site-title .main-name { display: block; font-size: 12px; font-weight: 700; color: #64748b; line-height: 1.2; }
@@ -94,13 +94,14 @@
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
 
-    /* --- グラフのレインボー枠デザイン --- */
+    /* --- グラフのパステルピンク＆紫枠デザイン --- */
     .chart-card {
       position: relative;
       background: #fff;
       padding: 3px; /* 枠の太さ */
       border-radius: 20px;
-      background: linear-gradient(135deg, #e0e7ff 0%, #fae8ff 25%, #fef3c7 50%, #d1fae5 75%, #e0f2fe 100%);
+      /* パステルピンクと紫をメインにしたグラデーション */
+      background: linear-gradient(135deg, #fce7f3 0%, #fbcfe8 25%, #f5d0fe 50%, #e9d5ff 75%, #f3e8ff 100%);
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
     }
     .chart-card-inner {
@@ -109,7 +110,7 @@
       padding: 20px;
     }
 
-    /* ボタンとグラフを近づける修正 */
+    /* ボタンとグラフの距離を詰める */
     .group-buttons-wrapper { margin-bottom: 8px; }
     .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 4px; padding: 0 4px; }
     .group-btn { padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
@@ -127,7 +128,7 @@
     .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
-    /* 読み込みUI復帰適用 */
+    /* 2024以前読み込みUI復帰 */
     .load-more-text { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: underline; margin-bottom: 4px; }
 
     .hot-area { padding: 12px 20px; }
@@ -141,7 +142,7 @@
     .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
-    /* --- 一覧UI修正 (3カラム固定) --- */
+    /* 一覧UI（3カラム固定） */
     .cd-list { display: grid; gap: 10px; }
     .cd-item-base { 
       display: grid; grid-template-columns: 1fr 90px; gap: 16px; padding: 14px 16px; 
@@ -149,8 +150,7 @@
       color: inherit; background: #fff; align-items: center; transition: all 0.2s ease; 
     }
     .cd-item-base.upcoming { 
-      grid-template-columns: 64px 1fr 90px; 
-      border: 1px solid #fed7aa; background-color: #fffaf5;
+      grid-template-columns: 64px 1fr 90px; border: 1px solid #fed7aa; background-color: #fffaf5;
     }
     @media (max-width: 767px) {
       .cd-item-base { grid-template-columns: 1fr 80px; padding: 10px 12px; gap: 10px; }
@@ -166,7 +166,6 @@
     .meta { font-size: 10.5px; color: var(--sub); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
     .badge { font-size: 9px; padding: 1px 5px; border-radius: 4px; color: #fff; font-weight: 700; }
     
-    /* 予約中カウントダウン位置修正 */
     .sales-box { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; flex-shrink: 0; }
     .sales-val { font-weight: 700; font-size: 14px; letter-spacing: -0.02em; white-space: nowrap; }
     .countdown { font-size: 10px; font-weight: 700; color: #ea580c; background: #fff7ed; padding: 1px 6px; border-radius: 99px; border: 1px solid #ffedd5; width: fit-content; white-space: nowrap; }
