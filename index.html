@@ -126,8 +126,26 @@
     .group-btn.active { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     .group-btn.is-selected-in-list { background: #f8fafc !important; color: #cbd5e1 !important; border: 1px solid #e2e8f0 !important; box-shadow: none !important; opacity: 0.8; }
 
-    .selected-groups-row { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-start; margin-top: 10px; padding: 12px 4px; background: #f8fafc; border-radius: 12px; min-height: 38px; border: 1px dashed var(--border); }
-    .selected-label { font-size: 10px; color: var(--sub); width: 100%; text-align: left; padding-left: 4px; margin-bottom: 6px; font-weight: 600; }
+    /* 選択中のグループ：横並び設定 */
+    .selected-groups-row { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 10px; 
+      align-items: center; 
+      justify-content: flex-start; 
+      margin-top: 10px; 
+      padding: 10px 12px; 
+      background: #f8fafc; 
+      border-radius: 12px; 
+      min-height: 38px; 
+      border: 1px dashed var(--border); 
+    }
+    .selected-label { 
+      font-size: 11px; 
+      color: var(--sub); 
+      font-weight: 700; 
+      white-space: nowrap; 
+    }
 
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
     .chart-body { position: relative; height: 300px; min-width: 100%; }
@@ -300,7 +318,7 @@
         <div class="group-buttons" id="groupButtons"></div>
         <div id="selectedGroupsArea" class="selected-groups-row" style="display:none;">
           <div class="selected-label">選択中のグループ</div>
-          <div id="selectedButtonsContainer" style="display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-start;"></div>
+          <div id="selectedButtonsContainer" style="display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-start; align-items:center;"></div>
         </div>
       </div>
       
@@ -377,7 +395,7 @@
             </div>
             <div class="analysis-block" style="border-color: #66b27e;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #66b27e, #a7d8b5);">Travis Japan</div>
-              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(102,178,126,0.03) 0%, #ffffff 100%);">3rdアルバム『's travelers』が14.8万枚のセールスを記録。国内のパッケージ販売以上に、YouTubeの再生回数や海外公演でのプレゼンスを重視しており、グローバルなファンベースを構築しているのが特徴です。国内のCD売上は比較的緩やかですが、ストリーミング市場での強さが際立つ、デジタルネイティブなグループといえます。</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(102,178,126,0.03) 0%, #ffffff 100%);">3rdアルバム『's travelers』が14.8万枚のセールスを記録. 国内のパッケージ販売以上に、YouTubeの再生回数や海外公演でのプレゼンスを重視しており、グローバルなファンベースを構築しているのが特徴です。国内のCD売上は比較的緩やかですが、ストリーミング市場での強さが際立つ、デジタルネイティブなグループといえます。</div>
             </div>
             <div class="analysis-block" style="border-color: #1d9967;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #1d9967, #4fc092);">WEST.</div>
@@ -405,7 +423,7 @@
             </div>
             <div class="analysis-block" style="border-color: #f0897c;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #f0897c, #f7b9b1);">A.B.C-Z</div>
-              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(240,137,124,0.03) 0%, #ffffff 100%);">CDの純粋な売上枚数以上に、「アクロバット」を駆使したパフォーマンスへの評価が高いグループです。その特性から、他グループと比較してもCDより映像作品の売上比率が高い傾向にあり、コアなファンによる支持基盤を持っています。</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(240,137,124,0.03) 0%, #ffffff 100%);">CDの純粋な売上枚数以上に、「アクロバット」を駆使したパフォーマンスへの評価が高いグループです. その特性から、他グループと比較してもCDより映像作品の売上比率が高い傾向にあり、コアなファンによる支持基盤を持っています。</div>
             </div>
           </div>
         </section>
