@@ -57,7 +57,7 @@
     .dropdown-content { display: none; position: absolute; right: 0; background-color: #fff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); z-index: 101; border: 1px solid var(--border); border-radius: 8px; margin-top: 8px; }
     @media (min-width: 1025px) { .dropdown:hover .dropdown-content { display: block; } }
     .dropdown-content.is-active { display: block; }
-    .dropdown-content a { color: var(--text); padding: 10px 16px; text-decoration: none; display: block; font-size: 12px; border-bottom: 1px solid var(--border); }
+    .dropdown-content a { color: var(--text); padding: 10px 16px; text-decoration: none; display: block; font-size: 12px; border-bottom: 1px solid var(--border); border-radius: 8px; margin-top: 8px; }
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
@@ -143,13 +143,7 @@
     .cd-item-base.upcoming { 
       grid-template-columns: 64px 1fr 90px; border: 1px solid #fed7aa; background-color: #fffaf5;
     }
-
-    /* リストUI：リンクがある場合のみ浮き出し効果を適用 */
-    a.cd-item-base:hover { 
-      transform: translateY(-2px); 
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
-      border-color: #cbd5e1; 
-    }
+    a.cd-item-base:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: #cbd5e1; }
 
     .show-more-btn {
       width: 100%; padding: 12px; margin-top: 10px; background: #f8fafc; border: 1px solid var(--border);
@@ -245,10 +239,9 @@
       <div class="group-buttons-wrapper">
         <div style="font-size: 11px; font-weight: 400; color: #64748b; margin-bottom: 6px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
         <div class="group-buttons" id="groupButtons"></div>
-        
         <div id="selectedGroupsArea" class="selected-groups-row" style="display:none;">
           <div class="selected-label">選択中のグループ</div>
-          <div id="selectedButtonsContainer" style="display:contents;"></div>
+          <div id="selectedButtonsContainer" style="display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-start;"></div>
         </div>
       </div>
       
@@ -469,6 +462,7 @@ function render(shouldAnimate = false) {
   const isSingle = activeGroups.size === 1;
   const chartWrapper = document.getElementById("chartWrapper");
   const chartBody = document.getElementById("chartBody");
+  
   const minBarWidth = isSingle ? 60 : 45;
   const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * minBarWidth);
   chartBody.style.width = `${finalWidth}px`;
@@ -490,13 +484,17 @@ function render(shouldAnimate = false) {
           data: chartSource.map(c => c[type]),
           backgroundColor: isSingle ? singleColor + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
           borderColor: singleColor,
-          borderWidth: 0, 
+          // 修正：棒グラフの時は枠線なし、折れ線の時は2px
+          borderWidth: isSingle ? 2 : 0, 
           borderRadius: 4, 
           fill: true, 
           tension: 0.3, 
+          // 修正：折れ線グラフの点（ポイント）を表示
           pointBackgroundColor: "#fff", 
           pointBorderColor: singleColor, 
-          pointRadius: isSingle ? 4 : 0
+          pointRadius: isSingle ? 4 : 0,
+          pointHoverRadius: isSingle ? 6 : 0,
+          pointBorderWidth: isSingle ? 2 : 0
         }]
       },
       options: {
