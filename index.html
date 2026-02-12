@@ -92,14 +92,20 @@
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
 
-    /* タイトル見出しの太字を解除 */
     .card-section-title { font-size: 15px; font-weight: 600; color: #475569; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
     .card-section-title::before { content: ""; width: 4px; height: 16px; background: #eba0b8; border-radius: 2px; }
 
     .group-buttons-wrapper { margin-bottom: 8px; }
-    .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 4px; padding: 0 4px; }
-    .group-btn { padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
+    .group-buttons { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 6px; margin-bottom: 4px; padding: 0 4px; }
+    .group-btn { position: relative; padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
+    
+    .group-btn.active, .group-btn.is-selected-in-list { padding-right: 24px; }
+    .group-btn.active::after, .group-btn.is-selected-in-list::after { content: '×'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 800; opacity: 0.6; }
     .group-btn.active { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .group-btn.is-selected-in-list { background: #f8fafc !important; color: #cbd5e1 !important; border: 1px solid #e2e8f0 !important; box-shadow: none !important; opacity: 0.8; }
+
+    .selected-groups-row { display: flex; flex-wrap: wrap; gap: 6px; justify-content: flex-start; margin-top: 10px; padding: 12px 4px; background: #f8fafc; border-radius: 12px; min-height: 38px; border: 1px dashed var(--border); }
+    .selected-label { font-size: 10px; color: var(--sub); width: 100%; text-align: left; padding-left: 4px; margin-bottom: 6px; font-weight: 600; }
 
     @media (max-width: 767px) {
       .group-buttons { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
@@ -128,6 +134,7 @@
 
     .cd-list { display: grid; gap: 10px; }
     .no-data-msg { font-size: 12px; color: var(--sub); text-align: center; padding: 20px 0; }
+    
     .cd-item-base { 
       display: grid; grid-template-columns: 1fr 90px; gap: 16px; padding: 14px 16px; 
       border: 1px solid var(--border); border-radius: 12px; text-decoration: none; 
@@ -136,6 +143,8 @@
     .cd-item-base.upcoming { 
       grid-template-columns: 64px 1fr 90px; border: 1px solid #fed7aa; background-color: #fffaf5;
     }
+    .cd-item-base:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: #cbd5e1; }
+
     @media (max-width: 767px) {
       .cd-item-base { grid-template-columns: 1fr 80px; padding: 10px 12px; gap: 10px; }
       .cd-item-base.upcoming { grid-template-columns: 50px 1fr 80px; }
@@ -169,6 +178,8 @@
     .analysis-btn { text-decoration: none; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 700; text-align: center; transition: all 0.2s; display: block; border: 1px solid; }
     .analysis-btn:hover { opacity: 0.8; transform: translateY(-1px); }
     .group-links-container { display: flex; flex-direction: column; gap: 8px; }
+
+    .inner-loading { text-align: center; padding: 40px 0; color: var(--sub); font-size: 12px; }
   </style>
 </head>
 <body>
@@ -210,9 +221,7 @@
 </header>
 
 <div class="container">
-  <div id="loading" class="card"><div style="text-align:center; padding:40px;"><div class="spinner"></div>データを取得中...</div></div>
-
-  <div id="mainContent" class="content-wrapper" style="display:none;">
+  <div id="mainContent" class="content-wrapper">
     <div class="card">
       <div class="chart-tabs">
         <div class="chart-tab is-active" data-sort="date">発売日順</div>
@@ -222,9 +231,19 @@
       <div class="group-buttons-wrapper">
         <div style="font-size: 11px; font-weight: 400; color: #64748b; margin-bottom: 6px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
         <div class="group-buttons" id="groupButtons"></div>
+        
+        <div id="selectedGroupsArea" class="selected-groups-row" style="display:none;">
+          <div class="selected-label">選択中のグループ</div>
+          <div id="selectedButtonsContainer" style="display:contents;"></div>
+        </div>
       </div>
       
-      <div class="chart-wrapper" id="chartWrapper"><div class="chart-body" id="chartBody"><canvas id="salesChart"></canvas></div></div>
+      <div class="chart-wrapper" id="chartWrapper">
+        <div class="chart-body" id="chartBody">
+          <div id="chartLoading" class="inner-loading"><div class="spinner"></div>グラフを作成中...</div>
+          <canvas id="salesChart"></canvas>
+        </div>
+      </div>
       <div class="chart-footer">
         <div id="chartBtnArea"></div>
         <button onclick="copyShareUrl()" class="share-btn-mini" id="shareBtn">
@@ -247,17 +266,19 @@
     <div class="split-area">
       <div class="list-container" style="display:flex; flex-direction:column; gap:24px;">
         <div class="card" id="upcomingCard">
-          <div class="card-section-title">これから発売！</div>
-          <div class="cd-list" id="upcomingList"></div>
+          <div class="card-section-title">これから発売予定</div>
+          <div class="cd-list" id="upcomingList">
+            <div class="inner-loading"><div class="spinner"></div>予定を取得中...</div>
+          </div>
         </div>
-        
         <div class="card" id="historyCard">
           <div class="card-section-title">歴代シングル・アルバム売上</div>
-          <div class="cd-list" id="cdList"></div>
+          <div class="cd-list" id="cdList">
+            <div class="inner-loading"><div class="spinner"></div>データを取得中...</div>
+          </div>
           <div id="listBtnArea" style="text-align:center; margin-top:20px;"></div>
         </div>
       </div>
-      
       <div class="side-content">
         <section id="analysis" class="card analysis-card" style="margin-bottom: 24px;">
           <div class="card-title">2026年最新の売上傾向分析</div>
@@ -266,7 +287,6 @@
             <p style="margin: 0 0 12px 0;">また、最新シングル『Stargaze』で初週33.0万枚を記録した<strong>SixTONES</strong>、2人体制移行後も30万枚越えの高水準を保つ<strong>King & Prince</strong>、そして『アシンメトリー / Black Nightmare』で前作を上回る推移を見せる<strong>なにわ男子</strong>の3組が、初動水準を保っています。</p>
           </div>
         </section>
-
         <section id="group-nav" class="card analysis-card" style="margin-bottom: 24px;">
           <div class="card-title">各グループ別 売上詳細データ</div>
           <div id="groupLinks" class="group-links-container">
@@ -302,25 +322,219 @@ document.querySelectorAll('.chart-tab').forEach(tab => {
   });
 });
 
-const groupDropdown = document.getElementById('groupDropdown');
-const dropdownContent = groupDropdown.querySelector('.dropdown-content');
-groupDropdown.addEventListener('click', (e) => { e.stopPropagation(); dropdownContent.classList.toggle('is-active'); });
-window.addEventListener('click', () => { dropdownContent.classList.remove('is-active'); });
+function renderGroupButtons(isPreload = false) {
+  let sortedGroups = [];
+  if (isPreload) sortedGroups = fixedGroupOrder;
+  else {
+    const latestValid = {};
+    allProcessedData.forEach(cd => {
+      if (cd.category === 'single' && cd.firstWeek !== null) {
+        const cur = latestValid[cd.group];
+        if (!cur || new Date(cd.releaseDate) > new Date(cur.date)) latestValid[cd.group] = { date: cd.releaseDate, sales: cd.firstWeek };
+      }
+    });
+    sortedGroups = [...new Set(allProcessedData.map(c => c.group))].sort((a, b) => (latestValid[b]?.sales || -1) - (latestValid[a]?.sales || -1));
+  }
 
-function copyShareUrl() {
-  const groups = Array.from(activeGroups).join(',');
-  const type = document.getElementById("salesType").value;
-  const filter = document.getElementById("filter").value;
-  const sort = document.getElementById("sortOrder").value;
-  const url = new URL(window.location.href);
-  if(groups) url.searchParams.set('g', groups); else url.searchParams.delete('g');
-  url.searchParams.set('t', type); url.searchParams.set('f', filter); url.searchParams.set('s', sort);
-  navigator.clipboard.writeText(url.href).then(() => {
-    const btnText = document.getElementById('shareBtnText');
-    const originalText = btnText.innerText;
-    btnText.innerText = "コピーしました！";
-    setTimeout(() => btnText.innerText = originalText, 2000);
+  const listHtml = sortedGroups.map(g => {
+    const isSelected = activeGroups.has(g);
+    const color = fixedGroupColors[g] || "#7f8c8d";
+    const extraClass = isSelected ? 'is-selected-in-list' : '';
+    return `<button class="group-btn ${extraClass}" data-group="${g}" style="border-color:${isSelected ? '#e2e8f0' : color}; color:${isSelected ? '#cbd5e1' : color}; background:#fff">${g}</button>`;
+  }).join("");
+  document.getElementById("groupButtons").innerHTML = listHtml;
+  
+  const selectedArea = document.getElementById("selectedGroupsArea");
+  const selectedContainer = document.getElementById("selectedButtonsContainer");
+  
+  if (activeGroups.size > 0) {
+    selectedArea.style.display = "flex";
+    selectedContainer.innerHTML = Array.from(activeGroups).map(g => {
+      const color = fixedGroupColors[g] || "#7f8c8d";
+      return `<button class="group-btn active" data-group="${g}" style="border-color:${color}; color:#fff; background:${color}">${g}</button>`;
+    }).join("");
+  } else {
+    selectedArea.style.display = "none";
+  }
+
+  document.querySelectorAll(".group-btn").forEach(btn => {
+    btn.onclick = () => {
+      if(!isFullDataLoaded) loadAllRecords();
+      const g = btn.dataset.group;
+      if (activeGroups.has(g)) { activeGroups.delete(g); } 
+      else { if (activeGroups.size >= 5) return alert("最大5グループまで"); activeGroups.add(g); }
+      const url = new URL(window.location.href);
+      if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
+      window.history.replaceState({}, '', url);
+      renderGroupButtons(false); 
+      render(true);
+    };
   });
+}
+
+async function loadData() {
+  initSettingsByUrl();
+  renderGroupButtons(true);
+  try {
+    const [resData, resInfo] = await Promise.all([fetch(SHEET_DATA_URL), fetch(SHEET_INFO_URL)]);
+    const rawData = parseCSV(await resData.text());
+    allProcessedData = rawData.map(d => ({ 
+      title: d.title, group: d.group, releaseDate: d.releaseDate, category: d.category,
+      firstDay: isNaN(parseInt(d.firstDay)) ? null : parseInt(d.firstDay),
+      firstWeek: isNaN(parseInt(d.firstWeek)) ? null : parseInt(d.firstWeek),
+      seller: d.seller || "",
+      affiliate: d.affiliate || ""
+    }));
+    if(isFullDataLoaded) cds = allProcessedData;
+    else cds = allProcessedData.filter(c => new Date(c.releaseDate) >= new Date("2024-01-01"));
+    const chartLoading = document.getElementById('chartLoading');
+    if(chartLoading) chartLoading.style.display = 'none';
+    renderGroupButtons(false); 
+    render();
+    if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
+    if (!isFullDataLoaded && allProcessedData.length > cds.length) showLoadMoreButtons();
+  } catch (e) { console.error(e); }
+}
+
+function loadAllRecords() {
+  if (isFullDataLoaded) return;
+  cds = allProcessedData; 
+  isFullDataLoaded = true;
+  const btn = document.querySelector('.load-more-text'); 
+  if(btn) btn.remove();
+}
+
+function showLoadMoreButtons() {
+  if (isFullDataLoaded) return;
+  const btn = document.createElement('button');
+  btn.className = 'load-more-text'; btn.textContent = '<< 2024年以前のデータも読み込む';
+  btn.onclick = () => { loadAllRecords(); render(true); };
+  document.getElementById('chartBtnArea').appendChild(btn);
+}
+
+function processInfo(data) {
+  const histories = data.filter(d => d.type === 'history');
+  document.getElementById('historyList').innerHTML = histories.map(h => `<li class="history-item"><span class="history-date">${h.date}</span><div class="history-text">${h.text}</div></li>`).join("");
+}
+
+function render(shouldAnimate = false) {
+  const type = document.getElementById("salesType").value;
+  const f = document.getElementById("filter").value;
+  const s = document.getElementById("sortOrder").value;
+  
+  if (!cds.length) return;
+  if (s === "salesDesc" && !isFullDataLoaded) loadAllRecords();
+
+  let filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
+  
+  let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
+    if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
+    return (a[type] || 0) - (b[type] || 0); // 右端を最高売上にするための昇順
+  });
+  
+  if (chartSource.length === 0 && activeGroups.size > 0) {
+     loadAllRecords();
+     filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
+     chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
+        if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
+        return (a[type] || 0) - (b[type] || 0);
+     });
+  }
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const upcoming = filtered.filter(c => c[type] === null);
+  
+  const history = filtered.filter(c => c[type] !== null).sort((a, b) => {
+    if (s === "date") return b.releaseDate.localeCompare(a.releaseDate);
+    return (b[type] || -1) - (a[type] || -1); // 表（リスト）は降順
+  });
+
+  const isSingle = activeGroups.size === 1;
+  const chartWrapper = document.getElementById("chartWrapper");
+  const chartBody = document.getElementById("chartBody");
+  
+  // 棒グラフの幅計算を元の仕様(isSingle ? 60 : 45)に戻す
+  const minBarWidth = isSingle ? 60 : 45;
+  const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * minBarWidth);
+  chartBody.style.width = `${finalWidth}px`;
+  
+  if (chart) chart.destroy();
+  let singleColor = "#5D9C9F";
+  if (isSingle) {
+    const groupName = Array.from(activeGroups)[0];
+    singleColor = fixedGroupColors[groupName] || "#5D9C9F";
+  }
+  
+  const ctx = document.getElementById("salesChart");
+  if (ctx) {
+    chart = new Chart(ctx, {
+      type: isSingle ? 'line' : 'bar',
+      data: {
+        labels: chartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
+        datasets: [{
+          data: chartSource.map(c => c[type]),
+          backgroundColor: isSingle ? singleColor + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
+          borderColor: singleColor,
+          borderWidth: 0, 
+          borderRadius: 4, 
+          fill: true, 
+          tension: 0.3, 
+          pointBackgroundColor: "#fff", 
+          pointBorderColor: singleColor, 
+          pointRadius: isSingle ? 4 : 0
+        }]
+      },
+      options: {
+        responsive: true, 
+        maintainAspectRatio: false,
+        animation: shouldAnimate ? { duration: 800 } : false,
+        plugins: { 
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: (context) => { const d = chartSource[context[0].dataIndex]; return `${d.group} / ${d.title}`; },
+              label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
+            }
+          },
+          datalabels: { anchor: 'end', align: 'top', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
+        },
+        scales: { 
+          y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, grace: '15%' },
+          x: { ticks: { font: {size: 8}, maxRotation: 45, minRotation: 45 }, grid: { display: false } }
+        }
+      }
+    });
+  }
+  
+  // デフォルトで右端（最新/最高売上）を表示
+  chartWrapper.scrollLeft = finalWidth;
+
+  const getListItemHtml = (c) => {
+    const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
+    const color = fixedGroupColors[c.group] || "#7f8c8d";
+    const salesValExists = c[type] !== null;
+    const salesDisp = salesValExists ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'集計中');
+    const isUpcomingLayout = !salesValExists;
+    const countdownHtml = days>0 ? `<div class="countdown">あと${days}日</div>` : days===0 ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` : "";
+    const content = `
+      ${isUpcomingLayout ? `<div class="cd-thumb">${c.affiliate ? `<img src="${c.affiliate}">` : ''}</div>` : ''}
+      <div class="cd-info-main">
+        <span class="cd-title" style="color:${color}">
+          ${c.title}
+          ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>${isUpcomingLayout ? '<span class=\"buy-label\">購入はこちら</span>' : ''}` : ''}
+        </span>
+        <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span></div>
+      </div>
+      <div class="sales-box">
+        <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDisp}</div>
+        ${countdownHtml}
+      </div>
+    `;
+    return c.seller ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</a>` : `<div class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</div>`;
+  };
+
+  document.getElementById("upcomingList").innerHTML = upcoming.length ? upcoming.map(getListItemHtml).join("") : '<div class="no-data-msg">現在、発売予定の作品はありません</div>';
+  document.getElementById("cdList").innerHTML = history.length ? history.map(getListItemHtml).join("") : '<div class="no-data-msg">該当するデータがありません</div>';
 }
 
 function parseCSV(text) {
@@ -348,178 +562,29 @@ function initSettingsByUrl() {
     if(params.get('g')) { params.get('g').split(',').forEach(g => activeGroups.add(decodeURIComponent(g))); isFullDataLoaded = true; }
 }
 
-async function loadData() {
-  initSettingsByUrl();
-  renderGroupButtons(true);
-  try {
-    const [resData, resInfo] = await Promise.all([fetch(SHEET_DATA_URL), fetch(SHEET_INFO_URL)]);
-    const rawData = parseCSV(await resData.text());
-    allProcessedData = rawData.map(d => ({ 
-      title: d.title, group: d.group, releaseDate: d.releaseDate, category: d.category,
-      firstDay: isNaN(parseInt(d.firstDay)) ? null : parseInt(d.firstDay),
-      firstWeek: isNaN(parseInt(d.firstWeek)) ? null : parseInt(d.firstWeek),
-      seller: d.seller || "",
-      affiliate: d.affiliate || ""
-    }));
-    if(isFullDataLoaded) cds = allProcessedData;
-    else cds = allProcessedData.filter(c => new Date(c.releaseDate) >= new Date("2024-01-01"));
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'flex';
-    renderGroupButtons(false); 
-    render();
-    if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
-    if (!isFullDataLoaded && allProcessedData.length > cds.length) showLoadMoreButtons();
-  } catch (e) { console.error(e); }
-}
-
-function loadAllRecords() {
-  if (isFullDataLoaded) return;
-  cds = allProcessedData; isFullDataLoaded = true;
-  const btn = document.querySelector('.load-more-text'); if(btn) btn.remove();
-}
-
-function showLoadMoreButtons() {
-  if (isFullDataLoaded) return;
-  const btn = document.createElement('button');
-  btn.className = 'load-more-text'; btn.textContent = '<< 2024年以前のデータも読み込む';
-  btn.onclick = () => { loadAllRecords(); render(true); };
-  document.getElementById('chartBtnArea').appendChild(btn);
-}
-
-function processInfo(data) {
-  const histories = data.filter(d => d.type === 'history');
-  document.getElementById('historyList').innerHTML = histories.map(h => `<li class="history-item"><span class="history-date">${h.date}</span><div class="history-text">${h.text}</div></li>`).join("");
-}
-
-function renderGroupButtons(isPreload = false) {
-  let sortedGroups = [];
-  if (isPreload) sortedGroups = fixedGroupOrder;
-  else {
-    const latestValid = {};
-    allProcessedData.forEach(cd => {
-      if (cd.category === 'single' && cd.firstWeek !== null) {
-        const cur = latestValid[cd.group];
-        if (!cur || new Date(cd.releaseDate) > new Date(cur.date)) latestValid[cd.group] = { date: cd.releaseDate, sales: cd.firstWeek };
-      }
-    });
-    sortedGroups = [...new Set(allProcessedData.map(c => c.group))].sort((a, b) => (latestValid[b]?.sales || -1) - (latestValid[a]?.sales || -1));
-  }
-  document.getElementById("groupButtons").innerHTML = sortedGroups.map(g => {
-    const active = activeGroups.has(g);
-    const color = fixedGroupColors[g] || "#7f8c8d";
-    return `<button class="group-btn ${active?'active':''}" data-group="${g}" style="border-color:${color}; color:${active?'#fff':color}; background:${active?color:'#fff'}">${g}</button>`;
-  }).join("");
-  document.querySelectorAll(".group-btn").forEach(btn => {
-    btn.onclick = () => {
-      if(!isFullDataLoaded) loadAllRecords();
-      const g = btn.dataset.group;
-      if (activeGroups.has(g)) activeGroups.delete(g);
-      else if (activeGroups.size < 5) activeGroups.add(g);
-      else return alert("最大5グループまで");
-      const url = new URL(window.location.href);
-      if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
-      window.history.replaceState({}, '', url);
-      renderGroupButtons(false); render(true);
-    };
-  });
-}
-
-function render(shouldAnimate = false) {
+function copyShareUrl() {
+  const groups = Array.from(activeGroups).join(',');
   const type = document.getElementById("salesType").value;
-  const f = document.getElementById("filter").value;
-  const s = document.getElementById("sortOrder").value;
-  
-  if (!cds.length) return;
-
-  let filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
-  
-  let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
-    if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
-    return (a[type] || 0) - (b[type] || 0);
+  const filter = document.getElementById("filter").value;
+  const sort = document.getElementById("sortOrder").value;
+  const url = new URL(window.location.href);
+  if(groups) url.searchParams.set('g', groups); else url.searchParams.delete('g');
+  url.searchParams.set('t', type); url.searchParams.set('f', filter); url.searchParams.set('s', sort);
+  navigator.clipboard.writeText(url.href).then(() => {
+    const btnText = document.getElementById('shareBtnText');
+    const originalText = btnText.innerText;
+    btnText.innerText = "コピーしました！";
+    setTimeout(() => btnText.innerText = originalText, 2000);
   });
-  
-  const today = new Date(); today.setHours(0,0,0,0);
-  const upcoming = filtered.filter(c => c[type] === null);
-  const history = filtered.filter(c => c[type] !== null).sort((a, b) => s === "date" ? b.releaseDate.localeCompare(a.releaseDate) : (b[type] || -1) - (a[type] || -1));
-
-  const isSingle = activeGroups.size === 1;
-  const chartWrapper = document.getElementById("chartWrapper");
-  const chartBody = document.getElementById("chartBody");
-  const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * (isSingle ? 60 : 45));
-  chartBody.style.width = `${finalWidth}px`;
-  if (chart) chart.destroy();
-  let singleColor = "#5D9C9F";
-  if (isSingle) {
-    const groupName = Array.from(activeGroups)[0];
-    singleColor = fixedGroupColors[groupName] || "#5D9C9F";
-  }
-  const ctx = document.getElementById("salesChart");
-  if (ctx) {
-    chart = new Chart(ctx, {
-      type: isSingle ? 'line' : 'bar',
-      data: {
-        labels: chartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
-        datasets: [{
-          data: chartSource.map(c => c[type]),
-          backgroundColor: isSingle ? singleColor + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
-          borderColor: singleColor,
-          borderWidth: isSingle ? 2 : 0, borderRadius: 4, fill: true, tension: 0.3, 
-          pointBackgroundColor: "#fff", pointBorderColor: singleColor, pointRadius: isSingle ? 4 : 0
-        }]
-      },
-      options: {
-        responsive: true, maintainAspectRatio: false,
-        animation: shouldAnimate ? { duration: 800 } : false,
-        plugins: { 
-          legend: { display: false },
-          tooltip: {
-            callbacks: {
-              title: (context) => { const d = chartSource[context[0].dataIndex]; return `${d.group} / ${d.title}`; },
-              label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
-            }
-          },
-          datalabels: { anchor: 'end', align: 'top', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
-        },
-        scales: { 
-          y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, grace: '10%' },
-          x: { ticks: { font: {size: 8}, maxRotation: 45, minRotation: 45 }, grid: { display: false } }
-        }
-      }
-    });
-  }
-  if (finalWidth > chartWrapper.clientWidth) chartWrapper.scrollLeft = finalWidth;
-
-  const getListItemHtml = (c) => {
-    const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
-    const color = fixedGroupColors[c.group] || "#7f8c8d";
-    const salesValExists = c[type] !== null;
-    const salesDisp = salesValExists ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'集計中');
-    const isUpcomingLayout = !salesValExists;
-    const countdownHtml = days>0 ? `<div class="countdown">あと${days}日</div>` : days===0 ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` : "";
-
-    const content = `
-      ${isUpcomingLayout ? `<div class="cd-thumb">${c.affiliate ? `<img src="${c.affiliate}">` : ''}</div>` : ''}
-      <div class="cd-info-main">
-        <span class="cd-title" style="color:${color}">
-          ${c.title}
-          ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>${isUpcomingLayout ? '<span class=\"buy-label\">購入はこちら</span>' : ''}` : ''}
-        </span>
-        <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span></div>
-      </div>
-      <div class="sales-box">
-        <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDisp}</div>
-        ${countdownHtml}
-      </div>
-    `;
-    return c.seller ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</a>` : `<div class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</div>`;
-  };
-
-  document.getElementById("upcomingList").innerHTML = upcoming.length ? upcoming.map(getListItemHtml).join("") : '<div class="no-data-msg">現在、発売予定の作品はありません</div>';
-  document.getElementById("cdList").innerHTML = history.length ? history.map(getListItemHtml).join("") : '<div class="no-data-msg">該当するデータがありません</div>';
 }
 
 [document.getElementById("salesType"), document.getElementById("filter")].forEach(el => el.addEventListener("change", () => render(true)));
 window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300); });
+const groupDropdown = document.getElementById('groupDropdown');
+const dropdownContent = groupDropdown.querySelector('.dropdown-content');
+groupDropdown.addEventListener('click', (e) => { e.stopPropagation(); dropdownContent.classList.toggle('is-active'); });
+window.addEventListener('click', () => { dropdownContent.classList.remove('is-active'); });
+
 loadData();
 </script>
 </body>
