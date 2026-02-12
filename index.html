@@ -95,8 +95,32 @@
     .card-section-title::before { content: ""; width: 4px; height: 16px; background: #eba0b8; border-radius: 2px; }
 
     .group-buttons-wrapper { margin-bottom: 8px; }
-    .group-buttons { display: flex; flex-wrap: wrap; justify-content: flex-start; gap: 6px; margin-bottom: 4px; padding: 0 4px; }
-    .group-btn { position: relative; padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
+    
+    /* グループボタン：PCは折り返し、スマホは横スクロール */
+    .group-buttons { 
+      display: flex; 
+      gap: 6px; 
+      margin-bottom: 4px; 
+      padding: 0 4px 8px 4px; 
+    }
+
+    @media (max-width: 767px) {
+      .group-buttons {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .group-buttons::-webkit-scrollbar { display: none; }
+    }
+    @media (min-width: 768px) {
+      .group-buttons {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+    }
+
+    .group-btn { position: relative; padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0; }
     
     .group-btn.active, .group-btn.is-selected-in-list { padding-right: 24px; }
     .group-btn.active::after, .group-btn.is-selected-in-list::after { content: '×'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 800; opacity: 0.6; }
@@ -168,14 +192,14 @@
     .ext-link-icon { width: 11px; height: 11px; color: var(--sub); margin-left: 5px; vertical-align: middle; }
     .buy-label { font-size: 10px; color: var(--sub); font-weight: 600; margin-left: 2px; vertical-align: middle; white-space: nowrap; }
 
-    /* --- 分析セクション新デザイン：パターン5（丸み抑制版） --- */
+    /* 分析セクションの新デザイン */
     .analysis-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
     .analysis-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 768px) { .analysis-grid { grid-template-columns: repeat(2, 1fr); } }
     
     .analysis-block { 
       background: #fff; 
-      border-radius: 4px; /* 丸みを抑制 */
+      border-radius: 4px; /* 丸み抑制 */
       overflow: hidden; 
       border: 1px solid var(--border); 
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
@@ -192,7 +216,6 @@
       font-size: 13px; 
       font-weight: 600; 
       color: #fff; 
-      border-radius: 0; /* ヘッダーの丸みも解除 */
     }
     .analysis-body { 
       padding: 16px; 
@@ -343,7 +366,7 @@
             </div>
             <div class="analysis-block" style="border-color: #5eb3bf;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #5eb3bf, #a3d9e0);">Aぇ! group</div>
-              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(94,179,191,0.03) 0%, #ffffff 100%);">3rdシングル『Chameleon』が初週45.5万枚を記録し、関西ジュニアとして積み上げた実力と人気を背景に、デビュー後も順調な推移を見せています。2026年の動向は、彼らが目標とするトップグループの仲間入りを果たせるかどうかを占う重要な試気石となります。</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(94,179,191,0.03) 0%, #ffffff 100%);">3rdシングル『Chameleon』が初週45.5万枚を記録し、関西ジュニアとして積み上げた実力と人気を背景に、デビュー後も順調な推移を見せています。2026年の動向は、彼らが目標とするトップグループの仲間入りを果たせるかどうかを占う重要な試金石となります。</div>
             </div>
             <div class="analysis-block" style="border-color: #66b27e;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #66b27e, #a7d8b5);">Travis Japan</div>
@@ -548,6 +571,7 @@ function render(shouldAnimate = false) {
   const isSingle = activeGroups.size === 1;
   const chartWrapper = document.getElementById("chartWrapper");
   const chartBody = document.getElementById("chartBody");
+  
   const minBarWidth = isSingle ? 60 : 45;
   const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * minBarWidth);
   chartBody.style.width = `${finalWidth}px`;
