@@ -96,7 +96,6 @@
 
     .group-buttons-wrapper { margin-bottom: 8px; }
     
-    /* グループボタン：PCは折り返し、スマホは横スクロール */
     .group-buttons { 
       display: flex; 
       gap: 6px; 
@@ -192,14 +191,14 @@
     .ext-link-icon { width: 11px; height: 11px; color: var(--sub); margin-left: 5px; vertical-align: middle; }
     .buy-label { font-size: 10px; color: var(--sub); font-weight: 600; margin-left: 2px; vertical-align: middle; white-space: nowrap; }
 
-    /* 分析セクションの新デザイン */
+    /* 分析セクションのデザイン */
     .analysis-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
     .analysis-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 768px) { .analysis-grid { grid-template-columns: repeat(2, 1fr); } }
     
     .analysis-block { 
       background: #fff; 
-      border-radius: 4px; /* 丸み抑制 */
+      border-radius: 4px; 
       overflow: hidden; 
       border: 1px solid var(--border); 
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
@@ -207,6 +206,7 @@
       flex-direction: column;
       transition: all 0.2s ease;
     }
+
     .analysis-header { 
       padding: 10px 16px; 
       font-size: 13px; 
@@ -220,6 +220,17 @@
       color: #475569; 
       flex: 1;
     }
+
+    /* もっと見るリンク */
+    .more-link {
+      display: block;
+      text-align: right;
+      font-size: 11px;
+      font-weight: 700;
+      text-decoration: none;
+      margin-top: 4px;
+    }
+    .more-link:hover { text-decoration: underline; }
 
     .history-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
     .history-list { list-style: none; padding: 0; margin: 0; }
@@ -342,11 +353,11 @@
           <div class="analysis-grid">
             <div class="analysis-block" style="border-color: #1b489d;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #1b489d, #3c6dbd);">Snow Man</div>
-              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(27,72,157,0.03) 0%, #ffffff 100%);">最新アルバム『音故知新』で4作連続の初週ミリオンセラーを達成するなど、圧倒的な数字を記録しており、固定ファンの熱量の高さが売上に直結しています。バラエティ番組での露出や各メンバーの活躍によってライト層の取り込みにも成功しています。2025年には初となる国立競技場公演を成功に導き、「絶対王者」としての地位を盤石なものにしています。</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(27,72,157,0.03) 0%, #ffffff 100%);">最新アルバム『音故知新』で4作連続の初週ミリオンセラーを達成するなど、圧倒的な数字を記録しており、固定ファンの熱量の高さが売上に直結しています。バラエティ番組での露出や各メンバーの活躍によってライト層の取り込みにも成功しています。2025年には初となる国立競技場公演を成功に導き、「絶対王者」としての地位を盤石なものにしています。国内での圧倒的な実績を武器に、次は音楽シーン全体の記録を塗り替えるフェーズへと突入しています。<a href="https://fan-chart.com/snowman" class="more-link" style="color:#1b489d;">もっと見る >></a></div>
             </div>
             <div class="analysis-block" style="border-color: #555555;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #555555, #888888);">SixTONES</div>
-              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(85,85,85,0.03) 0%, #ffffff 100%);">デビュー6周年という節目を迎える2026年、初のベストアルバム『MILESixTONES -Best Tracks-』がビルボード初週57.7万枚を記録しました。これは前年アルバム『GOLD』の初動（約42万枚）を上回る数字であり、ベスト盤としての高い集客力を証明する形となりました。野田洋次郎氏による楽曲提供を受けた16thシングル『Stargaze』に象徴される高い音楽性と、圧倒的なライブパフォーマンスによって、独自の路線を貫いています。</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(85,85,85,0.03) 0%, #ffffff 100%);">デビュー6周年という節目を迎える2026年、初のベストアルバム『MILESixTONES -Best Tracks-』がビルボード初週57.7万枚を記録しました。これは前年アルバム『GOLD』の初動（約42万枚）を上回る数字であり、ベスト盤としての高い集客力を証明する形となりました。野田洋次郎氏による楽曲提供を受けた16thシングル『Stargaze』に象徴される高い音楽性と、圧倒的なライブパフォーマンスによって、独自の路線を貫いています。<a href="https://fan-chart.com/sixtones" class="more-link" style="color:#555555;">もっと見る >></a></div>
             </div>
             <div class="analysis-block" style="border-color: #de6d6d;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #de6d6d, #f2a2a2);">timelesz</div>
@@ -354,11 +365,11 @@
             </div>
             <div class="analysis-block" style="border-color: #fab700;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #fab700, #ffdb70);">King & Prince</div>
-              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(250,183,0,0.03) 0%, #ffffff 100%);">2025年12月に発売された7thアルバム『STARRING』は、オリコン初週25.0万枚で首位を獲得しました。SNSでのヒットも手伝い、Billboard Hot Albumsでは3週連続1位をマークするなどロングヒットを記録しています。2人体制移行後もシングル売上は30〜40万枚と安定した数字を維持しており、今後は『シンデレラガール』に続くような国民的楽曲を打ち出し、いかにライト層を拡大できるかが勝負所となります。</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(250,183,0,0.03) 0%, #ffffff 100%);">2025年12月に発売された7thアルバム『STARRING』は、オリコン初週25.0万枚で首位を獲得しました。SNSでのヒットも手伝い、Billboard Hot Albumsでは3週連続1位をマークするなどロングヒットを記録しています。2人体制移行後もシングル売上は30〜40万枚と安定した数字を維持しており、今後は『シンデレラガール』に続くような国民的楽曲を打ち出し、いかにライト層を拡大できるかが勝負所となります。<a href="https://fan-chart.com/king-and-prince" class="more-link" style="color:#fab700;">もっと見る >></a></div>
             </div>
             <div class="analysis-block" style="border-color: #eba0b8;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #eba0b8, #f5cad8);">なにわ男子</div>
-              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(235,160,184,0.03) 0%, #ffffff 100%);">9thシングル『アシンメトリー / Black Nightmare』は、前作『Doki it』（初週33.6万枚）を上回る好スタートを切りました。デビュー時から一貫して「関西発の正統派アイドル」路線を堅持しており、若年層や関西圏における支持層の厚さは圧倒的です。メンバー各人の俳優活動がグループを牽引している現状から、今後グループ全体としていかにファン層を多角化していけるかが注目されます。</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(235,160,184,0.03) 0%, #ffffff 100%);">9thシングル『アシンメトリー / Black Nightmare』は、前作『Doki it』（初週33.6万枚）を上回る好スタートを切りました。デビュー時から一貫して「関西発の正統派アイドル」路線を堅持しており、若年層や関西圏における支持層の厚さは圧倒的です。メンバー各人の俳優活動がグループを牽引している現状から、今後グループ全体としていかにファン層を多角化していけるかが注目されます。<a href="https://fan-chart.com/naniwa-danshi" class="more-link" style="color:#eba0b8;">もっと見る >></a></div>
             </div>
             <div class="analysis-block" style="border-color: #5eb3bf;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #5eb3bf, #a3d9e0);">Aぇ! group</div>
