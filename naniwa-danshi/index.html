@@ -16,6 +16,7 @@
       --border: #e2e8f0; --accent-sm: #eba0b9; /* なにわ男子メインカラー */
       --primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
       --accent-upcoming: #ea580c;
+      --history-body: #475569; /* 軌跡セクション用カラー */
     }
     body { 
       margin: 0; padding: 0; 
@@ -24,7 +25,7 @@
       scroll-behavior: smooth;
     }
 
-    /* --- ユーティリティバー：Snow Man/King & Princeと統一 --- */
+    /* --- ユーティリティバー --- */
     .utility-bar { 
       background: #fff; 
       border-bottom: 1px solid var(--border); 
@@ -63,17 +64,52 @@
     .dropdown-content a:last-child { border-bottom: none; }
     .dropdown-content a:hover { background-color: #f1f5f9; }
 
-    /* --- ヘッダー：固定なしに修正 --- */
-    header { 
+    /* --- ヘッダー（Fan Chart ロゴスタイル統合） --- */
+    .sticky-header { 
       background: #fff; 
       border-bottom: 3px solid var(--accent-sm); 
-      padding: 1rem; 
-      z-index: 100; 
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05); 
+      padding: 20px 10px; 
     }
-    .header-inner { max-width: 1100px; margin: 0 auto; }
-    .header-title { font-size: 1.2rem; margin: 0; font-weight: 800; text-align: center; }
+    .header-content { max-width: 1100px; margin: 0 auto; }
+    .site-title { text-align: center; }
+    .site-title h1 { margin: 0; padding: 0; }
+    
+    /* 1段目：なにわ男子 歴代売上推移チャート（拡大 ＆ ピンクカラー） */
+    .site-title .sub-name { 
+      display: block; 
+      font-size: 16px; 
+      color: var(--accent-sm); 
+      font-weight: 800; 
+      margin-bottom: 2px; 
+      letter-spacing: 0.02em; 
+    }
+    /* 2段目：Fan Chart */
+    .site-title .main-logo { 
+      display: block; 
+      font-family: "Georgia", serif; 
+      font-size: 32px; 
+      font-weight: 900; 
+      font-style: italic; 
+      color: #333; 
+      line-height: 1.1; 
+      margin: 2px 0 4px 0; 
+    }
+    /* 3段目：【2026年最新】... */
+    .site-title .main-name { 
+      display: block; 
+      font-size: 11px; 
+      font-weight: 700; 
+      color: #64748b; 
+      line-height: 1.2; 
+    }
 
+    @media (min-width: 768px) {
+      .site-title .sub-name { font-size: 20px; } 
+      .site-title .main-logo { font-size: 48px; }
+      .site-title .main-name { font-size: 15px; }
+    }
+
+    /* --- コンテンツエリア --- */
     .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); margin-bottom: 24px; border: 1px solid var(--border); overflow: hidden; }
     
@@ -89,7 +125,6 @@
       color: #64748b; 
       cursor: pointer; 
       font-weight: 400; 
-      margin-top: 2px;
     }
     .checkbox-control input { width: 14px; height: 14px; cursor: pointer; margin: 0; }
 
@@ -100,6 +135,7 @@
 
     .section-title { font-weight: 800; color: var(--accent-sm); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; font-size: 1.1rem; }
     
+    /* --- 軌跡セクション --- */
     .history-item { position: relative; padding-left: 28px; padding-bottom: 18px; border-left: 2px solid var(--border); margin-left: 6px; }
     .history-item:last-child { border-left: 2px solid transparent; padding-bottom: 0; }
     .history-item::before { 
@@ -107,8 +143,9 @@
       width: 12px; height: 12px; border-radius: 50%; background: var(--accent-sm); border: 2px solid #fff; 
       box-shadow: 0 0 0 1px var(--bg);
     }
-    .history-year { font-weight: 800; font-size: 14px; color: var(--accent-sm); margin-bottom: 2px; line-height: 1.4; }
-    .history-desc { font-size: 13px; color: #475569; line-height: 1.5; margin: 0; }
+    /* 小見出しを説明文と同じ色に統一 */
+    .history-year { font-weight: 800; font-size: 14px; color: var(--history-body); margin-bottom: 2px; line-height: 1.4; }
+    .history-desc { font-size: 13px; color: var(--history-body); line-height: 1.5; margin: 0; }
 
     .list-header { font-size: 1.1rem; font-weight: 800; color: var(--accent-sm); margin: 25px 0 15px 5px; }
     .cd-list { display: grid; gap: 12px; }
@@ -123,15 +160,36 @@
     .cd-item-link { text-decoration: none !important; color: inherit !important; display: block; }
     .cd-item-base { 
       display: grid; grid-template-columns: 80px 1fr auto; gap: 12px; padding: 12px; 
-      align-items: center; text-decoration: none !important;
+      align-items: center; 
     }
     .cd-thumb { width: 80px; height: 80px; background: #f1f5f9; border-radius: 8px; overflow: hidden; display: flex; align-items: center; justify-content: center; }
     .cd-thumb img { max-width: 100%; height: auto; display: block; }
     .cd-title { font-weight: 800; font-size: 13.5px; color: var(--accent-sm); line-height: 1.4; margin-bottom: 4px; }
-    .sales-val { font-weight: 800; font-size: 14px; color: var(--accent-sm); text-align: right; }
+    
+    /* 売上・カウントダウン表示エリア */
+    .sales-val { 
+      font-weight: 800; 
+      font-size: 14px; 
+      color: var(--accent-sm); 
+      text-align: right; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-end; 
+      gap: 4px; 
+    }
     .badge-million { background: #f59e0b; color: #fff; font-size: 9px; padding: 2px 5px; border-radius: 4px; font-weight: bold; margin-top: 3px; display: inline-block; }
     
-    .countdown { font-size: 10px; font-weight: 700; color: var(--accent-upcoming); background: #fff7ed; padding: 1px 6px; border-radius: 99px; border: 1px solid #ffedd5; margin-left: 5px; }
+    /* カウントダウン（予約受付中の下に来るよう調整） */
+    .countdown { 
+      font-size: 10px; 
+      font-weight: 700; 
+      color: var(--accent-upcoming); 
+      background: #fff7ed; 
+      padding: 1px 8px; 
+      border-radius: 99px; 
+      border: 1px solid #ffedd5; 
+      white-space: nowrap;
+    }
 
     .admin-comment { 
       padding: 10px 15px 12px 15px; 
@@ -149,7 +207,6 @@
 
     @media (max-width: 768px) {
       .card { padding: 12px; }
-      .header-title { font-size: 1.1rem; }
       .cd-item-base { grid-template-columns: 70px 1fr auto; gap: 10px; }
       .cd-thumb { width: 70px; height: 70px; }
       .cd-title { font-size: 13px; }
@@ -180,9 +237,15 @@
   </div>
 </div>
 
-<header>
-  <div class="header-inner">
-    <h1 class="header-title">なにわ男子 歴代売上推移チャート</h1>
+<header class="sticky-header">
+  <div class="header-content">
+    <div class="site-title">
+      <h1>
+        <span class="sub-name">なにわ男子 歴代売上推移チャート</span>
+        <span class="main-logo">Fan Chart</span>
+        <span class="main-name">【2026年最新】歴代シングル・アルバム売上枚数比較サイト</span>
+      </h1>
+    </div>
   </div>
 </header>
 
@@ -323,7 +386,7 @@ function render(shouldAnimate = false, shouldScroll = false) {
   let chartSource = allData.filter(c => (f === "all" || c.category === f) && c[type] !== null)
                            .sort((a,b) => s === "date" ? a.releaseDate.localeCompare(b.releaseDate) : (b[type] || 0) - (a[type] || 0));
   
-  let listSource = allData.filter(c => (f === "all" || c.category === f))
+  let listSource = allData.filter(c => (f === "all" || c.category === f) && c.title !== "")
                           .sort((a,b) => b.releaseDate.localeCompare(a.releaseDate));
   
   const chartBody = document.getElementById("chartBody");
@@ -393,11 +456,11 @@ function render(shouldAnimate = false, shouldScroll = false) {
     relDate.setHours(0,0,0,0);
     const days = Math.ceil((relDate - today) / 86400000);
     
-    let salesDisp = "";
+    let salesText = "";
     if (c[type]) {
-      salesDisp = (c[type]/10000).toFixed(1) + "万枚";
+      salesText = `<span>${(c[type]/10000).toFixed(1)}万枚</span>`;
     } else {
-      salesDisp = days > 0 ? "予約受付中" : "集計中";
+      salesText = `<span>${days > 0 ? "予約受付中" : "集計中"}</span>`;
     }
 
     return `
@@ -409,11 +472,12 @@ function render(shouldAnimate = false, shouldScroll = false) {
             <div class="cd-title">${c.title}</div>
             <div style="font-size:10px; color:var(--sub); font-weight:700;">
               ${c.releaseDate} | ${c.category.toUpperCase()}
-              ${days > 0 ? `<span class="countdown">あと${days}日</span>` : days === 0 ? `<span class="countdown" style="background:#f97316;color:#fff;border:none;">本日発売</span>` : ""}
             </div>
           </div>
           <div class="sales-val" style="${days > 0 ? 'color:var(--accent-upcoming);' : ''}">
-            ${salesDisp}${c.firstWeek >= 1000000 ? '<br><span class="badge-million">MILLION</span>' : ''}
+            ${salesText}
+            ${days > 0 ? `<span class="countdown">あと${days}日</span>` : days === 0 ? `<span class="countdown" style="background:#f97316;color:#fff;border:none;">本日発売</span>` : ""}
+            ${c.firstWeek >= 1000000 ? '<span class="badge-million">MILLION</span>' : ''}
           </div>
         </div>
         ${c.comment ? `<div class="admin-comment" style="border-top: 1px solid #f1f5f9;">${c.comment}</div>` : ''}
