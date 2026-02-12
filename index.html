@@ -143,7 +143,21 @@
     .cd-item-base.upcoming { 
       grid-template-columns: 64px 1fr 90px; border: 1px solid #fed7aa; background-color: #fffaf5;
     }
-    .cd-item-base:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: #cbd5e1; }
+
+    /* リストUI：リンクがある場合のみ浮き出し効果を適用 */
+    a.cd-item-base:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
+      border-color: #cbd5e1; 
+    }
+
+    .show-more-btn {
+      width: 100%; padding: 12px; margin-top: 10px; background: #f8fafc; border: 1px solid var(--border);
+      border-radius: 12px; color: #64748b; font-size: 13px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s;
+    }
+    .show-more-btn:hover { background: #f1f5f9; color: var(--text); }
+    .hidden-item { display: none !important; }
 
     @media (max-width: 767px) {
       .cd-item-base { grid-template-columns: 1fr 80px; padding: 10px 12px; gap: 10px; }
@@ -273,9 +287,12 @@
         </div>
         <div class="card" id="historyCard">
           <div class="card-section-title">歴代シングル・アルバム売上</div>
-          <div class="cd-list" id="cdList">
-            <div class="inner-loading"><div class="spinner"></div>データを取得中...</div>
+          <div id="listScrollArea">
+            <div class="cd-list" id="cdList">
+              <div class="inner-loading"><div class="spinner"></div>データを取得中...</div>
+            </div>
           </div>
+          <div id="showMoreArea"></div>
           <div id="listBtnArea" style="text-align:center; margin-top:20px;"></div>
         </div>
       </div>
@@ -429,7 +446,7 @@ function render(shouldAnimate = false) {
   
   let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
     if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
-    return (a[type] || 0) - (b[type] || 0); // 右端を最高売上にするための昇順
+    return (a[type] || 0) - (b[type] || 0); 
   });
   
   if (chartSource.length === 0 && activeGroups.size > 0) {
@@ -446,14 +463,12 @@ function render(shouldAnimate = false) {
   
   const history = filtered.filter(c => c[type] !== null).sort((a, b) => {
     if (s === "date") return b.releaseDate.localeCompare(a.releaseDate);
-    return (b[type] || -1) - (a[type] || -1); // 表（リスト）は降順
+    return (b[type] || -1) - (a[type] || -1); 
   });
 
   const isSingle = activeGroups.size === 1;
   const chartWrapper = document.getElementById("chartWrapper");
   const chartBody = document.getElementById("chartBody");
-  
-  // 棒グラフの幅計算を元の仕様(isSingle ? 60 : 45)に戻す
   const minBarWidth = isSingle ? 60 : 45;
   const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * minBarWidth);
   chartBody.style.width = `${finalWidth}px`;
@@ -506,16 +521,18 @@ function render(shouldAnimate = false) {
     });
   }
   
-  // デフォルトで右端（最新/最高売上）を表示
   chartWrapper.scrollLeft = finalWidth;
 
-  const getListItemHtml = (c) => {
+  const INITIAL_SHOW_COUNT = 10;
+  const getListItemHtml = (c, index) => {
     const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
     const color = fixedGroupColors[c.group] || "#7f8c8d";
     const salesValExists = c[type] !== null;
     const salesDisp = salesValExists ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'集計中');
     const isUpcomingLayout = !salesValExists;
     const countdownHtml = days>0 ? `<div class="countdown">あと${days}日</div>` : days===0 ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` : "";
+    const hideClass = (index >= INITIAL_SHOW_COUNT) ? 'hidden-item' : '';
+
     const content = `
       ${isUpcomingLayout ? `<div class="cd-thumb">${c.affiliate ? `<img src="${c.affiliate}">` : ''}</div>` : ''}
       <div class="cd-info-main">
@@ -530,11 +547,30 @@ function render(shouldAnimate = false) {
         ${countdownHtml}
       </div>
     `;
-    return c.seller ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</a>` : `<div class="cd-item-base ${isUpcomingLayout?'upcoming':''}">${content}</div>`;
+    return c.seller 
+      ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${isUpcomingLayout?'upcoming':''} ${hideClass}">${content}</a>` 
+      : `<div class="cd-item-base ${isUpcomingLayout?'upcoming':''} ${hideClass}">${content}</div>`;
   };
 
   document.getElementById("upcomingList").innerHTML = upcoming.length ? upcoming.map(getListItemHtml).join("") : '<div class="no-data-msg">現在、発売予定の作品はありません</div>';
-  document.getElementById("cdList").innerHTML = history.length ? history.map(getListItemHtml).join("") : '<div class="no-data-msg">該当するデータがありません</div>';
+  
+  const listArea = document.getElementById("cdList");
+  if (history.length) {
+    listArea.innerHTML = history.map((c, i) => getListItemHtml(c, i)).join("");
+    const showMoreArea = document.getElementById("showMoreArea");
+    if (history.length > INITIAL_SHOW_COUNT) {
+      showMoreArea.innerHTML = `<button class="show-more-btn" id="btnShowMore">もっと見る (${history.length - INITIAL_SHOW_COUNT}件のデータ) <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></button>`;
+      document.getElementById("btnShowMore").onclick = function() {
+        document.querySelectorAll('.hidden-item').forEach(el => el.classList.remove('hidden-item'));
+        this.remove();
+      };
+    } else {
+      showMoreArea.innerHTML = "";
+    }
+  } else {
+    listArea.innerHTML = '<div class="no-data-msg">該当するデータがありません</div>';
+    document.getElementById("showMoreArea").innerHTML = "";
+  }
 }
 
 function parseCSV(text) {
