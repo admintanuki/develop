@@ -126,7 +126,6 @@
     .group-btn.active { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
     .group-btn.is-selected-in-list { background: #f8fafc !important; color: #cbd5e1 !important; border: 1px solid #e2e8f0 !important; box-shadow: none !important; opacity: 0.8; }
 
-    /* 選択中のグループ：横並び設定 */
     .selected-groups-row { 
       display: flex; 
       flex-wrap: wrap; 
@@ -209,7 +208,6 @@
     .ext-link-icon { width: 11px; height: 11px; color: var(--sub); margin-left: 5px; vertical-align: middle; }
     .buy-label { font-size: 10px; color: var(--sub); font-weight: 600; margin-left: 2px; vertical-align: middle; white-space: nowrap; }
 
-    /* 分析セクションのデザイン */
     .analysis-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
     .analysis-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 768px) { .analysis-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -225,29 +223,10 @@
       transition: all 0.2s ease;
     }
 
-    .analysis-header { 
-      padding: 10px 16px; 
-      font-size: 13px; 
-      font-weight: 600; 
-      color: #fff; 
-    }
-    .analysis-body { 
-      padding: 16px; 
-      font-size: 12.5px; 
-      line-height: 1.8; 
-      color: #475569; 
-      flex: 1;
-    }
+    .analysis-header { padding: 10px 16px; font-size: 13px; font-weight: 600; color: #fff; }
+    .analysis-body { padding: 16px; font-size: 12.5px; line-height: 1.8; color: #475569; flex: 1; }
 
-    /* もっと見るリンク */
-    .more-link {
-      display: block;
-      text-align: right;
-      font-size: 11px;
-      font-weight: 700;
-      text-decoration: none;
-      margin-top: 4px;
-    }
+    .more-link { display: block; text-align: right; font-size: 11px; font-weight: 700; text-decoration: none; margin-top: 4px; }
     .more-link:hover { text-decoration: underline; }
 
     .history-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
@@ -395,7 +374,7 @@
             </div>
             <div class="analysis-block" style="border-color: #66b27e;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #66b27e, #a7d8b5);">Travis Japan</div>
-              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(102,178,126,0.03) 0%, #ffffff 100%);">3rdアルバム『's travelers』が14.8万枚のセールスを記録. 国内のパッケージ販売以上に、YouTubeの再生回数や海外公演でのプレゼンスを重視しており、グローバルなファンベースを構築しているのが特徴です。国内のCD売上は比較的緩やかですが、ストリーミング市場での強さが際立つ、デジタルネイティブなグループといえます。</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(102,178,126,0.03) 0%, #ffffff 100%);">3rdアルバム『's travelers』が14.8万枚のセールスを記録. 国内のパッケージ販売以上に、YouTubeの再生回数や海外公演でのプレゼンスを重視しており、グローバルなファンベースを構築しているのが特徴です。国内のCD売上は比較的緩やかですが、ストリーミング市場での強さが際立つ, デジタルネイティブなグループといえます。</div>
             </div>
             <div class="analysis-block" style="border-color: #1d9967;">
               <div class="analysis-header" style="background: linear-gradient(90deg, #1d9967, #4fc092);">WEST.</div>
@@ -451,8 +430,32 @@ if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
 const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
 const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv";
 
-const fixedGroupColors = { "Snow Man": "#1b489d", "timelesz": "#de6d6d", "Aぇ! group": "#5eb3bf", "なにわ男子": "#eba0b8", "SixTONES": "#555555", "King & Prince": "#fab700", "WEST.": "#1d9967", "Hey! Say! JUMP": "#39aeed", "DOMOTO": "#554435", "SUPER EIGHT": "#F7AF73", "Travis Japan": "#66b27e", "NEWS": "#8170b2", "Kis-My-Ft2": "#CFE394", "A.B.C-Z": "#f0897c" };
-const fixedGroupOrder = Object.keys(fixedGroupColors);
+// 嵐とKAT-TUNを追加し、色の定義を行う
+const fixedGroupColors = { 
+  "嵐": "#4ba8d6",
+  "Snow Man": "#1b489d", 
+  "SixTONES": "#555555",
+  "timelesz": "#de6d6d", 
+  "King & Prince": "#fab700", 
+  "なにわ男子": "#eba0b8", 
+  "Aぇ! group": "#5eb3bf", 
+  "Travis Japan": "#66b27e",
+  "WEST.": "#1d9967", 
+  "Hey! Say! JUMP": "#39aeed", 
+  "Kis-My-Ft2": "#CFE394",
+  "DOMOTO": "#554435", 
+  "SUPER EIGHT": "#F7AF73", 
+  "NEWS": "#8170b2", 
+  "A.B.C-Z": "#f0897c",
+  "KAT-TUN": "#888888" 
+};
+
+// ボタンの並び順を固定リストで定義（嵐 → 分析順 → KAT-TUN）
+const fixedGroupOrder = [
+  "嵐", "Snow Man", "SixTONES", "timelesz", "King & Prince", "なにわ男子", 
+  "Aぇ! group", "Travis Japan", "WEST.", "Hey! Say! JUMP", "Kis-My-Ft2", 
+  "DOMOTO", "SUPER EIGHT", "NEWS", "A.B.C-Z", "KAT-TUN"
+];
 
 let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isFullDataLoaded = false;
 
@@ -465,21 +468,9 @@ document.querySelectorAll('.chart-tab').forEach(tab => {
   });
 });
 
-function renderGroupButtons(isPreload = false) {
-  let sortedGroups = [];
-  if (isPreload) sortedGroups = fixedGroupOrder;
-  else {
-    const latestValid = {};
-    allProcessedData.forEach(cd => {
-      if (cd.category === 'single' && cd.firstWeek !== null) {
-        const cur = latestValid[cd.group];
-        if (!cur || new Date(cd.releaseDate) > new Date(cur.date)) latestValid[cd.group] = { date: cd.releaseDate, sales: cd.firstWeek };
-      }
-    });
-    sortedGroups = [...new Set(allProcessedData.map(c => c.group))].sort((a, b) => (latestValid[b]?.sales || -1) - (latestValid[a]?.sales || -1));
-  }
-
-  const listHtml = sortedGroups.map(g => {
+// 固定順序で描画するように修正
+function renderGroupButtons() {
+  const listHtml = fixedGroupOrder.map(g => {
     const isSelected = activeGroups.has(g);
     const color = fixedGroupColors[g] || "#7f8c8d";
     const extraClass = isSelected ? 'is-selected-in-list' : '';
@@ -509,7 +500,7 @@ function renderGroupButtons(isPreload = false) {
       const url = new URL(window.location.href);
       if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
       window.history.replaceState({}, '', url);
-      renderGroupButtons(false); 
+      renderGroupButtons(); 
       render(true);
     };
   });
@@ -517,7 +508,7 @@ function renderGroupButtons(isPreload = false) {
 
 async function loadData() {
   initSettingsByUrl();
-  renderGroupButtons(true);
+  renderGroupButtons();
   try {
     const [resData, resInfo] = await Promise.all([fetch(SHEET_DATA_URL), fetch(SHEET_INFO_URL)]);
     const rawData = parseCSV(await resData.text());
@@ -532,7 +523,7 @@ async function loadData() {
     else cds = allProcessedData.filter(c => new Date(c.releaseDate) >= new Date("2024-01-01"));
     const chartLoading = document.getElementById('chartLoading');
     if(chartLoading) chartLoading.style.display = 'none';
-    renderGroupButtons(false); 
+    renderGroupButtons(); 
     render();
     if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
     if (!isFullDataLoaded && allProcessedData.length > cds.length) showLoadMoreButtons();
