@@ -501,10 +501,11 @@ function renderGroupButtons() {
       if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
       window.history.replaceState({}, '', url);
       renderGroupButtons(); 
+     setTimeout(() => {
       render(true);
-    };
-  });
-}
+    }, 0);
+  };
+});
 
 async function loadData() {
   initSettingsByUrl();
