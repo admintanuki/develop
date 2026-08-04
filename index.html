@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
+  <link rel="canonical" href="https://fan-chart.com/">
+  
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPEDDGQHPC"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,19 +15,12 @@
   </script>
 
   <title>【2026最新】STARTO(旧ジャニーズ) CD売上枚数比較・歴代グラフ推移 | Snow Man・SixTONES・なにわ男子ほか</title>
-  <meta name="description" content="STARTO(旧ジャニーズ)所属アーティストの最新CD売上データを網羅。Snow Man、SixTONES、King & Prince、なにわ男子などの歴代シングル・アルバム初動枚数をグラフで比較。2026年最新の売上傾向分析も掲載中。">
+  <meta name="description" content="STARTO(旧ジャニーズ)所属アーティストの最新CD売上データを網羅。Snow Man、SixTONES、King & Prince、なにわ男子などの最新および歴代シングル・アルバム初動枚数をグラフで比較。2026年最新の売上傾向分析も掲載中。">
   
   <meta property="og:site_name" content="STARTO CD売上枚数比較サイト">
   <meta property="og:title" content="【2026最新】STARTO(旧ジャニーズ) CD売上枚数比較・歴代グラフ推移">
-  <meta property="og:description" content="所属アーティストのCD売上データを可視化。Snow Man、SixTONES、なにわ男子などの最新・歴代データを網羅。">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://fan-chart.com/">
   <meta property="og:image" content="https://fan-chart.com/ogp.png">
-
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="【2026最新】STARTO(旧ジャニーズ) CD売上枚数比較・歴代グラフ推移">
-  <meta name="twitter:description" content="Snow Man、SixTONES、なにわ男子等の歴代売上枚数をグラフで比較。ファン必見のデータダッシュボード。">
-  <meta name="twitter:image" content="https://fan-chart.com/ogp.png">
 
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
   <link rel="preconnect" href="https://docs.google.com">
@@ -35,104 +30,422 @@
   
   <style>
     :root {
-      --bg: #f8fafc;
+      --bg: #f1f5f9; 
       --card: #ffffff;
       --text: #334155;
       --sub: #94a3b8;
       --border: #e2e8f0;
+      --accent-teal: #5D9C9F;
+      --accent-pink: #eba0b8;
+      --accent-hot: #f97316;
       --primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
 
     html { scroll-behavior: smooth; }
-    body { margin: 0; padding: 0; font-family: 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--text); padding-bottom: 60px; overflow-x: hidden; line-height: 1.6; }
 
-    .utility-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: flex-end; gap: 15px; font-size: 12px; }
-    .utility-link { text-decoration: none; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 4px; }
-    .utility-link svg { width: 14px; height: 14px; stroke: currentColor; }
+    body { 
+      margin: 0; padding: 0; 
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif; 
+      background: var(--bg); color: var(--text); padding-bottom: 60px; overflow-x: hidden; line-height: 1.6; 
+    }
 
-    .sticky-header { position: sticky; top: 0; z-index: 100; background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
+    .utility-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: flex-end; align-items: center; font-size: 12px; }
+    .utility-right { display: flex; gap: 15px; }
+    .utility-link { text-decoration: none; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 4px; position: relative; cursor: pointer; }
+    
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-content { display: none; position: absolute; right: 0; background-color: #fff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); z-index: 101; border: 1px solid var(--border); border-radius: 8px; margin-top: 8px; }
+    @media (min-width: 1025px) { .dropdown:hover .dropdown-content { display: block; } }
+    .dropdown-content.is-active { display: block; }
+    .dropdown-content a { color: var(--text); padding: 10px 16px; text-decoration: none; display: block; font-size: 12px; border-bottom: 1px solid var(--border); }
+    .dropdown-content a:last-child { border-bottom: none; }
+    .dropdown-content a:hover { background-color: #f1f5f9; }
+
+    .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
     
-    .site-title { text-align: center; margin-bottom: 15px; }
-    .site-title .sub-name { display: block; font-size: 12px; color: #64748b; font-weight: 600; margin-bottom: 2px; }
-    .site-title .main-name { display: block; font-size: 17px; font-weight: 800; color: #1e293b; line-height: 1.2; }
+    .site-title { text-align: center; margin-bottom: 0px; }
+    .site-title h1 { margin: 0; padding: 0; }
+    .site-title .sub-name { display: block; font-size: 13px; color: var(--accent-pink); font-weight: 800; margin-bottom: 0px; letter-spacing: 0.02em; }
+    .site-title .main-logo { display: block; font-family: "Georgia", serif; font-size: 32px; font-weight: 900; font-style: italic; color: #333; line-height: 1.1; margin: 2px 0 4px 0; }
+    .site-title .main-name { display: block; font-size: 12px; font-weight: 700; color: #64748b; line-height: 1.2; }
 
     @media (min-width: 768px) {
       .site-title .sub-name { font-size: 15px; }
-      .site-title .main-name { font-size: 26px; }
-      .utility-bar { gap: 24px; font-size: 13px; }
+      .site-title .main-logo { font-size: 48px; }
+      .site-title .main-name { font-size: 15px; }
+    }
+
+    .chart-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 15px;
+      padding-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chart-tabs { display: flex; padding-left: 5px; }
+    .chart-tab { padding: 8px 14px; font-size: 13px; font-weight: 700; color: var(--sub); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
+    .chart-tab.is-active { color: var(--accent-pink); border-bottom: 2px solid var(--accent-pink); }
+
+    /* トグルスイッチ (初日 / 初週) */
+    .toggle-switch-container {
+      display: inline-flex;
+      align-items: center;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 3px;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
     }
     
-    .group-buttons { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; margin-bottom: 12px; padding: 0 4px; }
-    .group-btn { padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; }
-    .group-btn.active { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-
-    .controls { display: grid; grid-template-columns: repeat(3, 1fr); gap: 4px; max-width: 800px; margin: 0 auto; }
-    select { padding: 8px 2px; border-radius: 6px; border: 1px solid var(--border); background: #fff; width: 100%; color: var(--text); font-size: 11px; font-weight: 600; cursor: pointer; }
-
-    @media (min-width: 768px) {
-      .controls { gap: 12px; }
-      select { padding: 10px 12px; font-size: 13px; border-radius: 8px; }
+    .toggle-switch-slider {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: calc(50% - 3px);
+      height: calc(100% - 6px);
+      background-color: var(--accent-pink);
+      border-radius: 99px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1;
     }
 
-    @media (max-width: 767px) {
-      .group-buttons { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
-      .group-buttons::-webkit-scrollbar { display: none; }
+    .toggle-switch-container.is-right .toggle-switch-slider {
+      transform: translateX(100%);
+    }
+
+    .toggle-switch-btn {
+      position: relative;
+      z-index: 2;
+      padding: 4px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #64748b;
+      border-radius: 99px;
+      transition: color 0.25s ease;
+    }
+
+    .toggle-switch-btn.is-active {
+      color: #ffffff;
+    }
+
+    /* ------------------------------------
+       チェックボックス (シングル / アルバム) - グレー系に変更
+    ------------------------------------ */
+    .filter-checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+    }
+    .filter-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .filter-checkbox-label input[type="checkbox"] {
+      accent-color: #64748b; /* グレー系に指定 */
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
     }
 
     .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px; }
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
-    .notice-area { background: #eff6ff; border: 1px solid #dbeafe; color: #1e40af; padding: 12px 16px; border-radius: 8px; font-size: 12px; display: none; align-items: center; gap: 10px; margin-bottom: 10px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
+
+    .card-section-title { font-size: 15px; font-weight: 600; color: #475569; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .card-section-title::before { content: ""; width: 4px; height: 16px; background: var(--accent-pink); border-radius: 2px; }
+
+    .group-buttons-wrapper { margin-bottom: 8px; }
+    
+    .group-buttons { 
+      display: flex; 
+      gap: 6px; 
+      margin-bottom: 4px; 
+      padding: 0 4px 8px 4px; 
+    }
+
+    @media (max-width: 767px) {
+      .group-buttons {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .group-buttons::-webkit-scrollbar { display: none; }
+    }
+    @media (min-width: 768px) {
+      .group-buttons {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+    }
+
+    .group-btn { position: relative; padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0; }
+    
+    .group-btn.active, .group-btn.is-selected-in-list { padding-right: 24px; }
+    .group-btn.active::after, .group-btn.is-selected-in-list::after { content: '×'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 800; opacity: 0.6; }
+    .group-btn.active { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .group-btn.is-selected-in-list { background: #f8fafc !important; color: #cbd5e1 !important; border: 1px solid #e2e8f0 !important; box-shadow: none !important; opacity: 0.8; }
+
+    .selected-groups-row { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 10px; 
+      align-items: center; 
+      justify-content: flex-start; 
+      margin-top: 10px; 
+      padding: 10px 12px; 
+      background: #f8fafc; 
+      border-radius: 12px; 
+      min-height: 38px; 
+      border: 1px dashed var(--border); 
+    }
+    .selected-label { 
+      font-size: 11px; 
+      color: var(--sub); 
+      font-weight: 700; 
+      white-space: nowrap; 
+    }
+
+    .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+    .chart-body { position: relative; height: 300px; min-width: 100%; }
+    
+    .chart-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; min-height: 24px; flex-wrap: wrap; gap: 10px; }
+    .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
+
+    .load-more-text { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: underline; margin-bottom: 4px; }
+
+    .hot-area { padding: 12px 20px; }
+    .hot-list { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+    .hot-label { font-size: 11px; font-weight: 800; color: var(--accent-hot); display: flex; align-items: center; gap: 4px; white-space: nowrap; border-right: 1px solid var(--border); padding-right: 12px; }
+    .hot-label svg { width: 14px; height: 14px; fill: currentColor; }
+    .hot-item { text-decoration: none; color: var(--text); font-size: 13px; font-weight: 400; transition: color 0.2s; display: flex; align-items: center; }
+    .hot-item:hover { color: var(--accent-hot); }
+    .hot-item::after { content: '>'; margin-left: 4px; font-size: 10px; opacity: 0.5; }
 
     .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; }
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
-    .history-card .card-title, .analysis-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
-    .analysis-card { scroll-margin-top: 200px; }
+    .cd-list { display: grid; gap: 10px; }
+    .no-data-msg { font-size: 12px; color: var(--sub); text-align: center; padding: 20px 0; grid-column: 1 / -1; }
+    
+    .cd-item-base { 
+      display: grid; grid-template-columns: 1fr 90px; gap: 16px; padding: 14px 16px; 
+      border: 1px solid var(--border); border-radius: 12px; text-decoration: none; 
+      color: inherit; background: #fff; align-items: center; transition: all 0.2s ease; 
+    }
+
+    /* これから発売予定（カード型）用スタイル */
+    .upcoming-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px 14px;
+    }
+    @media (min-width: 768px) {
+      .upcoming-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px 18px;
+      }
+    }
+
+    .upcoming-card-item {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease;
+    }
+    a.upcoming-card-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .upcoming-thumb-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background-color: #f1f5f9;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .upcoming-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .upcoming-no-img {
+      color: var(--sub);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .upcoming-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+    .upcoming-badge {
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .upcoming-date {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--sub);
+    }
+
+    .upcoming-card-title {
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1.35;
+      margin-bottom: 2px;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .upcoming-group-name {
+      font-size: 11px;
+      color: var(--sub);
+      font-weight: 600;
+    }
+    .upcoming-status-row {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    a.cd-item-base:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: #cbd5e1; }
+
+    .show-more-btn {
+      width: 100%; padding: 12px; margin-top: 10px; background: #f8fafc; border: 1px solid var(--border);
+      border-radius: 12px; color: #64748b; font-size: 13px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s;
+    }
+    .show-more-btn:hover { background: #f1f5f9; color: var(--text); }
+    .hidden-item { display: none !important; }
+
+    @media (max-width: 767px) {
+      .cd-item-base { grid-template-columns: 1fr 80px; padding: 10px 12px; gap: 10px; }
+    }
+
+    .cd-thumb { width: 64px; height: 64px; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    @media (max-width: 767px) { .cd-thumb { width: 50px; height: 50px; } }
+    .cd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; border: 1px solid var(--border); border-radius: 6px; }
+
+    .cd-info-main { min-width: 0; } 
+    .cd-title { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; line-height: 1.4; color: #1e293b; word-break: break-all; }
+    .meta { font-size: 10.5px; color: var(--sub); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+    .badge { font-size: 9px; padding: 1px 5px; border-radius: 4px; color: #fff; font-weight: 700; }
+    
+    .sales-box { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; flex-shrink: 0; }
+    .sales-val { font-weight: 700; font-size: 14px; letter-spacing: -0.02em; white-space: nowrap; }
+    .countdown { font-size: 10px; font-weight: 700; color: #ea580c; background: #fff7ed; padding: 1px 6px; border-radius: 99px; border: 1px solid #ffedd5; width: fit-content; white-space: nowrap; }
+
+    .ext-link-icon { width: 11px; height: 11px; color: var(--sub); margin-left: 5px; vertical-align: middle; }
+    .buy-label { font-size: 10px; color: var(--sub); font-weight: 600; margin-left: 2px; vertical-align: middle; white-space: nowrap; }
+
+    .analysis-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
+    .analysis-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 768px) { .analysis-grid { grid-template-columns: repeat(2, 1fr); } }
+    
+    .analysis-block { 
+      background: #fff; 
+      border-radius: 4px; 
+      overflow: hidden; 
+      border: 1px solid var(--border); 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+      display: flex; 
+      flex-direction: column;
+      transition: all 0.2s ease;
+    }
+
+    .analysis-header { padding: 10px 16px; font-size: 13px; font-weight: 600; color: #fff; }
+    .analysis-body { padding: 16px; font-size: 12.5px; line-height: 1.8; color: #475569; flex: 1; }
+
+    .more-link { display: block; text-align: right; font-size: 11px; font-weight: 700; text-decoration: none; margin-top: 4px; }
+    .more-link:hover { text-decoration: underline; }
+
+    .history-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
     .history-list { list-style: none; padding: 0; margin: 0; }
     .history-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dotted var(--border); }
     .history-date { font-size: 10px; color: var(--sub); display: block; margin-bottom: 2px; font-weight: 600; }
     .history-text { font-size: 12px; line-height: 1.4; color: #334155; }
-
-    .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
-    .chart-body { position: relative; height: 300px; }
-    #chartCaption { font-size: 10px; color: var(--sub); text-align: center; margin-top: 10px; }
-
-    .cd-list { display: grid; gap: 10px; }
-    .cd-item-base { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 14px 16px; border: 1px solid var(--border); border-radius: 12px; text-decoration: none; color: inherit; transition: all 0.2s ease; background: #fff; align-items: center; }
-    a.cd-item-base:hover { transform: translateY(-2px); box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.05); border-color: #cbd5e1; }
-    .cd-item-base.upcoming { border: 1px solid #fed7aa; background-color: #fffaf5; }
     
-    .cd-title { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; line-height: 1.4; color: #1e293b; }
-    .meta { font-size: 10.5px; color: var(--sub); display: flex; align-items: center; flex-wrap: wrap; gap: 6px; }
-    .badge { font-size: 9px; padding: 1px 5px; border-radius: 4px; color: #fff; font-weight: 700; }
-    .countdown { font-size: 10px; font-weight: 700; color: #ea580c; background: #fff7ed; padding: 1px 6px; border-radius: 99px; border: 1px solid #ffedd5; }
-    .sales-val { font-weight: 700; font-size: 14px; text-align: right; letter-spacing: -0.02em; }
-    .rank-num { font-size: 11px; color: #94a3b8; margin-right: 3px; }
-    .ext-link-icon { width: 11px; height: 11px; color: #94a3b8; margin-left: 3px; }
-    .loading { text-align: center; padding: 60px 20px; color: var(--sub); font-size: 14px; }
+    .back-to-top { position: fixed; bottom: 20px; right: 20px; background: var(--card); border: 1px solid var(--border); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--primary-shadow); cursor: pointer; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s; text-decoration: none; color: var(--text); }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top: 3px solid var(--accent-teal); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .analysis-btn { text-decoration: none; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 700; text-align: center; transition: all 0.2s; display: block; border: 1px solid; }
+    .analysis-btn:hover { opacity: 0.8; transform: translateY(-1px); }
+    .group-links-container { display: flex; flex-direction: column; gap: 8px; }
+
+    .inner-loading { text-align: center; padding: 40px 0; color: var(--sub); font-size: 12px; }
   </style>
 </head>
 <body>
 
+<a href="#" class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2.5;"><path d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg></a>
+
 <div class="utility-bar">
-  <a href="howto.html" class="utility-link"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" /></svg>ガイド</a>
-  <a href="#analysis" class="utility-link"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>分析</a>
-  <a href="terms.html" class="utility-link"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>規約</a>
+  <div class="utility-right">
+    <div class="dropdown" id="groupDropdown">
+      <span class="utility-link">グループ別</span>
+      <div class="dropdown-content">
+        <a href="https://fan-chart.com/snowman">Snow Man</a>
+        <a href="https://fan-chart.com/sixtones">SixTONES</a>
+        <a href="https://fan-chart.com/king-and-prince">King & Prince</a>
+        <a href="https://fan-chart.com/naniwa-danshi">なにわ男子</a>
+      </div>
+    </div>
+    <a href="#analysis" class="utility-link">分析</a>
+    <a href="howto.html" class="utility-link">ガイド</a>
+    <a href="terms.html" class="utility-link">規約</a>
+  </div>
 </div>
 
 <header class="sticky-header">
   <div class="header-content">
     <div class="site-title">
-      <h1 style="margin:0; font-size:inherit; font-weight:inherit;">
-        <span class="sub-name">【2026年最新】STARTO ENTERTAINMENT(旧ジャニーズ)</span>
-        <span class="main-name">歴代シングル・アルバム売上枚数比較サイト</span>
+      <h1>
+        <span class="sub-name">STARTO ENTERTAINMENT(旧ジャニーズ)</span>
+        <span class="main-logo">Fan Chart</span>
+        <span class="main-name">【2026年最新】歴代シングル・アルバム売上枚数比較サイト</span>
       </h1>
     </div>
-    <div class="group-buttons" id="groupButtons"></div>
-    <div class="controls">
-      <select id="salesType"><option value="firstDay">初日</option><option value="firstWeek" selected>初週</option></select>
+    <!-- 内部データ動作用要素 -->
+    <div style="display:none;">
+      <select id="salesType"><option value="firstWeek" selected>初週</option><option value="firstDay">初日</option></select>
       <select id="filter"><option value="all">シングル&アルバム</option><option value="single">シングル</option><option value="album">アルバム</option></select>
       <select id="sortOrder"><option value="date" selected>発売日順</option><option value="salesDesc">売上順</option></select>
     </div>
@@ -140,25 +453,156 @@
 </header>
 
 <div class="container">
-  <div class="notice-area" id="noticeArea"><span class="notice-icon">i</span><span id="noticeText"></span></div>
-  <div id="loading" class="loading">データを読み込み中...</div>
-  <div id="mainContent" class="content-wrapper" style="display:none;">
+  <div id="mainContent" class="content-wrapper">
     <div class="card">
-      <div class="chart-wrapper"><div class="chart-body" id="chartBody"><canvas id="salesChart"></canvas></div></div>
-      <p id="chartCaption">データが多い場合は横スクロール（右端が最新）</p>
-    </div>
-    <div class="split-area">
-      <div class="card"><div class="cd-list" id="cdList"></div></div>
-      <div class="side-content">
-        <section id="analysis" class="card analysis-card" style="margin-bottom: 24px;">
-          <div class="card-title">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" style="width: 16px; height: 16px; color: #3b82f6;"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 14.25v2.25m3-4.5v4.5m3-6.75v6.75m3-9v9M6 20.25h12A2.25 2.25 0 0020.25 18V6A2.25 2.25 0 0018 3.75H6A2.25 2.25 0 003.75 6v12A2.25 2.25 0 006 20.25z" /></svg>
-            2026年最新の売上傾向分析
+      <div class="chart-header-row">
+        <div class="chart-tabs">
+          <div class="chart-tab is-active" data-sort="date">発売日順</div>
+          <div class="chart-tab" data-sort="salesDesc">売上順</div>
+        </div>
+        <!-- グラフ枠内右上：初日 / 初週 トグルスイッチ -->
+        <div class="toggle-switch-container is-right" id="salesTypeToggle">
+          <div class="toggle-switch-slider"></div>
+          <div class="toggle-switch-btn" data-value="firstDay">初日</div>
+          <div class="toggle-switch-btn is-active" data-value="firstWeek">初週</div>
+        </div>
+      </div>
+
+      <div class="group-buttons-wrapper">
+        <div style="font-size: 11px; font-weight: 400; color: #64748b; margin-bottom: 6px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
+        <div class="group-buttons" id="groupButtons"></div>
+        <div id="selectedGroupsArea" class="selected-groups-row" style="display:none;">
+          <div class="selected-label">選択中のグループ</div>
+          <div id="selectedButtonsContainer" style="display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-start; align-items:center;"></div>
+        </div>
+      </div>
+      
+      <div class="chart-wrapper" id="chartWrapper">
+        <div class="chart-body" id="chartBody">
+          <div id="chartLoading" class="inner-loading"><div class="spinner"></div>グラフを作成中...</div>
+          <canvas id="salesChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-footer">
+        <!-- グラフ枠内左下：シングル / アルバム チェックボックス -->
+        <div id="chartBtnArea">
+          <div class="filter-checkbox-group">
+            <label class="filter-checkbox-label">
+              <input type="checkbox" id="chkSingle" checked> シングル
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" id="chkAlbum" checked> アルバム
+            </label>
           </div>
-          <div style="font-size: 12px; line-height: 1.7; color: #334155;">
-            <p style="margin: 0 0 12px 0;"><strong>Snow Man</strong>が直近のアルバムで初週ミリオンを達成するなど、圧倒的な数字を記録しており、固定ファンの強さがグラフにも表れています。</p>
-            <p style="margin: 0 0 12px 0;">また、最新シングル『Stargaze』で初週33.0万枚を記録した<strong>SixTONES</strong>、2人体制移行後も30万枚越えの高水準を保つ<strong>King & Prince</strong>、そして『アシンメトリー / Black Nightmare』で前作を上回る推移を見せる<strong>なにわ男子</strong>の3組が、初週30万〜40万枚レンジで推移しています。</p>
-            <p style="margin: 0;">ここに、新体制初アルバム『FAM』で61.9万枚という自己最高記録を樹立した<strong>timelesz</strong>や、『Chameleon』で45.5万枚を記録する<strong>Aぇ! group</strong>などの急伸勢が加わり、各グループが次々と自己ベスト級の初動を更新する状況が続いています。</p>
+        </div>
+        <button onclick="copyShareUrl()" class="share-btn-mini" id="shareBtn">
+          <svg viewBox="0 0 24 24" id="shareIcon"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" fill="currentColor"/></svg>
+          <span id="shareBtnText">このグラフを共有</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="split-area">
+      <div class="list-container" style="display:flex; flex-direction:column; gap:24px;">
+        <div class="card" id="upcomingCard">
+          <div class="card-section-title">これから発売予定</div>
+          <div class="upcoming-grid" id="upcomingList">
+            <div class="inner-loading"><div class="spinner"></div>予定を取得中...</div>
+          </div>
+        </div>
+
+        <div class="card hot-area">
+          <div class="hot-list">
+            <span class="hot-label"><svg viewBox="0 0 24 24"><path d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311L4.5 17c0 3.866 3.134 7 7 7s7-3.134 7-7c0-2.116-1.03-4.03-2.688-5.576zM13.5 0s-4 4.5-4 8c0 1.5 1 3.5 3 4.5.5-2.5 2-4.5 4-4.5.5 5-2.5 9.5-6 11-1-.5-3.5-2.5-3.5-6.5 0-3.5 3.5-12.5 6.5-12.5z"/></svg>HOT</span>
+            <a href="https://fan-chart.com/snowman" class="hot-item">Snow Man</a>
+            <a href="https://fan-chart.com/sixtones" class="hot-item">SixTONES</a>
+            <a href="https://fan-chart.com/king-and-prince" class="hot-item">King & Prince</a>
+            <a href="https://fan-chart.com/naniwa-danshi" class="hot-item">なにわ男子</a>
+          </div>
+        </div>
+
+        <div class="card" id="historyCard">
+          <div class="card-section-title">歴代シングル・アルバム売上</div>
+          <div id="listScrollArea">
+            <div class="cd-list" id="cdList">
+              <div class="inner-loading"><div class="spinner"></div>データを取得中...</div>
+            </div>
+          </div>
+          <div id="showMoreArea"></div>
+          <div id="listBtnArea" style="text-align:center; margin-top:20px;"></div>
+        </div>
+
+        <section id="analysis" class="card analysis-card">
+          <div class="card-section-title">2026年最新の売上傾向分析</div>
+          <div class="analysis-grid">
+            <div class="analysis-block" style="border-color: #1b489d;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #1b489d, #3c6dbd);">Snow Man</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(27,72,157,0.03) 0%, #ffffff 100%);">最新アルバム『音故知新』で4作連続の初週ミリオンセラーを達成するなど、圧倒的な数字を記録しており、固定ファンの熱量の高さが売上に直結しています。バラエティ番組での露出や各メンバーの活躍によってライト層の取り込みにも成功。2025年には初となる国立競技場公演を成功に導き、「絶対王者」としての地位を盤石なものにしました。今後は国内での圧倒的な実績を武器に、音楽シーン全体の記録を塗り替えるフェーズへと突入しています。<a href="https://fan-chart.com/snowman" class="more-link" style="color:#1b489d;">もっと見る >></a></div>
+            </div>
+            <div class="analysis-block" style="border-color: #555555;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #555555, #888888);">SixTONES</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(85,85,85,0.03) 0%, #ffffff 100%);">デビュー6周年という節目を迎える2026年、初のベストアルバム『MILESixTONES -Best Tracks-』がビルボード初週57.7万枚を記録しました。これは前年アルバム『GOLD』の初動（約42万枚）を上回る数字であり、ベスト盤としての高い集客力を証明する形となりました。野田洋次郎氏による楽曲提供を受けた16thシングル『Stargaze』に象徴される高い音楽性と、圧倒的なライブパフォーマンスによって、独自の路線を貫いています。<a href="https://fan-chart.com/sixtones" class="more-link" style="color:#555555;">もっと見る >></a></div>
+            </div>
+            <div class="analysis-block" style="border-color: #de6d6d;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #de6d6d, #f2a2a2);">timelesz</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(222,109,109,0.03) 0%, #ffffff 100%);">新体制後初となるアルバム『FAM』が初週61.9万枚を売り上げました。オーディションプロジェクト、通称「タイプロ」の物語性が新規層を惹きつけ、大きな転換点となっています。今作では握手会特典が売上の牽引材料となった側面もあるため、真価が問われる次作の動向が注目されます。2026年は、この勢いをいかに持続させられるかが鍵となるでしょう。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #fab700;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #fab700, #ffdb70);">King & Prince</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(250,183,0,0.03) 0%, #ffffff 100%);">2025年12月に発売された7thアルバム『STARRING』は、オリコン初週25.0万枚で首位を獲得しました。SNSでのヒットも手伝い、Billboard Hot Albumsでは3週連続1位をマークするなどロングヒットを記録しています。2人体制移行後もシングル売上は30〜40万枚と安定した数字を維持しており、今後は『シンデレラガール』に続くような国民的楽曲を打ち出し、いかにライト層を拡大できるかが勝負所となります。<a href="https://fan-chart.com/king-and-prince" class="more-link" style="color:#fab700;">もっと見る >></a></div>
+            </div>
+            <div class="analysis-block" style="border-color: #eba0b8;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #eba0b8, #f5cad8);">なにわ男子</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(235,160,184,0.03) 0%, #ffffff 100%);">9thシングル『アシンメトリー / Black Nightmare』は、前作『Doki it』（初週33.6万枚）を上回る好スタートを切りました。デビュー時から一貫して「関西発の正統派アイドル」路線を堅持しており、若年層や関西圏における支持層の厚さは圧倒的です。メンバー各人の俳優活動がグループを牽引している現状から、今後グループ全体としていかにファン層を多角化していけるかが注目されます。<a href="https://fan-chart.com/naniwa-danshi" class="more-link" style="color:#eba0b8;">もっと見る >></a></div>
+            </div>
+            <div class="analysis-block" style="border-color: #5eb3bf;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #5eb3bf, #a3d9e0);">Aぇ! group</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(94,179,191,0.03) 0%, #ffffff 100%);">3rdシングル『Chameleon』が初週45.5万枚を記録し、関西ジュニアとして積み上げた実力と人気を背景に、デビュー後も順調な推移を見せています。2026年の動向は、彼らが目標とするトップグループの仲間入りを果たせるかどうかを占う重要な試金石となります。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #66b27e;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #66b27e, #a7d8b5);">Travis Japan</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(102,178,126,0.03) 0%, #ffffff 100%);">3rdアルバム『's travelers』が14.8万枚のセールスを記録. 国内のパッケージ販売以上に、YouTubeの再生回数や海外公演でのプレゼンスを重視しており、グローバルなファンベースを構築しているのが特徴です。国内のCD売上は比較的緩やかですが、ストリーミング市場での強さが際立つ, デジタルネイティブなグループといえます。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #1d9967;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #1d9967, #4fc092);">WEST.</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(29,153,103,0.03) 0%, #ffffff 100%);">CD売上は2025年以降、緩やかな下降傾向にありますが、初のデジタルシングル『愛執』がオリコン週間デジタルシングルランキングで1位（初週6.0万DL）を獲得するなど、新たな兆しを見せています。新アルバム『唯一無二』の発売とアリーナツアーの開催が決定しており、ライブを軸とした再加速が期待されます。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #39aeed;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #39aeed, #8ccdf5);">Hey! Say! JUMP</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(57,174,237,0.03) 0%, #ffffff 100%);">アルバム『S say』は初週20.1万枚を記録しました。大規模なイベント施策に頼らずとも安定した売上を維持しており、卓越したダンススキルとグループの結束力が大きな強みとなっています。中島裕翔氏の卒業後も最新作『ハニカミ』で売上規模を維持しており、グループ力を安定して維持しています。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #CFE394;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #CFE394, #e6f0c2);">Kis-My-Ft2</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(207,227,148,0.03) 0%, #ffffff 100%);">最新作『&Joy』が初週9.1万枚を売り上げ、オリコン週間シングルランキングでの連続1位記録を33作に更新しました。また、アルバム『MAGFACT』のリリース時には、ハイタッチ会の開催を企画。グループとしての強い覚悟と、それに応えるファンの熱い結束力が、30.9万枚という大きな数字となって結実しました。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #554435;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #554435, #8a7766);">DOMOTO</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(85,68,53,0.03) 0%, #ffffff 100%);">2025年にKinKi Kidsから「DOMOTO」へとグループ名を刷新しました。その象徴となった1stデジタルシングル『愛のかたまり』（セルフカバー版）は、オリコン週間デジタルシングルランキングで初登場1位を獲得。配信市場でも強さを見せたことは彼らの楽曲が世代を超えて愛されている証です。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #F7AF73;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #F7AF73, #ffd2ad);">SUPER EIGHT</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(247,175,115,0.03) 0%, #ffffff 100%);">2024年発売の最新アルバム『SUPER EIGHT』が初週18万枚超で1位を獲得しました。2024年以降、CDをコンスタントにリリースする形から、舞台や配信、ライブを主軸にするスタイルへとシフトしています。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #8170b2;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #8170b2, #b5abd1);">NEWS</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(129,112,178,0.03) 0%, #ffffff 100%);">2024年11月にリリースされたシングル『あっちむいてほい』は、初週13.3万枚を売り上げ、デビューからのシングル連続1位記録を「31作」に更新しました。2025年8月の最新アルバム『変身』では、前作を下回ったものの、今後の巻き返しが期待されます。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #f0897c;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #f0897c, #f7b9b1);">A.B.C-Z</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(240,137,124,0.03) 0%, #ffffff 100%);">CDの純粋な売上枚数以上に、「アクロバット」を駆使したパフォーマンスへの評価が高いグループです. その特性から、他グループと比較してもCDより映像作品の売上比率が高い傾向にあり、コアなファンによる支持基盤を持っています。</div>
+            </div>
+          </div>
+        </section>
+      </div>
+      
+      <div class="side-content">
+        <section id="group-nav" class="card history-card" style="margin-bottom: 24px;">
+          <div class="card-title">各グループ別 詳細</div>
+          <div id="groupLinks" class="group-links-container">
+            <a href="https://fan-chart.com/snowman" class="analysis-btn" style="color: #1b489d; border-color: rgba(27, 72, 157, 0.3); background: rgba(27, 72, 157, 0.05);">Snow Man ></a>
+            <a href="https://fan-chart.com/sixtones" class="analysis-btn" style="color: #555555; border-color: rgba(85, 85, 85, 0.3); background: rgba(85, 85, 85, 0.05);">SixTONES ></a>
+            <a href="https://fan-chart.com/king-and-prince" class="analysis-btn" style="color: #fab700; border-color: rgba(250, 183, 0, 0.3); background: rgba(250, 183, 0, 0.05);">King & Prince ></a>
+            <a href="https://fan-chart.com/naniwa-danshi" class="analysis-btn" style="color: #eba0b8; border-color: rgba(235, 160, 184, 0.3); background: rgba(235, 160, 184, 0.05);">なにわ男子 ></a>
           </div>
         </section>
         <aside class="card history-card"><div class="card-title">更新履歴</div><ul class="history-list" id="historyList"></ul></aside>
@@ -167,22 +611,330 @@
   </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
 <script>
+if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
+
 const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
 const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv";
 
-if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
+// 嵐とKAT-TUNを追加し、色の定義を行う
+const fixedGroupColors = { 
+  "嵐": "#4ba8d6",
+  "Snow Man": "#1b489d", 
+  "SixTONES": "#555555",
+  "timelesz": "#de6d6d", 
+  "King & Prince": "#fab700", 
+  "なにわ男子": "#eba0b8", 
+  "Aぇ! group": "#5eb3bf", 
+  "Travis Japan": "#66b27e",
+  "WEST.": "#1d9967", 
+  "Hey! Say! JUMP": "#39aeed", 
+  "Kis-My-Ft2": "#CFE394",
+  "DOMOTO": "#554435", 
+  "SUPER EIGHT": "#F7AF73", 
+  "NEWS": "#8170b2", 
+  "A.B.C-Z": "#f0897c",
+  "KAT-TUN": "#888888" 
+};
 
-const fixedGroupColors = { "SixTONES": "#555555", "King & Prince": "#fab700", "Aぇ! group": "#5eb3bf", "Hey! Say! JUMP": "#39aeed", "WEST.": "#1d9967", "Snow Man": "#1b489d", "Travis Japan": "#66b27e", "NEWS": "#8170b2", "嵐": "#fdd303", "DOMOTO": "#554435", "Kis-My-Ft2": "#cfe394", "SUPER EIGHT": "#f7af73", "なにわ男子": "#eba0b8", "A.B.C-Z": "#f0897c", "timelesz": "#de6d6d" };
-function getGroupColor(g) { return fixedGroupColors[g] || "#7f8c8d"; }
-function hexToRgba(hex, alpha) { let c; if(/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)){ c= hex.substring(1).split(''); if(c.length== 3){ c= [c[0], c[0], c[1], c[1], c[2], c[2]]; } c= '0x'+c.join(''); return 'rgba('+[(c>>16)&255, (c>>8)&255, c&255].join(',')+','+alpha+')'; } return hex; }
+// ボタンの並び順を固定リストで定義（嵐 → 分析順 → KAT-TUN）
+const fixedGroupOrder = [
+  "嵐", "Snow Man", "SixTONES", "timelesz", "King & Prince", "なにわ男子", 
+  "Aぇ! group", "Travis Japan", "WEST.", "Hey! Say! JUMP", "Kis-My-Ft2", 
+  "DOMOTO", "SUPER EIGHT", "NEWS", "A.B.C-Z", "KAT-TUN"
+];
 
-let cds = []; let activeGroups = new Set(); let chart; let lastWidth = window.innerWidth;
+let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isFullDataLoaded = false;
+
+document.querySelectorAll('.chart-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+    document.getElementById('sortOrder').value = tab.dataset.sort;
+    render(true);
+  });
+});
+
+// 固定順序で描画するように修正
+function renderGroupButtons() {
+  const listHtml = fixedGroupOrder.map(g => {
+    const isSelected = activeGroups.has(g);
+    const color = fixedGroupColors[g] || "#7f8c8d";
+    const extraClass = isSelected ? 'is-selected-in-list' : '';
+    return `<button class="group-btn ${extraClass}" data-group="${g}" style="border-color:${isSelected ? '#e2e8f0' : color}; color:${isSelected ? '#cbd5e1' : color}; background:#fff">${g}</button>`;
+  }).join("");
+  document.getElementById("groupButtons").innerHTML = listHtml;
+  
+  const selectedArea = document.getElementById("selectedGroupsArea");
+  const selectedContainer = document.getElementById("selectedButtonsContainer");
+  
+  if (activeGroups.size > 0) {
+    selectedArea.style.display = "flex";
+    selectedContainer.innerHTML = Array.from(activeGroups).map(g => {
+      const color = fixedGroupColors[g] || "#7f8c8d";
+      return `<button class="group-btn active" data-group="${g}" style="border-color:${color}; color:#fff; background:${color}">${g}</button>`;
+    }).join("");
+  } else {
+    selectedArea.style.display = "none";
+  }
+
+  document.querySelectorAll(".group-btn").forEach(btn => {
+    btn.onclick = () => {
+      if(!isFullDataLoaded) loadAllRecords();
+      const g = btn.dataset.group;
+      if (activeGroups.has(g)) { activeGroups.delete(g); } 
+      else { if (activeGroups.size >= 5) return alert("最大5グループまで"); activeGroups.add(g); }
+      const url = new URL(window.location.href);
+      if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
+      window.history.replaceState({}, '', url);
+      renderGroupButtons(); 
+      render(true);
+    };
+  });
+}
+
+async function loadData() {
+  initSettingsByUrl();
+  renderGroupButtons();
+  try {
+    const [resData, resInfo] = await Promise.all([fetch(SHEET_DATA_URL), fetch(SHEET_INFO_URL)]);
+    const rawData = parseCSV(await resData.text());
+    allProcessedData = rawData.map(d => ({ 
+      title: d.title, group: d.group, releaseDate: d.releaseDate, category: d.category,
+      firstDay: isNaN(parseInt(d.firstDay)) ? null : parseInt(d.firstDay),
+      firstWeek: isNaN(parseInt(d.firstWeek)) ? null : parseInt(d.firstWeek),
+      seller: d.seller || "",
+      affiliate: d.affiliate || ""
+    }));
+    if(isFullDataLoaded) cds = allProcessedData;
+    else cds = allProcessedData.filter(c => new Date(c.releaseDate) >= new Date("2024-01-01"));
+    const chartLoading = document.getElementById('chartLoading');
+    if(chartLoading) chartLoading.style.display = 'none';
+    renderGroupButtons(); 
+    render();
+    if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
+    if (!isFullDataLoaded && allProcessedData.length > cds.length) showLoadMoreButtons();
+  } catch (e) { console.error(e); }
+}
+
+function loadAllRecords() {
+  if (isFullDataLoaded) return;
+  cds = allProcessedData; 
+  isFullDataLoaded = true;
+  const btn = document.querySelector('.load-more-text'); 
+  if(btn) btn.remove();
+}
+
+function showLoadMoreButtons() {
+  if (isFullDataLoaded) return;
+  const btn = document.createElement('button');
+  btn.className = 'load-more-text'; btn.textContent = '<< 2024年以前のデータも読み込む';
+  btn.onclick = () => { loadAllRecords(); render(true); };
+  document.getElementById('chartBtnArea').appendChild(btn);
+}
+
+function processInfo(data) {
+  const histories = data.filter(d => d.type === 'history');
+  document.getElementById('historyList').innerHTML = histories.map(h => `<li class="history-item"><span class="history-date">${h.date}</span><div class="history-text">${h.text}</div></li>`).join("");
+}
+
+function render(shouldAnimate = false) {
+  const type = document.getElementById("salesType").value;
+  const f = document.getElementById("filter").value;
+  const s = document.getElementById("sortOrder").value;
+  
+  if (!cds.length) return;
+  if (s === "salesDesc" && !isFullDataLoaded) loadAllRecords();
+
+  let filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
+  
+  let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
+    if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
+    return (a[type] || 0) - (b[type] || 0); 
+  });
+  
+  if (chartSource.length === 0 && activeGroups.size > 0) {
+     loadAllRecords();
+     filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
+     chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
+        if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
+        return (a[type] || 0) - (b[type] || 0);
+     });
+  }
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  const upcoming = filtered.filter(c => c[type] === null);
+  
+  const history = filtered.filter(c => c[type] !== null).sort((a, b) => {
+    if (s === "date") return b.releaseDate.localeCompare(a.releaseDate);
+    return (b[type] || -1) - (a[type] || -1); 
+  });
+
+  const isSingle = activeGroups.size === 1;
+  const chartWrapper = document.getElementById("chartWrapper");
+  const chartBody = document.getElementById("chartBody");
+  
+  const minBarWidth = isSingle ? 60 : 45;
+  const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * minBarWidth);
+  chartBody.style.width = `${finalWidth}px`;
+  
+  if (chart) chart.destroy();
+  let singleColor = "#5D9C9F";
+  if (isSingle) {
+    const groupName = Array.from(activeGroups)[0];
+    singleColor = fixedGroupColors[groupName] || "#5D9C9F";
+  }
+  
+  const ctx = document.getElementById("salesChart");
+  if (ctx) {
+    chart = new Chart(ctx, {
+      type: isSingle ? 'line' : 'bar',
+      data: {
+        labels: chartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
+        datasets: [{
+          data: chartSource.map(c => c[type]),
+          backgroundColor: isSingle ? singleColor + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
+          borderColor: singleColor,
+          borderWidth: isSingle ? 2 : 0, 
+          borderRadius: 4, 
+          fill: true, 
+          tension: 0.3, 
+          pointBackgroundColor: "#fff", 
+          pointBorderColor: singleColor, 
+          pointRadius: isSingle ? 4 : 0,
+          pointHoverRadius: isSingle ? 6 : 0,
+          pointBorderWidth: isSingle ? 2 : 0
+        }]
+      },
+      options: {
+        responsive: true, 
+        maintainAspectRatio: false,
+        animation: shouldAnimate ? { duration: 800 } : false,
+        plugins: { 
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              title: (context) => { const d = chartSource[context[0].dataIndex]; return `${d.group} / ${d.title}`; },
+              label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
+            }
+          },
+          datalabels: { anchor: 'end', align: 'top', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
+        },
+        scales: { 
+          y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, grace: '15%' },
+          x: { ticks: { font: {size: 8}, maxRotation: 45, minRotation: 45 }, grid: { display: false } }
+        }
+      }
+    });
+  }
+  
+  chartWrapper.scrollLeft = finalWidth;
+
+  const INITIAL_SHOW_COUNT = 10;
+  const STEP_SHOW_COUNT = 50; 
+  let currentShowCount = INITIAL_SHOW_COUNT;
+
+  // 歴代リスト用
+  const getListItemHtml = (c, index) => {
+    const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
+    const color = fixedGroupColors[c.group] || "#7f8c8d";
+    const salesValExists = c[type] !== null;
+    const salesDisp = salesValExists ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'売上集計中');
+    const countdownHtml = days>0 ? `<div class="countdown">あと${days}日</div>` : days===0 ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` : "";
+    const hideClass = (index >= currentShowCount) ? 'hidden-item' : '';
+
+    const content = `
+      <div class="cd-info-main">
+        <span class="cd-title" style="color:${color}">
+          ${c.title}
+          ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
+        </span>
+        <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span></div>
+      </div>
+      <div class="sales-box">
+        <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDisp}</div>
+        ${countdownHtml}
+      </div>
+    `;
+    return c.seller 
+      ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${hideClass}">${content}</a>` 
+      : `<div class="cd-item-base ${hideClass}">${content}</div>`;
+  };
+
+  // これから発売予定（カード型）用
+  const getUpcomingCardHtml = (c) => {
+    const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
+    const color = fixedGroupColors[c.group] || "#7f8c8d";
+    const formattedDate = c.releaseDate ? c.releaseDate.replace(/-/g, '.') : '';
+    const imgHtml = c.affiliate 
+      ? `<img src="${c.affiliate}" alt="${c.title}">` 
+      : `<div class="upcoming-no-img">🎵 RELEASE</div>`;
+
+    const salesDispText = days > 0 ? '予約受付中' : '売上集計中';
+    const countdownHtml = days > 0 
+      ? `<div class="countdown">あと${days}日</div>` 
+      : days === 0 
+        ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` 
+        : ``;
+
+    const content = `
+      <div class="upcoming-thumb-wrap">
+        ${imgHtml}
+      </div>
+      <div class="upcoming-meta-row">
+        <span class="upcoming-badge" style="background:${color}">${c.category ? c.category.toUpperCase() : 'CD'}</span>
+        <span class="upcoming-date">${formattedDate}</span>
+      </div>
+      <div class="upcoming-card-title" style="color:${color}">
+        ${c.title}
+        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
+      </div>
+      <div class="upcoming-group-name">${c.group}</div>
+      <div class="upcoming-status-row">
+        <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDispText}</div>
+        ${countdownHtml}
+      </div>
+    `;
+
+    return c.seller 
+      ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="upcoming-card-item">${content}</a>`
+      : `<div class="upcoming-card-item">${content}</div>`;
+  };
+
+  document.getElementById("upcomingList").innerHTML = upcoming.length 
+    ? upcoming.map(getUpcomingCardHtml).join("") 
+    : '<div class="no-data-msg">現在、発売予定の作品はありません</div>';
+  
+  const updateList = () => {
+    const listArea = document.getElementById("cdList");
+    listArea.innerHTML = history.map((c, i) => getListItemHtml(c, i)).join("");
+    const showMoreArea = document.getElementById("showMoreArea");
+    
+    if (history.length > currentShowCount) {
+      const remaining = history.length - currentShowCount;
+      const nextStep = Math.min(STEP_SHOW_COUNT, remaining);
+      showMoreArea.innerHTML = `<button class="show-more-btn" id="btnShowMore">あと ${remaining} 件を表示（＋${nextStep}件）<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></button>`;
+      document.getElementById("btnShowMore").onclick = function() {
+        currentShowCount += STEP_SHOW_COUNT;
+        updateList();
+      };
+    } else {
+      showMoreArea.innerHTML = "";
+    }
+  };
+
+  if (history.length) { updateList(); } else {
+    document.getElementById("cdList").innerHTML = '<div class="no-data-msg">該当するデータがありません</div>';
+    document.getElementById("showMoreArea").innerHTML = "";
+  }
+}
 
 function parseCSV(text) {
   const lines = text.trim().split('\n'); if (lines.length < 2) return [];
-  const headers = lines[0].split(',').map(h => h.trim());
+  const headers = lines[0].split(',').map(h => {
+    const trimH = h.trim();
+    return trimH.startsWith('\uFEFF') ? trimH.slice(1) : trimH;
+  });
   return lines.slice(1).map(line => {
     const values = line.split(','); const obj = {};
     headers.forEach((h, i) => { obj[h] = values[i] ? values[i].replace(/\r/g, '').trim() : ""; });
@@ -190,104 +942,99 @@ function parseCSV(text) {
   });
 }
 
-async function loadData() {
-  try {
-    const resData = await fetch(SHEET_DATA_URL);
-    const rawData = parseCSV(await resData.text());
-    cds = rawData.map(d => ({ ...d, firstDay: isNaN(parseInt(d.firstDay)) ? null : parseInt(d.firstDay), firstWeek: isNaN(parseInt(d.firstWeek)) ? null : parseInt(d.firstWeek), seller: d.seller || "" }));
-    const resInfo = await fetch(SHEET_INFO_URL);
-    if(resInfo.ok) { processInfo(parseCSV(await resInfo.text())); }
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('mainContent').style.display = 'flex'; 
-    initGroups(); render(true); 
-  } catch (e) { document.getElementById('loading').innerHTML = "読み込みエラー"; }
-}
-
-function processInfo(data) {
-  const notice = data.find(d => d.type === 'notice' && d.text);
-  if (notice) { document.getElementById('noticeText').textContent = notice.text; document.getElementById('noticeArea').style.display = 'flex'; }
-  const histories = data.filter(d => d.type === 'history');
-  document.getElementById('historyList').innerHTML = histories.map(h => `<li class="history-item"><span class="history-date">${h.date}</span><div class="history-text">${h.text}</div></li>`).join("");
-}
-
-function calculateGroupOrder() {
-  const latestValid = {};
-  cds.forEach(cd => { if (cd.category === 'single' && cd.firstWeek !== null) { const cur = latestValid[cd.group]; if (!cur || new Date(cd.releaseDate) > new Date(cur.date)) { latestValid[cd.group] = { date: cd.releaseDate, sales: cd.firstWeek }; } } });
-  return [...new Set(cds.map(c => c.group))].sort((a, b) => (latestValid[b]?.sales || -1) - (latestValid[a]?.sales || -1));
-}
-
-function initGroups() {
-  document.getElementById("groupButtons").innerHTML = calculateGroupOrder().map(g => `<button class="group-btn" data-group="${g}">${g}</button>`).join("");
-  document.querySelectorAll(".group-btn").forEach(btn => {
-    const g = btn.dataset.group; const color = getGroupColor(g);
-    btn.style.borderColor = color; btn.style.color = color;
-    btn.addEventListener("click", () => {
-      if (!btn.classList.contains("active") && activeGroups.size >= 5) return alert("5グループまでです");
-      btn.classList.toggle("active");
-      const active = btn.classList.contains("active");
-      btn.style.background = active ? color : "#fff"; btn.style.color = active ? "#fff" : color;
-      active ? activeGroups.add(g) : activeGroups.delete(g);
-      render(true);
-    });
-  });
-}
-
-function render(shouldAnimate = false) {
-  const type = document.getElementById("salesType").value;
-  const f = document.getElementById("filter").value;
-  const s = document.getElementById("sortOrder").value;
-  let filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
-  let sortedList = [...filtered];
-  sortedList.sort((a, b) => s === "date" ? b.releaseDate.localeCompare(a.releaseDate) : (b[type] || -1) - (a[type] || -1));
-  let chartSource = filtered.filter(c => c[type] !== null);
-  const isSingle = activeGroups.size === 1;
-  chartSource.sort((a, b) => { if (s === "date") return a.releaseDate.localeCompare(b.releaseDate); return (b[type] || 0) - (a[type] || 0); });
-  const chartBody = document.getElementById("chartBody");
-  const containerWidth = chartBody.parentElement.clientWidth;
-  const finalWidth = Math.max(containerWidth, chartSource.length * (isSingle ? 60 : 45));
-  chartBody.style.width = `${finalWidth}px`;
-  if (chart) chart.destroy();
-  chartBody.innerHTML = '<canvas id="salesChart"></canvas>';
-  const color = isSingle ? getGroupColor([...activeGroups][0]) : null;
-  const datasetConfig = {
-    data: chartSource.map(c => c[type]), borderRadius: 4,
-    datalabels: { display: true, align: 'top', anchor: 'end', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
-  };
-  if (isSingle) {
-    Object.assign(datasetConfig, { type: 'line', borderColor: color, backgroundColor: hexToRgba(color, 0.2), borderWidth: 2, fill: true, tension: 0.3, pointRadius: 4, pointBackgroundColor: "#fff", pointBorderColor: color });
-  } else {
-    Object.assign(datasetConfig, { type: 'bar', backgroundColor: chartSource.map(c => getGroupColor(c.group)), borderWidth: 0, maxBarThickness: window.innerWidth < 600 ? 18 : 30 });
-  }
-  chart = new Chart(document.getElementById("salesChart"), {
-    data: { labels: chartSource.map(c => c.title.length > 7 ? c.title.substring(0, 7) + ".." : c.title), datasets: [datasetConfig] },
-    options: {
-      responsive: true, maintainAspectRatio: false,
-      animation: shouldAnimate ? { duration: 1000, easing: 'easeOutQuart' } : false,
-      plugins: { legend: { display: false }, tooltip: { callbacks: { title: (items) => { const itm = chartSource[items[0].dataIndex]; return [`[${itm.group}] ${itm.title}`, `(${itm.releaseDate})`]; } } } },
-      scales: { 
-        y: { 
-          ticks: { callback: v => (v/10000) + "万", font: {size: 9} },
-          suggestedMax: 300000,
-          grace: '10%' 
-        }, 
-        x: { ticks: { maxRotation: 45, minRotation: 45, font: {size: 8} }, grid: { display: false } } 
-      }
+function initSettingsByUrl() {
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('t')) {
+      const t = params.get('t');
+      document.getElementById("salesType").value = t;
+      const toggleContainer = document.getElementById("salesTypeToggle");
+      document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(btn => {
+        const isActive = (btn.dataset.value === t);
+        btn.classList.toggle('is-active', isActive);
+      });
+      toggleContainer.classList.toggle('is-right', t === 'firstWeek');
     }
-  });
-  if (s === "date" && finalWidth > containerWidth) document.querySelector('.chart-wrapper').scrollLeft = finalWidth;
-  const today = new Date(); today.setHours(0,0,0,0);
-  document.getElementById("cdList").innerHTML = sortedList.map((c, idx) => {
-    const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / (1000 * 60 * 60 * 24));
-    const color = getGroupColor(c.group); const hasVal = c[type] !== null;
-    const statusBadge = (days > 0) ? `<span class="countdown">あと${days}日</span>` : (days === 0 ? `<span class="countdown" style="background:#f97316; color:#fff; border:none;">本日</span>` : "");
-    const salesDisplay = hasVal ? (c[type]/10000).toFixed(1) + "万枚" : (days > 0 ? "予約受付中" : "集計中");
-    const link = c.seller && c.seller !== "";
-    const html = `<div><span class="cd-title" style="color:${color}">${s==='salesDesc'&&hasVal?`<span class="rank-num">#${idx+1}</span>`:''}${c.title}${link?'<svg class="ext-link-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>':''}</span><div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span> ${statusBadge}</div></div><div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDisplay}</div>`;
-    return link ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${days>0?'upcoming':''}">${html}</a>` : `<div class="cd-item-base ${days>0?'upcoming':''}" style="cursor:default;">${html}</div>`;
-  }).join("");
+    if(params.get('f')) {
+      const f = params.get('f');
+      document.getElementById("filter").value = f;
+      document.getElementById("chkSingle").checked = (f === 'all' || f === 'single');
+      document.getElementById("chkAlbum").checked = (f === 'all' || f === 'album');
+    }
+    if(params.get('s')) {
+      const s = params.get('s');
+      document.getElementById("sortOrder").value = s;
+      document.querySelectorAll('.chart-tab').forEach(t => { t.classList.toggle('is-active', t.dataset.sort === s); });
+    }
+    if(params.get('g')) { params.get('g').split(',').forEach(g => activeGroups.add(decodeURIComponent(g))); isFullDataLoaded = true; }
 }
-[document.getElementById("salesType"), document.getElementById("filter"), document.getElementById("sortOrder")].forEach(el => el.addEventListener("change", () => render(true)));
-window.addEventListener('resize', () => { if (window.innerWidth !== lastWidth) { lastWidth = window.innerWidth; render(false); } });
+
+function copyShareUrl() {
+  const groups = Array.from(activeGroups).join(',');
+  const type = document.getElementById("salesType").value;
+  const filter = document.getElementById("filter").value;
+  const sort = document.getElementById("sortOrder").value;
+  const url = new URL(window.location.href);
+  if(groups) url.searchParams.set('g', groups); else url.searchParams.delete('g');
+  url.searchParams.set('t', type); url.searchParams.set('f', filter); url.searchParams.set('s', sort);
+  navigator.clipboard.writeText(url.href).then(() => {
+    const btnText = document.getElementById('shareBtnText');
+    const originalText = btnText.innerText;
+    btnText.innerText = "コピーしました！";
+    setTimeout(() => btnText.innerText = originalText, 2000);
+  });
+}
+
+// ------------------------------------
+// UIイベントリスナー
+// ------------------------------------
+const salesTypeToggle = document.getElementById('salesTypeToggle');
+document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    const val = btn.dataset.value;
+    
+    // スライダーアニメーション方向切り替え
+    if (val === 'firstWeek') {
+      salesTypeToggle.classList.add('is-right');
+    } else {
+      salesTypeToggle.classList.remove('is-right');
+    }
+    
+    document.getElementById('salesType').value = val;
+    render(true);
+  });
+});
+
+// チェックボックス解除防止（最後の1個は外せない処理）
+function handleCheckboxChange(e) {
+  const chkSingle = document.getElementById('chkSingle');
+  const chkAlbum = document.getElementById('chkAlbum');
+
+  // 両方外されようとした場合は操作を無効化（何も起きないようにする）
+  if (!chkSingle.checked && !chkAlbum.checked) {
+    e.preventDefault();
+    e.target.checked = true; // チェックを元に戻す
+    return;
+  }
+
+  let filterVal = 'all';
+  if (chkSingle.checked && !chkAlbum.checked) filterVal = 'single';
+  else if (!chkSingle.checked && chkAlbum.checked) filterVal = 'album';
+
+  document.getElementById('filter').value = filterVal;
+  render(true);
+}
+
+document.getElementById('chkSingle').addEventListener('click', handleCheckboxChange);
+document.getElementById('chkAlbum').addEventListener('click', handleCheckboxChange);
+
+window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300); });
+const groupDropdown = document.getElementById('groupDropdown');
+const dropdownContent = groupDropdown.querySelector('.dropdown-content');
+groupDropdown.addEventListener('click', (e) => { e.stopPropagation(); dropdownContent.classList.toggle('is-active'); });
+window.addEventListener('click', () => { dropdownContent.classList.remove('is-active'); });
+
 loadData();
 </script>
 </body>
