@@ -481,6 +481,10 @@
           <canvas id="salesChart"></canvas>
         </div>
       </div>
+      
+      <!-- スクロール読み込み案内 -->
+      <div id="mobileChartNotice" style="font-size:10px; color:#94a3b8; text-align:left; margin-top:6px; font-weight:700; padding-left:5px; height:15px;"></div>
+
       <div class="chart-footer">
         <!-- グラフ枠内左下：シングル / アルバム チェックボックス -->
         <div id="chartBtnArea">
@@ -643,13 +647,22 @@ const fixedGroupOrder = [
 ];
 
 let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isFullDataLoaded = false;
+let currentGraphShowCount = 100; // グラフの初期表示件数
+let isFetchingGraph = false;
+window.hasMoreGraphData = false;
+
+// 絞り込みやタブ変更があった際に表示件数をリセットする関数
+function resetAndRender() {
+  currentGraphShowCount = 100;
+  render(true);
+}
 
 document.querySelectorAll('.chart-tab').forEach(tab => {
   tab.addEventListener('click', () => {
     document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('is-active'));
     tab.classList.add('is-active');
     document.getElementById('sortOrder').value = tab.dataset.sort;
-    render(true);
+    resetAndRender();
   });
 });
 
@@ -686,14 +699,13 @@ function renderGroupButtons() {
         activeGroups.add(g); 
       }
 
-      // 全選択解除時にも全過去データをロードして描画できるように修正
       if (!isFullDataLoaded) loadAllRecords();
 
       const url = new URL(window.location.href);
       if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
       window.history.replaceState({}, '', url);
       renderGroupButtons(); 
-      render(true);
+      resetAndRender();
     };
   });
 }
@@ -743,7 +755,32 @@ function processInfo(data) {
   document.getElementById('historyList').innerHTML = histories.map(h => `<li class="history-item"><span class="history-date">${h.date}</span><div class="history-text">${h.text}</div></li>`).join("");
 }
 
-function render(shouldAnimate = false) {
+// ------------------------------------
+// 左スクロール時の過去データ継ぎ足し読み込み
+// ------------------------------------
+const chartWrapperEl = document.getElementById("chartWrapper");
+chartWrapperEl.addEventListener('scroll', function() {
+  // 左端(50px以内)に到達 ＆ 取得中でない ＆ まだ過去データがある場合
+  if (this.scrollLeft <= 50 && !isFetchingGraph && window.hasMoreGraphData) {
+    isFetchingGraph = true;
+    
+    // 全データ未ロードならここで全データを解放
+    if (!isFullDataLoaded) {
+      loadAllRecords();
+    }
+    
+    const oldScrollWidth = this.scrollWidth;
+    currentGraphShowCount += 100;
+    render(false, true); // true = scroll Load flag
+    
+    // 継ぎ足し後、視点がジャンプしないようスクロール位置を自動補正
+    this.scrollLeft = this.scrollWidth - oldScrollWidth > 0 ? this.scrollWidth - oldScrollWidth : 0;
+    
+    setTimeout(() => { isFetchingGraph = false; }, 300);
+  }
+});
+
+function render(shouldAnimate = false, isScrollLoad = false) {
   const type = document.getElementById("salesType").value;
   const f = document.getElementById("filter").value;
   const s = document.getElementById("sortOrder").value;
@@ -776,34 +813,26 @@ function render(shouldAnimate = false) {
   });
 
   const isSingle = activeGroups.size === 1;
-  const chartWrapper = document.getElementById("chartWrapper");
   const chartBody = document.getElementById("chartBody");
 
-  const isMobile = window.innerWidth < 768;
+  // 過去データがあるかどうかのフラグを更新
+  window.currentFilteredChartLength = chartSource.length;
+  window.hasMoreGraphData = (!isFullDataLoaded || chartSource.length > currentGraphShowCount);
   
-  // スマホでもPCに近い太いバー(35px/50px)を設定して視認性を高める
-  let minBarWidth = isSingle ? (isMobile ? 50 : 60) : (isMobile ? 35 : 45); 
-  let finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * minBarWidth);
-  
-  // 【真っ白クラッシュ回避 ＆ 画質維持のハイブリッド処理】
-  let dpr = window.devicePixelRatio || 1;
-  if (isMobile) {
-    const maxBackingStoreWidth = 8000; // iOS SafariのCanvas描画限界幅(安全圏)
-    // 必要な内部ピクセル幅（CSS幅 × デバイスの解像度倍率）
-    const requiredWidth = finalWidth * dpr;
-    
-    if (requiredWidth > maxBackingStoreWidth) {
-      // 真っ白にならないギリギリのラインまで解像度(DPR)を滑らかに下げて、太さを維持する
-      dpr = Math.max(1, maxBackingStoreWidth / finalWidth);
-      
-      // DPRを1まで下げても限界を超えるほどデータが膨大な場合のみ、幅自体を縮小して強制描画
-      if (finalWidth > maxBackingStoreWidth) {
-        finalWidth = maxBackingStoreWidth;
-        dpr = 1;
-      }
-    }
+  const noticeEl = document.getElementById('mobileChartNotice');
+  if (noticeEl) {
+    noticeEl.innerText = window.hasMoreGraphData ? "※左にスクロールでさらに過去データを読み込みます" : "";
   }
 
+  // 表示件数の絞り込み (後方から抽出＝最新/売上上位を取得)
+  let displayChartSource = chartSource;
+  if (chartSource.length > currentGraphShowCount) {
+    displayChartSource = chartSource.slice(-currentGraphShowCount);
+  }
+
+  // バーの太さはPC版・昔のまま維持
+  const minBarWidth = isSingle ? 60 : 45;
+  const finalWidth = Math.max(chartWrapperEl.clientWidth, displayChartSource.length * minBarWidth);
   chartBody.style.width = `${finalWidth}px`;
   
   if (chart) chart.destroy();
@@ -818,10 +847,10 @@ function render(shouldAnimate = false) {
     chart = new Chart(ctx, {
       type: isSingle ? 'line' : 'bar',
       data: {
-        labels: chartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
+        labels: displayChartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
         datasets: [{
-          data: chartSource.map(c => c[type]),
-          backgroundColor: isSingle ? singleColor + '33' : chartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
+          data: displayChartSource.map(c => c[type]),
+          backgroundColor: isSingle ? singleColor + '33' : displayChartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
           borderColor: singleColor,
           borderWidth: isSingle ? 2 : 0, 
           borderRadius: 4, 
@@ -835,7 +864,6 @@ function render(shouldAnimate = false) {
         }]
       },
       options: {
-        devicePixelRatio: dpr, // 動的計算した最適解像度を適用
         responsive: true, 
         maintainAspectRatio: false,
         animation: shouldAnimate ? { duration: 800 } : false,
@@ -843,7 +871,7 @@ function render(shouldAnimate = false) {
           legend: { display: false },
           tooltip: {
             callbacks: {
-              title: (context) => { const d = chartSource[context[0].dataIndex]; return `${d.group} / ${d.title}`; },
+              title: (context) => { const d = displayChartSource[context[0].dataIndex]; return `${d.group} / ${d.title}`; },
               label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
             }
           },
@@ -857,11 +885,14 @@ function render(shouldAnimate = false) {
     });
   }
   
-  chartWrapper.scrollLeft = finalWidth;
+  // スクロール読み込み時以外は、最新(右端)へスクロールを合わせる
+  if (!isScrollLoad) {
+    chartWrapperEl.scrollLeft = finalWidth;
+  }
 
   const INITIAL_SHOW_COUNT = 10;
   const STEP_SHOW_COUNT = 50; 
-  let currentShowCount = INITIAL_SHOW_COUNT;
+  let currentListShowCount = INITIAL_SHOW_COUNT;
 
   const getListItemHtml = (c, index) => {
     const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
@@ -869,7 +900,7 @@ function render(shouldAnimate = false) {
     const salesValExists = c[type] !== null;
     const salesDisp = salesValExists ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'売上集計中');
     const countdownHtml = days>0 ? `<div class="countdown">あと${days}日</div>` : days===0 ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` : "";
-    const hideClass = (index >= currentShowCount) ? 'hidden-item' : '';
+    const hideClass = (index >= currentListShowCount) ? 'hidden-item' : '';
 
     const content = `
       <div class="cd-info-main">
@@ -937,12 +968,12 @@ function render(shouldAnimate = false) {
     listArea.innerHTML = history.map((c, i) => getListItemHtml(c, i)).join("");
     const showMoreArea = document.getElementById("showMoreArea");
     
-    if (history.length > currentShowCount) {
-      const remaining = history.length - currentShowCount;
+    if (history.length > currentListShowCount) {
+      const remaining = history.length - currentListShowCount;
       const nextStep = Math.min(STEP_SHOW_COUNT, remaining);
       showMoreArea.innerHTML = `<button class="show-more-btn" id="btnShowMore">あと ${remaining} 件を表示（＋${nextStep}件）<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></button>`;
       document.getElementById("btnShowMore").onclick = function() {
-        currentShowCount += STEP_SHOW_COUNT;
+        currentListShowCount += STEP_SHOW_COUNT;
         updateList();
       };
     } else {
@@ -1021,7 +1052,6 @@ document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(btn => 
     btn.classList.add('is-active');
     const val = btn.dataset.value;
     
-    // スライダーアニメーション方向切り替え
     if (val === 'firstWeek') {
       salesTypeToggle.classList.add('is-right');
     } else {
@@ -1029,19 +1059,17 @@ document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(btn => 
     }
     
     document.getElementById('salesType').value = val;
-    render(true);
+    resetAndRender();
   });
 });
 
-// チェックボックス解除防止（最後の1個は外せない処理）
 function handleCheckboxChange(e) {
   const chkSingle = document.getElementById('chkSingle');
   const chkAlbum = document.getElementById('chkAlbum');
 
-  // 両方外されようとした場合は操作を無効化（何も起きないようにする）
   if (!chkSingle.checked && !chkAlbum.checked) {
     e.preventDefault();
-    e.target.checked = true; // チェックを元に戻す
+    e.target.checked = true;
     return;
   }
 
@@ -1050,7 +1078,7 @@ function handleCheckboxChange(e) {
   else if (!chkSingle.checked && chkAlbum.checked) filterVal = 'album';
 
   document.getElementById('filter').value = filterVal;
-  render(true);
+  resetAndRender();
 }
 
 document.getElementById('chkSingle').addEventListener('click', handleCheckboxChange);
