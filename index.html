@@ -136,9 +136,7 @@
       color: #ffffff;
     }
 
-    /* ------------------------------------
-       チェックボックス (シングル / アルバム) - グレー系に変更
-    ------------------------------------ */
+    /* チェックボックス (シングル / アルバム) */
     .filter-checkbox-group {
       display: flex;
       align-items: center;
@@ -154,7 +152,7 @@
       cursor: pointer;
     }
     .filter-checkbox-label input[type="checkbox"] {
-      accent-color: #64748b; /* グレー系に指定 */
+      accent-color: #64748b;
       width: 15px;
       height: 15px;
       cursor: pointer;
@@ -680,10 +678,17 @@ function renderGroupButtons() {
 
   document.querySelectorAll(".group-btn").forEach(btn => {
     btn.onclick = () => {
-      if(!isFullDataLoaded) loadAllRecords();
       const g = btn.dataset.group;
-      if (activeGroups.has(g)) { activeGroups.delete(g); } 
-      else { if (activeGroups.size >= 5) return alert("最大5グループまで"); activeGroups.add(g); }
+      if (activeGroups.has(g)) { 
+        activeGroups.delete(g); 
+      } else { 
+        if (activeGroups.size >= 5) return alert("最大5グループまで"); 
+        activeGroups.add(g); 
+      }
+
+      // 全選択解除時にも全過去データをロードして描画できるように修正
+      if (!isFullDataLoaded) loadAllRecords();
+
       const url = new URL(window.location.href);
       if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
       window.history.replaceState({}, '', url);
@@ -774,8 +779,17 @@ function render(shouldAnimate = false) {
   const chartWrapper = document.getElementById("chartWrapper");
   const chartBody = document.getElementById("chartBody");
   
-  const minBarWidth = isSingle ? 60 : 45;
-  const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * minBarWidth);
+  const isMobile = window.innerWidth < 768;
+  const minBarWidth = isSingle ? (isMobile ? 50 : 60) : (isMobile ? 22 : 45); // スマホでの幅を調整
+  let finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * minBarWidth);
+  
+  // 【重要】スマホのCanvasメモリ上限（グラフが真っ白になる現象）回避
+  let dpr = window.devicePixelRatio || 1;
+  if (isMobile) {
+    if (finalWidth > 8000) finalWidth = 8000; // iOS Safariの描画限界を超えないようにキャップ
+    if (chartSource.length > 100) dpr = 1;    // 解像度を落としてメモリパンクを防ぐ
+  }
+  
   chartBody.style.width = `${finalWidth}px`;
   
   if (chart) chart.destroy();
@@ -807,6 +821,7 @@ function render(shouldAnimate = false) {
         }]
       },
       options: {
+        devicePixelRatio: dpr, // Retinaでの過剰メモリ消費を防止
         responsive: true, 
         maintainAspectRatio: false,
         animation: shouldAnimate ? { duration: 800 } : false,
@@ -818,7 +833,17 @@ function render(shouldAnimate = false) {
               label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
             }
           },
-          datalabels: { anchor: 'end', align: 'top', color: '#64748b', font: { size: 9, weight: '600' }, formatter: v => (v/10000).toFixed(1) }
+          datalabels: { 
+            anchor: 'end', 
+            align: 'top', 
+            color: '#64748b', 
+            font: { size: 9, weight: '600' }, 
+            formatter: v => (v/10000).toFixed(1),
+            display: (context) => {
+              // スマホでデータが大量の時はラベルが重なって潰れるため非表示にする
+              return (isMobile && chartSource.length > 150) ? false : true;
+            }
+          }
         },
         scales: { 
           y: { ticks: { callback: v => (v/10000) + "万", font: {size: 9} }, grace: '15%' },
