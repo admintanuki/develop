@@ -779,15 +779,31 @@ function render(shouldAnimate = false) {
   const chartWrapper = document.getElementById("chartWrapper");
   const chartBody = document.getElementById("chartBody");
 
-  // 【スマホで真っ白になる問題の解決】
-  // スマホ(モバイル)の場合、元の「細いバー」に戻します。
-  // これによりCanvasの巨大化を防ぎ、かつ100件制限などをかけずに全データを描画できます。
   const isMobile = window.innerWidth < 768;
-  const minBarWidth = isSingle 
-    ? (isMobile ? 22 : 60)  // スマホなら22px、PCなら60px
-    : (isMobile ? 22 : 45); // スマホなら22px、PCなら45px
+  
+  // スマホでもPCに近い太いバー(35px/50px)を設定して視認性を高める
+  let minBarWidth = isSingle ? (isMobile ? 50 : 60) : (isMobile ? 35 : 45); 
+  let finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * minBarWidth);
+  
+  // 【真っ白クラッシュ回避 ＆ 画質維持のハイブリッド処理】
+  let dpr = window.devicePixelRatio || 1;
+  if (isMobile) {
+    const maxBackingStoreWidth = 8000; // iOS SafariのCanvas描画限界幅(安全圏)
+    // 必要な内部ピクセル幅（CSS幅 × デバイスの解像度倍率）
+    const requiredWidth = finalWidth * dpr;
+    
+    if (requiredWidth > maxBackingStoreWidth) {
+      // 真っ白にならないギリギリのラインまで解像度(DPR)を滑らかに下げて、太さを維持する
+      dpr = Math.max(1, maxBackingStoreWidth / finalWidth);
+      
+      // DPRを1まで下げても限界を超えるほどデータが膨大な場合のみ、幅自体を縮小して強制描画
+      if (finalWidth > maxBackingStoreWidth) {
+        finalWidth = maxBackingStoreWidth;
+        dpr = 1;
+      }
+    }
+  }
 
-  const finalWidth = Math.max(chartWrapper.clientWidth, chartSource.length * minBarWidth);
   chartBody.style.width = `${finalWidth}px`;
   
   if (chart) chart.destroy();
@@ -819,6 +835,7 @@ function render(shouldAnimate = false) {
         }]
       },
       options: {
+        devicePixelRatio: dpr, // 動的計算した最適解像度を適用
         responsive: true, 
         maintainAspectRatio: false,
         animation: shouldAnimate ? { duration: 800 } : false,
@@ -872,7 +889,6 @@ function render(shouldAnimate = false) {
       : `<div class="cd-item-base ${hideClass}">${content}</div>`;
   };
 
-  // これから発売予定（カード型）用
   const getUpcomingCardHtml = (c) => {
     const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
     const color = fixedGroupColors[c.group] || "#7f8c8d";
