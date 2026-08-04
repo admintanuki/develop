@@ -36,6 +36,7 @@
       --sub: #94a3b8;
       --border: #e2e8f0;
       --accent-teal: #5D9C9F;
+      --accent-pink: #eba0b8;
       --accent-hot: #f97316;
       --primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
     }
@@ -63,9 +64,9 @@
     .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
     .header-content { max-width: 1100px; margin: 0 auto; }
     
-    .site-title { text-align: center; margin-bottom: 12px; }
+    .site-title { text-align: center; margin-bottom: 0px; }
     .site-title h1 { margin: 0; padding: 0; }
-    .site-title .sub-name { display: block; font-size: 13px; color: #eba0b8; font-weight: 800; margin-bottom: 0px; letter-spacing: 0.02em; }
+    .site-title .sub-name { display: block; font-size: 13px; color: var(--accent-pink); font-weight: 800; margin-bottom: 0px; letter-spacing: 0.02em; }
     .site-title .main-logo { display: block; font-family: "Georgia", serif; font-size: 32px; font-weight: 900; font-style: italic; color: #333; line-height: 1.1; margin: 2px 0 4px 0; }
     .site-title .main-name { display: block; font-size: 12px; font-weight: 700; color: #64748b; line-height: 1.2; }
 
@@ -74,25 +75,97 @@
       .site-title .main-logo { font-size: 48px; }
       .site-title .main-name { font-size: 15px; }
     }
-    
-    .controls { display: grid; grid-template-columns: repeat(2, 1fr); gap: 4px; max-width: 800px; margin: 0 auto; }
-    select { padding: 8px 2px; border-radius: 6px; border: 1px solid var(--border); background: #fff; width: 100%; color: var(--text); font-size: 11px; font-weight: 600; cursor: pointer; font-family: inherit; }
 
-    @media (min-width: 768px) {
-      .controls { gap: 12px; }
-      select { padding: 10px 12px; font-size: 13px; border-radius: 8px; }
+    .chart-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 15px;
+      padding-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 10px;
     }
 
-    .chart-tabs { display: flex; border-bottom: 1px solid var(--border); margin-bottom: 15px; padding-left: 5px; }
-    .chart-tab { padding: 8px 16px; font-size: 13px; font-weight: 700; color: var(--sub); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
-    .chart-tab.is-active { color: #eba0b8; border-bottom: 2px solid #eba0b8; }
+    .chart-tabs { display: flex; padding-left: 5px; }
+    .chart-tab { padding: 8px 14px; font-size: 13px; font-weight: 700; color: var(--sub); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
+    .chart-tab.is-active { color: var(--accent-pink); border-bottom: 2px solid var(--accent-pink); }
+
+    /* トグルスイッチ (初日 / 初週) */
+    .toggle-switch-container {
+      display: inline-flex;
+      align-items: center;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 3px;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+    }
+    
+    .toggle-switch-slider {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: calc(50% - 3px);
+      height: calc(100% - 6px);
+      background-color: var(--accent-pink);
+      border-radius: 99px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
+
+    .toggle-switch-container.is-right .toggle-switch-slider {
+      transform: translateX(100%);
+    }
+
+    .toggle-switch-btn {
+      position: relative;
+      z-index: 2;
+      padding: 4px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #64748b;
+      border-radius: 99px;
+      transition: color 0.25s ease;
+    }
+
+    .toggle-switch-btn.is-active {
+      color: #ffffff;
+    }
+
+    /* ------------------------------------
+       チェックボックス (シングル / アルバム) - グレー系に変更
+    ------------------------------------ */
+    .filter-checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+    }
+    .filter-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .filter-checkbox-label input[type="checkbox"] {
+      accent-color: #64748b; /* グレー系に指定 */
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
 
     .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px; }
     .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
     .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
 
     .card-section-title { font-size: 15px; font-weight: 600; color: #475569; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-    .card-section-title::before { content: ""; width: 4px; height: 16px; background: #eba0b8; border-radius: 2px; }
+    .card-section-title::before { content: ""; width: 4px; height: 16px; background: var(--accent-pink); border-radius: 2px; }
 
     .group-buttons-wrapper { margin-bottom: 8px; }
     
@@ -149,7 +222,7 @@
     .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
     .chart-body { position: relative; height: 300px; min-width: 100%; }
     
-    .chart-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; min-height: 24px; }
+    .chart-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; min-height: 24px; flex-wrap: wrap; gap: 10px; }
     .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
@@ -167,16 +240,111 @@
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
     .cd-list { display: grid; gap: 10px; }
-    .no-data-msg { font-size: 12px; color: var(--sub); text-align: center; padding: 20px 0; }
+    .no-data-msg { font-size: 12px; color: var(--sub); text-align: center; padding: 20px 0; grid-column: 1 / -1; }
     
     .cd-item-base { 
       display: grid; grid-template-columns: 1fr 90px; gap: 16px; padding: 14px 16px; 
       border: 1px solid var(--border); border-radius: 12px; text-decoration: none; 
       color: inherit; background: #fff; align-items: center; transition: all 0.2s ease; 
     }
-    .cd-item-base.upcoming { 
-      grid-template-columns: 64px 1fr 90px; border: 1px solid #fed7aa; background-color: #fffaf5;
+
+    /* これから発売予定（カード型）用スタイル */
+    .upcoming-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px 14px;
     }
+    @media (min-width: 768px) {
+      .upcoming-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px 18px;
+      }
+    }
+
+    .upcoming-card-item {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease;
+    }
+    a.upcoming-card-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .upcoming-thumb-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background-color: #f1f5f9;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .upcoming-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .upcoming-no-img {
+      color: var(--sub);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .upcoming-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+    .upcoming-badge {
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .upcoming-date {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--sub);
+    }
+
+    .upcoming-card-title {
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1.35;
+      margin-bottom: 2px;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .upcoming-group-name {
+      font-size: 11px;
+      color: var(--sub);
+      font-weight: 600;
+    }
+    .upcoming-status-row {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
     a.cd-item-base:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: #cbd5e1; }
 
     .show-more-btn {
@@ -189,7 +357,6 @@
 
     @media (max-width: 767px) {
       .cd-item-base { grid-template-columns: 1fr 80px; padding: 10px 12px; gap: 10px; }
-      .cd-item-base.upcoming { grid-template-columns: 50px 1fr 80px; }
     }
 
     .cd-thumb { width: 64px; height: 64px; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
@@ -276,10 +443,11 @@
         <span class="main-name">【2026年最新】歴代シングル・アルバム売上枚数比較サイト</span>
       </h1>
     </div>
-    <div class="controls">
+    <!-- 内部データ動作用要素 -->
+    <div style="display:none;">
       <select id="salesType"><option value="firstWeek" selected>初週</option><option value="firstDay">初日</option></select>
       <select id="filter"><option value="all">シングル&アルバム</option><option value="single">シングル</option><option value="album">アルバム</option></select>
-      <select id="sortOrder" style="display:none;"><option value="date" selected>発売日順</option><option value="salesDesc">売上順</option></select>
+      <select id="sortOrder"><option value="date" selected>発売日順</option><option value="salesDesc">売上順</option></select>
     </div>
   </div>
 </header>
@@ -287,9 +455,17 @@
 <div class="container">
   <div id="mainContent" class="content-wrapper">
     <div class="card">
-      <div class="chart-tabs">
-        <div class="chart-tab is-active" data-sort="date">発売日順</div>
-        <div class="chart-tab" data-sort="salesDesc">売上順</div>
+      <div class="chart-header-row">
+        <div class="chart-tabs">
+          <div class="chart-tab is-active" data-sort="date">発売日順</div>
+          <div class="chart-tab" data-sort="salesDesc">売上順</div>
+        </div>
+        <!-- グラフ枠内右上：初日 / 初週 トグルスイッチ -->
+        <div class="toggle-switch-container is-right" id="salesTypeToggle">
+          <div class="toggle-switch-slider"></div>
+          <div class="toggle-switch-btn" data-value="firstDay">初日</div>
+          <div class="toggle-switch-btn is-active" data-value="firstWeek">初週</div>
+        </div>
       </div>
 
       <div class="group-buttons-wrapper">
@@ -308,7 +484,17 @@
         </div>
       </div>
       <div class="chart-footer">
-        <div id="chartBtnArea"></div>
+        <!-- グラフ枠内左下：シングル / アルバム チェックボックス -->
+        <div id="chartBtnArea">
+          <div class="filter-checkbox-group">
+            <label class="filter-checkbox-label">
+              <input type="checkbox" id="chkSingle" checked> シングル
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" id="chkAlbum" checked> アルバム
+            </label>
+          </div>
+        </div>
         <button onclick="copyShareUrl()" class="share-btn-mini" id="shareBtn">
           <svg viewBox="0 0 24 24" id="shareIcon"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" fill="currentColor"/></svg>
           <span id="shareBtnText">このグラフを共有</span>
@@ -316,24 +502,25 @@
       </div>
     </div>
 
-    <div class="card hot-area">
-      <div class="hot-list">
-        <span class="hot-label"><svg viewBox="0 0 24 24"><path d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311L4.5 17c0 3.866 3.134 7 7 7s7-3.134 7-7c0-2.116-1.03-4.03-2.688-5.576zM13.5 0s-4 4.5-4 8c0 1.5 1 3.5 3 4.5.5-2.5 2-4.5 4-4.5.5 5-2.5 9.5-6 11-1-.5-3.5-2.5-3.5-6.5 0-3.5 3.5-12.5 6.5-12.5z"/></svg>HOT</span>
-        <a href="https://fan-chart.com/snowman" class="hot-item">Snow Man</a>
-        <a href="https://fan-chart.com/sixtones" class="hot-item">SixTONES</a>
-        <a href="https://fan-chart.com/king-and-prince" class="hot-item">King & Prince</a>
-        <a href="https://fan-chart.com/naniwa-danshi" class="hot-item">なにわ男子</a>
-      </div>
-    </div>
-
     <div class="split-area">
       <div class="list-container" style="display:flex; flex-direction:column; gap:24px;">
         <div class="card" id="upcomingCard">
           <div class="card-section-title">これから発売予定</div>
-          <div class="cd-list" id="upcomingList">
+          <div class="upcoming-grid" id="upcomingList">
             <div class="inner-loading"><div class="spinner"></div>予定を取得中...</div>
           </div>
         </div>
+
+        <div class="card hot-area">
+          <div class="hot-list">
+            <span class="hot-label"><svg viewBox="0 0 24 24"><path d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311L4.5 17c0 3.866 3.134 7 7 7s7-3.134 7-7c0-2.116-1.03-4.03-2.688-5.576zM13.5 0s-4 4.5-4 8c0 1.5 1 3.5 3 4.5.5-2.5 2-4.5 4-4.5.5 5-2.5 9.5-6 11-1-.5-3.5-2.5-3.5-6.5 0-3.5 3.5-12.5 6.5-12.5z"/></svg>HOT</span>
+            <a href="https://fan-chart.com/snowman" class="hot-item">Snow Man</a>
+            <a href="https://fan-chart.com/sixtones" class="hot-item">SixTONES</a>
+            <a href="https://fan-chart.com/king-and-prince" class="hot-item">King & Prince</a>
+            <a href="https://fan-chart.com/naniwa-danshi" class="hot-item">なにわ男子</a>
+          </div>
+        </div>
+
         <div class="card" id="historyCard">
           <div class="card-section-title">歴代シングル・アルバム売上</div>
           <div id="listScrollArea">
@@ -501,11 +688,10 @@ function renderGroupButtons() {
       if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
       window.history.replaceState({}, '', url);
       renderGroupButtons(); 
-     setTimeout(() => {
       render(true);
-    }, 0);
-  };
-});
+    };
+  });
+}
 
 async function loadData() {
   initSettingsByUrl();
@@ -648,21 +834,20 @@ function render(shouldAnimate = false) {
   const STEP_SHOW_COUNT = 50; 
   let currentShowCount = INITIAL_SHOW_COUNT;
 
+  // 歴代リスト用
   const getListItemHtml = (c, index) => {
     const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
     const color = fixedGroupColors[c.group] || "#7f8c8d";
     const salesValExists = c[type] !== null;
-    const salesDisp = salesValExists ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'集計中');
-    const isUpcomingLayout = !salesValExists;
+    const salesDisp = salesValExists ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'売上集計中');
     const countdownHtml = days>0 ? `<div class="countdown">あと${days}日</div>` : days===0 ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` : "";
     const hideClass = (index >= currentShowCount) ? 'hidden-item' : '';
 
     const content = `
-      ${isUpcomingLayout ? `<div class="cd-thumb">${c.affiliate ? `<img src="${c.affiliate}">` : ''}</div>` : ''}
       <div class="cd-info-main">
         <span class="cd-title" style="color:${color}">
           ${c.title}
-          ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>${isUpcomingLayout ? '<span class=\"buy-label\">購入はこちら</span>' : ''}` : ''}
+          ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
         </span>
         <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span></div>
       </div>
@@ -672,11 +857,53 @@ function render(shouldAnimate = false) {
       </div>
     `;
     return c.seller 
-      ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${isUpcomingLayout?'upcoming':''} ${hideClass}">${content}</a>` 
-      : `<div class="cd-item-base ${isUpcomingLayout?'upcoming':''} ${hideClass}">${content}</div>`;
+      ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${hideClass}">${content}</a>` 
+      : `<div class="cd-item-base ${hideClass}">${content}</div>`;
   };
 
-  document.getElementById("upcomingList").innerHTML = upcoming.length ? upcoming.map(getListItemHtml).join("") : '<div class="no-data-msg">現在、発売予定の作品はありません</div>';
+  // これから発売予定（カード型）用
+  const getUpcomingCardHtml = (c) => {
+    const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
+    const color = fixedGroupColors[c.group] || "#7f8c8d";
+    const formattedDate = c.releaseDate ? c.releaseDate.replace(/-/g, '.') : '';
+    const imgHtml = c.affiliate 
+      ? `<img src="${c.affiliate}" alt="${c.title}">` 
+      : `<div class="upcoming-no-img">🎵 RELEASE</div>`;
+
+    const salesDispText = days > 0 ? '予約受付中' : '売上集計中';
+    const countdownHtml = days > 0 
+      ? `<div class="countdown">あと${days}日</div>` 
+      : days === 0 
+        ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` 
+        : ``;
+
+    const content = `
+      <div class="upcoming-thumb-wrap">
+        ${imgHtml}
+      </div>
+      <div class="upcoming-meta-row">
+        <span class="upcoming-badge" style="background:${color}">${c.category ? c.category.toUpperCase() : 'CD'}</span>
+        <span class="upcoming-date">${formattedDate}</span>
+      </div>
+      <div class="upcoming-card-title" style="color:${color}">
+        ${c.title}
+        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
+      </div>
+      <div class="upcoming-group-name">${c.group}</div>
+      <div class="upcoming-status-row">
+        <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDispText}</div>
+        ${countdownHtml}
+      </div>
+    `;
+
+    return c.seller 
+      ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="upcoming-card-item">${content}</a>`
+      : `<div class="upcoming-card-item">${content}</div>`;
+  };
+
+  document.getElementById("upcomingList").innerHTML = upcoming.length 
+    ? upcoming.map(getUpcomingCardHtml).join("") 
+    : '<div class="no-data-msg">現在、発売予定の作品はありません</div>';
   
   const updateList = () => {
     const listArea = document.getElementById("cdList");
@@ -717,8 +944,22 @@ function parseCSV(text) {
 
 function initSettingsByUrl() {
     const params = new URLSearchParams(window.location.search);
-    if(params.get('t')) document.getElementById("salesType").value = params.get('t');
-    if(params.get('f')) document.getElementById("filter").value = params.get('f');
+    if(params.get('t')) {
+      const t = params.get('t');
+      document.getElementById("salesType").value = t;
+      const toggleContainer = document.getElementById("salesTypeToggle");
+      document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(btn => {
+        const isActive = (btn.dataset.value === t);
+        btn.classList.toggle('is-active', isActive);
+      });
+      toggleContainer.classList.toggle('is-right', t === 'firstWeek');
+    }
+    if(params.get('f')) {
+      const f = params.get('f');
+      document.getElementById("filter").value = f;
+      document.getElementById("chkSingle").checked = (f === 'all' || f === 'single');
+      document.getElementById("chkAlbum").checked = (f === 'all' || f === 'album');
+    }
     if(params.get('s')) {
       const s = params.get('s');
       document.getElementById("sortOrder").value = s;
@@ -743,7 +984,51 @@ function copyShareUrl() {
   });
 }
 
-[document.getElementById("salesType"), document.getElementById("filter")].forEach(el => el.addEventListener("change", () => render(true)));
+// ------------------------------------
+// UIイベントリスナー
+// ------------------------------------
+const salesTypeToggle = document.getElementById('salesTypeToggle');
+document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    const val = btn.dataset.value;
+    
+    // スライダーアニメーション方向切り替え
+    if (val === 'firstWeek') {
+      salesTypeToggle.classList.add('is-right');
+    } else {
+      salesTypeToggle.classList.remove('is-right');
+    }
+    
+    document.getElementById('salesType').value = val;
+    render(true);
+  });
+});
+
+// チェックボックス解除防止（最後の1個は外せない処理）
+function handleCheckboxChange(e) {
+  const chkSingle = document.getElementById('chkSingle');
+  const chkAlbum = document.getElementById('chkAlbum');
+
+  // 両方外されようとした場合は操作を無効化（何も起きないようにする）
+  if (!chkSingle.checked && !chkAlbum.checked) {
+    e.preventDefault();
+    e.target.checked = true; // チェックを元に戻す
+    return;
+  }
+
+  let filterVal = 'all';
+  if (chkSingle.checked && !chkAlbum.checked) filterVal = 'single';
+  else if (!chkSingle.checked && chkAlbum.checked) filterVal = 'album';
+
+  document.getElementById('filter').value = filterVal;
+  render(true);
+}
+
+document.getElementById('chkSingle').addEventListener('click', handleCheckboxChange);
+document.getElementById('chkAlbum').addEventListener('click', handleCheckboxChange);
+
 window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300); });
 const groupDropdown = document.getElementById('groupDropdown');
 const dropdownContent = groupDropdown.querySelector('.dropdown-content');
