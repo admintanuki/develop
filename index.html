@@ -764,7 +764,6 @@ chartWrapperEl.addEventListener('scroll', function() {
   if (this.scrollLeft <= 50 && !isFetchingGraph && window.hasMoreGraphData) {
     isFetchingGraph = true;
     
-    // 全データ未ロードならここで全データを解放
     if (!isFullDataLoaded) {
       loadAllRecords();
     }
@@ -824,13 +823,12 @@ function render(shouldAnimate = false, isScrollLoad = false) {
     noticeEl.innerText = window.hasMoreGraphData ? "※左にスクロールでさらに過去データを読み込みます" : "";
   }
 
-  // 表示件数の絞り込み (後方から抽出＝最新/売上上位を取得)
   let displayChartSource = chartSource;
   if (chartSource.length > currentGraphShowCount) {
     displayChartSource = chartSource.slice(-currentGraphShowCount);
   }
 
-  // バーの太さはPC版・昔のまま維持
+  // バーの太さはPC版のまま維持
   const minBarWidth = isSingle ? 60 : 45;
   const finalWidth = Math.max(chartWrapperEl.clientWidth, displayChartSource.length * minBarWidth);
   chartBody.style.width = `${finalWidth}px`;
@@ -862,7 +860,7 @@ function render(shouldAnimate = false, isScrollLoad = false) {
           pointBorderColor: singleColor, 
           pointRadius: isSingle ? 4 : 0,
           pointHoverRadius: isSingle ? 6 : 0,
-          pointHitRadius: isSingle ? 20 : 0, // 変更：スマホでのタップ判定領域を広く（操作性アップ）
+          pointHitRadius: isSingle ? 20 : 0,
           pointBorderWidth: isSingle ? 2 : 0
         }]
       },
@@ -870,9 +868,10 @@ function render(shouldAnimate = false, isScrollLoad = false) {
         responsive: true, 
         maintainAspectRatio: false,
         animation: shouldAnimate ? { duration: 800 } : false,
-        interaction: { // 変更：点そのものズバリを触らなくても、その縦軸（インデックス）付近を触ればツールチップが出るようにする
+        interaction: {
           mode: 'index',
-          intersect: false
+          intersect: false,
+          axis: 'x'
         },
         plugins: { 
           legend: { display: false },
@@ -886,24 +885,20 @@ function render(shouldAnimate = false, isScrollLoad = false) {
             anchor: 'end', 
             align: 'top', 
             color: '#64748b', 
-            // 変更：スマホ閲覧時の文字サイズを少し大きく（PC:9px, スマホ:11px）
             font: { size: isMobile ? 11 : 9, weight: '600' }, 
             formatter: v => (v/10000).toFixed(1),
-            display: (context) => {
-              return (isMobile && chartSource.length > 150) ? false : true;
-            }
+            // ★修正点：データ件数がどれだけ増えてもスマホで枚数ラベルを常に100%確実に表示する
+            display: true
           }
         },
         scales: { 
-          // 変更：Y軸とX軸のラベル文字サイズもスマホ時に少し大きく
-          y: { ticks: { callback: v => (v/10000) + "万", font: {size: isMobile ? 10 : 9} }, grace: '15%' },
-          x: { ticks: { font: {size: isMobile ? 10 : 8}, maxRotation: 45, minRotation: 45 }, grid: { display: false } }
+          y: { ticks: { callback: v => (v/10000) + "万", font: {size: isMobile ? 11 : 9} }, grace: '15%' },
+          x: { ticks: { font: {size: isMobile ? 11 : 8}, maxRotation: 45, minRotation: 45 }, grid: { display: false } }
         }
       }
     });
   }
   
-  // スクロール読み込み時以外は、最新(右端)へスクロールを合わせる
   if (!isScrollLoad) {
     chartWrapperEl.scrollLeft = finalWidth;
   }
