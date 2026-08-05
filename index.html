@@ -240,7 +240,7 @@
       width: max-content;
       align-items: stretch;
     }
-    /* スマホ画面で約2.5冊分見えるカード幅（125px）、グレーの枠線なし */
+    /* スマホ画面で約2.5冊分見えるカード幅（125px）・1タップ遷移のためホバーアニメ削除 */
     .magazine-item {
       width: 125px;
       flex-shrink: 0;
@@ -251,11 +251,7 @@
       padding: 0;
       text-decoration: none;
       color: inherit;
-      transition: transform 0.2s ease;
       box-sizing: border-box;
-    }
-    .magazine-item:hover {
-      transform: translateY(-2px);
     }
     /* 画像を四角（角丸なし）に変更 */
     .mag-thumb {
@@ -282,6 +278,20 @@
       color: var(--accent-hot);
       margin-bottom: 2px;
     }
+
+    /* 雑誌枠内グループ名バッジ（完全角丸・楕円・白抜き文字） */
+    .mag-group-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      color: #ffffff;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-bottom: 4px;
+      width: fit-content;
+      line-height: 1.2;
+    }
+
     .mag-title {
       font-size: 11px;
       font-weight: 400;
@@ -294,7 +304,7 @@
       word-break: break-all;
     }
 
-    /* 雑誌枠内「もっと見る」カードスタイル（ホバー時の変化なし・固定表示） */
+    /* 雑誌枠内「もっと見る」カードスタイル（→ アイコン・固定表示） */
     .magazine-more-card {
       width: 125px;
       flex-shrink: 0;
@@ -311,16 +321,16 @@
       box-sizing: border-box;
     }
     .mag-more-icon {
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: #fff;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
       margin-bottom: 6px;
-      color: var(--sub);
+      color: var(--text);
     }
     .mag-more-text {
       font-size: 11px;
@@ -613,6 +623,7 @@
 
     <div class="split-area">
       <div class="list-container">
+        <!-- これから発売予定 枠 (0件時は自動で枠ごと非表示) -->
         <div class="card" id="upcomingCard">
           <div class="card-section-title">これから発売予定</div>
           <div class="upcoming-grid" id="upcomingList">
@@ -620,7 +631,7 @@
           </div>
         </div>
 
-        <!-- 🔥おすすめ関連商品・最新雑誌 枠 (メインボタン完全連動) -->
+        <!-- 🔥おすすめ関連商品・最新雑誌 枠 -->
         <div class="card" id="magazineCard">
           <div class="card-section-title">🔥 おすすめ関連商品・最新雑誌</div>
           <div class="magazine-scroll-container" id="magazineScrollContainer">
@@ -879,7 +890,7 @@ async function loadData() {
 }
 
 // ------------------------------------
-// 最新雑誌データ管理・レンダリング（「もっと見る」カード方式・20件増加）
+// 最新雑誌データ管理・レンダリング（「もっと見る」カード方式・20件増加・グループバッジ付き）
 // ------------------------------------
 async function loadMagazineData() {
   try {
@@ -935,21 +946,25 @@ function renderMagazines() {
       ? `<img src="${m.src}" alt="${m.title}" loading="${loadingAttr}">` 
       : `<span style="font-size:10px;color:#94a3b8;">NO IMAGE</span>`;
 
+    // グループカラーの取得（白抜きバッジ用）
+    const groupColor = fixedGroupColors[m.group] || "#7f8c8d";
+
     return `
       <a href="${m.href}" target="_blank" rel="noopener noreferrer" class="magazine-item">
         <div class="mag-thumb">${imgHtml}</div>
         <div class="mag-date">${formattedDate}${formattedDate ? ' 発売' : ''}</div>
+        ${m.group ? `<div class="mag-group-badge" style="background:${groupColor};">${m.group}</div>` : ''}
         <div class="mag-title">${m.title}</div>
       </a>
     `;
   }).join("");
 
-  // まだ続きがある場合、横スクロール末尾に「もっと見る」カードを挿入
+  // まだ続きがある場合、横スクロール末尾に「もっと見る」カードを挿入（→ アイコン）
   if (hasMore) {
     html += `
       <div class="magazine-more-card" id="magLoadMoreBtn">
         <div class="mag-more-icon">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 4.5v15m7.5-7.5h-15"/></svg>
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
         </div>
         <div class="mag-more-text">もっと見る</div>
       </div>
@@ -1205,7 +1220,7 @@ function render(shouldAnimate = false, isScrollLoad = false) {
       </div>
       <div class="upcoming-card-title" style="color:${color}">
         ${c.title}
-        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
+        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
       </div>
       <div class="upcoming-group-name">${c.group}</div>
       <div class="upcoming-status-row">
@@ -1219,9 +1234,14 @@ function render(shouldAnimate = false, isScrollLoad = false) {
       : `<div class="upcoming-card-item">${content}</div>`;
   };
 
-  document.getElementById("upcomingList").innerHTML = upcoming.length 
-    ? upcoming.map(getUpcomingCardHtml).join("") 
-    : '<div class="no-data-msg">現在、発売予定の作品はありません</div>';
+  // これから発売予定カードの非表示・表示切替ロジック
+  const upcomingCard = document.getElementById("upcomingCard");
+  if (upcoming.length === 0) {
+    if (upcomingCard) upcomingCard.style.display = "none";
+  } else {
+    if (upcomingCard) upcomingCard.style.display = "block";
+    document.getElementById("upcomingList").innerHTML = upcoming.map(getUpcomingCardHtml).join("");
+  }
   
   const updateList = () => {
     const listArea = document.getElementById("cdList");
