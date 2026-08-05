@@ -650,10 +650,12 @@ let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isF
 let currentGraphShowCount = 100; // グラフの初期表示件数
 let isFetchingGraph = false;
 window.hasMoreGraphData = false;
+let lastActiveIndex = null; // 前回タップしたインデックスを記憶する変数（トグル用）
 
 // 絞り込みやタブ変更があった際に表示件数をリセットする関数
 function resetAndRender() {
   currentGraphShowCount = 100;
+  lastActiveIndex = null;
   render(true);
 }
 
@@ -760,7 +762,6 @@ function processInfo(data) {
 // ------------------------------------
 const chartWrapperEl = document.getElementById("chartWrapper");
 chartWrapperEl.addEventListener('scroll', function() {
-  // 左端(50px以内)に到達 ＆ 取得中でない ＆ まだ過去データがある場合
   if (this.scrollLeft <= 50 && !isFetchingGraph && window.hasMoreGraphData) {
     isFetchingGraph = true;
     
@@ -770,9 +771,8 @@ chartWrapperEl.addEventListener('scroll', function() {
     
     const oldScrollWidth = this.scrollWidth;
     currentGraphShowCount += 100;
-    render(false, true); // true = scroll Load flag
+    render(false, true);
     
-    // 継ぎ足し後、視点がジャンプしないようスクロール位置を自動補正
     this.scrollLeft = this.scrollWidth - oldScrollWidth > 0 ? this.scrollWidth - oldScrollWidth : 0;
     
     setTimeout(() => { isFetchingGraph = false; }, 300);
@@ -814,7 +814,6 @@ function render(shouldAnimate = false, isScrollLoad = false) {
   const isSingle = activeGroups.size === 1;
   const chartBody = document.getElementById("chartBody");
 
-  // 過去データがあるかどうかのフラグを更新
   window.currentFilteredChartLength = chartSource.length;
   window.hasMoreGraphData = (!isFullDataLoaded || chartSource.length > currentGraphShowCount);
   
@@ -828,7 +827,6 @@ function render(shouldAnimate = false, isScrollLoad = false) {
     displayChartSource = chartSource.slice(-currentGraphShowCount);
   }
 
-  // バーの太さはPC版のまま維持
   const minBarWidth = isSingle ? 60 : 45;
   const finalWidth = Math.max(chartWrapperEl.clientWidth, displayChartSource.length * minBarWidth);
   chartBody.style.width = `${finalWidth}px`;
@@ -867,15 +865,35 @@ function render(shouldAnimate = false, isScrollLoad = false) {
       options: {
         responsive: true, 
         maintainAspectRatio: false,
+        // 初期バージョン(index_4.html)と同様のアニメーション＆インタラクションに戻す
         animation: shouldAnimate ? { duration: 800 } : false,
         interaction: {
-          mode: 'index',
-          intersect: false,
-          axis: 'x'
+          mode: 'nearest',
+          intersect: true
+        },
+        onClick: (e, elements) => {
+          if (elements && elements.length > 0) {
+            const clickedIndex = elements[0].index;
+            if (lastActiveIndex === clickedIndex) {
+              chart.setActiveElements([]);
+              chart.tooltip.setActiveElements([], { x: 0, y: 0 });
+              chart.update();
+              lastActiveIndex = null;
+            } else {
+              lastActiveIndex = clickedIndex;
+            }
+          } else {
+            lastActiveIndex = null;
+          }
         },
         plugins: { 
           legend: { display: false },
           tooltip: {
+            // 初期バージョン(index_4.html)と同様の滑らかなフェード＆移動アニメーションを再現
+            animations: {
+              y: { duration: 200, easing: 'easeOutQuad' },
+              opacity: { duration: 200, easing: 'easeOutQuad' }
+            },
             callbacks: {
               title: (context) => { const d = displayChartSource[context[0].dataIndex]; return `${d.group} / ${d.title}`; },
               label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
@@ -887,7 +905,6 @@ function render(shouldAnimate = false, isScrollLoad = false) {
             color: '#64748b', 
             font: { size: isMobile ? 11 : 9, weight: '600' }, 
             formatter: v => (v/10000).toFixed(1),
-            // ★修正点：データ件数がどれだけ増えてもスマホで枚数ラベルを常に100%確実に表示する
             display: true
           }
         },
@@ -958,7 +975,7 @@ function render(shouldAnimate = false, isScrollLoad = false) {
       </div>
       <div class="upcoming-card-title" style="color:${color}">
         ${c.title}
-        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
+        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
       </div>
       <div class="upcoming-group-name">${c.group}</div>
       <div class="upcoming-status-row">
