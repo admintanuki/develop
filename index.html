@@ -159,8 +159,8 @@
     }
 
     .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px; }
-    .content-wrapper { display: flex; flex-direction: column; gap: 28px; }
-    .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; }
+    .content-wrapper { display: flex; flex-direction: column; gap: 28px; width: 100%; }
+    .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; box-sizing: border-box; width: 100%; min-width: 0; }
 
     .card-section-title { font-size: 15px; font-weight: 600; color: #475569; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
     .card-section-title::before { content: ""; width: 4px; height: 16px; background: var(--accent-pink); border-radius: 2px; }
@@ -226,6 +226,109 @@
 
     .load-more-text { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: underline; margin-bottom: 4px; }
 
+    /* 🔥おすすめ関連商品（最新掲載雑誌）エリアスタイル */
+    .magazine-scroll-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 16px;
+      margin-bottom: 4px;
+    }
+    .magazine-list {
+      display: flex;
+      gap: 12px;
+      width: max-content;
+      align-items: stretch;
+    }
+    /* スマホ画面で約2.5冊分見えるカード幅（125px）、グレーの枠線なし */
+    .magazine-item {
+      width: 125px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: none;
+      padding: 0;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease;
+      box-sizing: border-box;
+    }
+    .magazine-item:hover {
+      transform: translateY(-2px);
+    }
+    /* 画像を四角（角丸なし）に変更 */
+    .mag-thumb {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: #f1f5f9;
+      border-radius: 0px;
+      overflow: hidden;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mag-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 0px;
+    }
+    .mag-date {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent-hot);
+      margin-bottom: 2px;
+    }
+    .mag-title {
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.35;
+      color: #64748b;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-all;
+    }
+
+    /* 雑誌枠内「もっと見る」カードスタイル（ホバー時の変化なし・固定表示） */
+    .magazine-more-card {
+      width: 125px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 12px 8px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .mag-more-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+      color: var(--sub);
+    }
+    .mag-more-text {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
     .hot-area { padding: 12px 20px; }
     .hot-list { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
     .hot-label { font-size: 11px; font-weight: 800; color: var(--accent-hot); display: flex; align-items: center; gap: 4px; white-space: nowrap; border-right: 1px solid var(--border); padding-right: 12px; }
@@ -234,8 +337,10 @@
     .hot-item:hover { color: var(--accent-hot); }
     .hot-item::after { content: '>'; margin-left: 4px; font-size: 10px; opacity: 0.5; }
 
-    .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; width: 100%; }
     @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
+
+    .list-container { display: flex; flex-direction: column; gap: 24px; min-width: 0; width: 100%; }
 
     .cd-list { display: grid; gap: 10px; }
     .no-data-msg { font-size: 12px; color: var(--sub); text-align: center; padding: 20px 0; grid-column: 1 / -1; }
@@ -251,6 +356,7 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 20px 14px;
+      width: 100%;
     }
     @media (min-width: 768px) {
       .upcoming-grid {
@@ -265,6 +371,7 @@
       text-decoration: none;
       color: inherit;
       transition: transform 0.2s ease;
+      min-width: 0;
     }
     a.upcoming-card-item:hover {
       transform: translateY(-3px);
@@ -394,7 +501,7 @@
     .more-link { display: block; text-align: right; font-size: 11px; font-weight: 700; text-decoration: none; margin-top: 4px; }
     .more-link:hover { text-decoration: underline; }
 
-    .history-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
+    .history-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dotted var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
     .history-list { list-style: none; padding: 0; margin: 0; }
     .history-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dotted var(--border); }
     .history-date { font-size: 10px; color: var(--sub); display: block; margin-bottom: 2px; font-weight: 600; }
@@ -505,11 +612,21 @@
     </div>
 
     <div class="split-area">
-      <div class="list-container" style="display:flex; flex-direction:column; gap:24px;">
+      <div class="list-container">
         <div class="card" id="upcomingCard">
           <div class="card-section-title">これから発売予定</div>
           <div class="upcoming-grid" id="upcomingList">
             <div class="inner-loading"><div class="spinner"></div>予定を取得中...</div>
+          </div>
+        </div>
+
+        <!-- 🔥おすすめ関連商品・最新雑誌 枠 (メインボタン完全連動) -->
+        <div class="card" id="magazineCard">
+          <div class="card-section-title">🔥 おすすめ関連商品・最新雑誌</div>
+          <div class="magazine-scroll-container" id="magazineScrollContainer">
+            <div class="magazine-list" id="magazineList">
+              <div class="inner-loading"><div class="spinner"></div>雑誌情報を取得中...</div>
+            </div>
           </div>
         </div>
 
@@ -621,6 +738,9 @@ const cacheBuster = "&t=" + new Date().getTime();
 const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv" + cacheBuster;
 const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv" + cacheBuster;
 
+// 雑誌専用スプレッドシート（gid=2235118）
+const SHEET_MAGAZINE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=2235118&single=true&output=csv" + cacheBuster;
+
 // 嵐とKAT-TUNを追加し、色の定義を行う
 const fixedGroupColors = { 
   "嵐": "#4ba8d6",
@@ -654,11 +774,17 @@ let isFetchingGraph = false;
 window.hasMoreGraphData = false;
 let lastActiveIndex = null; // 前回タップしたインデックスを記憶する変数（トグル用）
 
+// 雑誌データ保持用
+let allMagazineData = [];
+let currentMagShowCount = 10; // 初期10冊
+
 // 絞り込みやタブ変更があった際に表示件数をリセットする関数
 function resetAndRender() {
   currentGraphShowCount = 100;
+  currentMagShowCount = 10; // 雑誌表示件数を初期リセット
   lastActiveIndex = null;
   render(true);
+  renderMagazines(); // メインボタン選択変更時に雑誌一覧も同時に再描画
 }
 
 document.querySelectorAll('.chart-tab').forEach(tab => {
@@ -670,7 +796,7 @@ document.querySelectorAll('.chart-tab').forEach(tab => {
   });
 });
 
-// 固定順序で描画するように修正
+// 固定順序で描画するように修正（メインボタン群）
 function renderGroupButtons() {
   const listHtml = fixedGroupOrder.map(g => {
     const isSelected = activeGroups.has(g);
@@ -717,8 +843,8 @@ function renderGroupButtons() {
 async function loadData() {
   initSettingsByUrl();
   renderGroupButtons();
+  loadMagazineData(); // 雑誌データ並行読み込み
   try {
-    // 【未然の回避策】Safariの不完全キャッシュ参照やリダイレクト失敗を防ぐ設定
     const fetchOpt = { cache: 'no-store', redirect: 'follow' };
     const [resData, resInfo] = await Promise.all([
       fetch(SHEET_DATA_URL, fetchOpt), 
@@ -744,12 +870,101 @@ async function loadData() {
     console.error(e); 
     const chartLoading = document.getElementById('chartLoading');
     if(chartLoading) {
-      // 「比較したいグループを選択（最大5つまで）」と同じ文字サイズ・フォントカラー・ウェイトでマイルドに表示
       chartLoading.style.fontSize = "11px";
       chartLoading.style.fontWeight = "400";
       chartLoading.style.color = "#64748b";
       chartLoading.innerHTML = "再度ページを更新してください";
     }
+  }
+}
+
+// ------------------------------------
+// 最新雑誌データ管理・レンダリング（「もっと見る」カード方式・20件増加）
+// ------------------------------------
+async function loadMagazineData() {
+  try {
+    const res = await fetch(SHEET_MAGAZINE_URL, { cache: 'no-store', redirect: 'follow' });
+    if (!res.ok) return;
+    const raw = parseCSV(await res.text());
+    allMagazineData = raw.map(d => ({
+      id: d.id,
+      group: d.group,
+      title: d.title,
+      releaseDate: d.releaseDate,
+      href: d.seller || "",       // E列：商品リンク
+      src: d.affiliate || "",     // F列：画像URL
+      isHot: (d.isHot || "").toUpperCase() === "TRUE"
+    }));
+    renderMagazines();
+  } catch (e) {
+    console.error("Magazine load error:", e);
+    const magList = document.getElementById("magazineList");
+    if(magList) magList.innerHTML = '<div class="no-data-msg">現在表示できる雑誌情報はありません</div>';
+  }
+}
+
+function renderMagazines() {
+  const container = document.getElementById("magazineList");
+  if (!container) return;
+
+  // メインのグループ選択ボタン（activeGroups）と完全連動
+  let filtered = [];
+  if (activeGroups.size === 0) {
+    // 未選択（デフォルト・全解除時）は isHot === TRUE のものを抽出
+    filtered = allMagazineData.filter(m => m.isHot);
+  } else {
+    // 選択されているグループのいずれかに該当する雑誌を抽出
+    filtered = allMagazineData.filter(m => activeGroups.has(m.group));
+  }
+
+  // 発売日降順ソート
+  filtered.sort((a, b) => (b.releaseDate || "").localeCompare(a.releaseDate || ""));
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-data-msg" style="width:100%;">該当する雑誌情報はありません</div>';
+    return;
+  }
+
+  const displayItems = filtered.slice(0, currentMagShowCount);
+  const hasMore = filtered.length > currentMagShowCount;
+
+  let html = displayItems.map((m, index) => {
+    const loadingAttr = index < 10 ? 'eager' : 'lazy';
+    const formattedDate = m.releaseDate ? m.releaseDate.replace(/-/g, '.') : '';
+    const imgHtml = m.src 
+      ? `<img src="${m.src}" alt="${m.title}" loading="${loadingAttr}">` 
+      : `<span style="font-size:10px;color:#94a3b8;">NO IMAGE</span>`;
+
+    return `
+      <a href="${m.href}" target="_blank" rel="noopener noreferrer" class="magazine-item">
+        <div class="mag-thumb">${imgHtml}</div>
+        <div class="mag-date">${formattedDate}${formattedDate ? ' 発売' : ''}</div>
+        <div class="mag-title">${m.title}</div>
+      </a>
+    `;
+  }).join("");
+
+  // まだ続きがある場合、横スクロール末尾に「もっと見る」カードを挿入
+  if (hasMore) {
+    html += `
+      <div class="magazine-more-card" id="magLoadMoreBtn">
+        <div class="mag-more-icon">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 4.5v15m7.5-7.5h-15"/></svg>
+        </div>
+        <div class="mag-more-text">もっと見る</div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+
+  // 「もっと見る」カードタップ時のクリックイベント設定（＋20件追加）
+  const moreBtn = document.getElementById("magLoadMoreBtn");
+  if (moreBtn) {
+    moreBtn.onclick = () => {
+      currentMagShowCount += 20;
+      renderMagazines();
+    };
   }
 }
 
@@ -990,7 +1205,7 @@ function render(shouldAnimate = false, isScrollLoad = false) {
       </div>
       <div class="upcoming-card-title" style="color:${color}">
         ${c.title}
-        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
+        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
       </div>
       <div class="upcoming-group-name">${c.group}</div>
       <div class="upcoming-status-row">
