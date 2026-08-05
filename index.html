@@ -616,8 +616,10 @@
 <script>
 if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
 
-const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv";
-const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv";
+// iPhone Safariのリダイレクト・キャッシュバグを回避するためタイムスタンプを付与
+const cacheBuster = "&t=" + new Date().getTime();
+const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv" + cacheBuster;
+const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv" + cacheBuster;
 
 // 嵐とKAT-TUNを追加し、色の定義を行う
 const fixedGroupColors = { 
@@ -716,7 +718,12 @@ async function loadData() {
   initSettingsByUrl();
   renderGroupButtons();
   try {
-    const [resData, resInfo] = await Promise.all([fetch(SHEET_DATA_URL), fetch(SHEET_INFO_URL)]);
+    // 【未然の回避策】Safariの不完全キャッシュ参照やリダイレクト失敗を防ぐ設定
+    const fetchOpt = { cache: 'no-store', redirect: 'follow' };
+    const [resData, resInfo] = await Promise.all([
+      fetch(SHEET_DATA_URL, fetchOpt), 
+      fetch(SHEET_INFO_URL, fetchOpt)
+    ]);
     const rawData = parseCSV(await resData.text());
     allProcessedData = rawData.map(d => ({ 
       title: d.title, group: d.group, releaseDate: d.releaseDate, category: d.category,
@@ -733,7 +740,17 @@ async function loadData() {
     render();
     if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
     if (!isFullDataLoaded && allProcessedData.length > cds.length) showLoadMoreButtons();
-  } catch (e) { console.error(e); }
+  } catch (e) { 
+    console.error(e); 
+    const chartLoading = document.getElementById('chartLoading');
+    if(chartLoading) {
+      // 「比較したいグループを選択（最大5つまで）」と同じ文字サイズ・フォントカラー・ウェイトでマイルドに表示
+      chartLoading.style.fontSize = "11px";
+      chartLoading.style.fontWeight = "400";
+      chartLoading.style.color = "#64748b";
+      chartLoading.innerHTML = "再度ページを更新してください";
+    }
+  }
 }
 
 function loadAllRecords() {
@@ -865,7 +882,6 @@ function render(shouldAnimate = false, isScrollLoad = false) {
       options: {
         responsive: true, 
         maintainAspectRatio: false,
-        // 初期バージョン(index_4.html)と同様のアニメーション＆インタラクションに戻す
         animation: shouldAnimate ? { duration: 800 } : false,
         interaction: {
           mode: 'nearest',
@@ -889,7 +905,6 @@ function render(shouldAnimate = false, isScrollLoad = false) {
         plugins: { 
           legend: { display: false },
           tooltip: {
-            // 初期バージョン(index_4.html)と同様の滑らかなフェード＆移動アニメーションを再現
             animations: {
               y: { duration: 200, easing: 'easeOutQuad' },
               opacity: { duration: 200, easing: 'easeOutQuad' }
