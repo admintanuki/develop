@@ -1,372 +1,1397 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <link rel="canonical" href="https://fan-chart.com/">
+  
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPEDDGQHPC"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-PPEDDGQHPC');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "xxylh4n2u9");
+  </script>
+
+  <title>【2026最新】STARTO(旧ジャニーズ) CD売上枚数比較・歴代グラフ推移 | Snow Man・SixTONES・なにわ男子ほか</title>
+  <meta name="description" content="STARTO(旧ジャニーズ)所属アーティストの最新CD売上データを網羅。Snow Man、SixTONES、King & Prince、なにわ男子などの最新および歴代シングル・アルバム初動枚数をグラフで比較。2026年最新の売上傾向分析も掲載中。">
+  
+  <meta property="og:site_name" content="STARTO CD売上枚数比較サイト">
+  <meta property="og:title" content="【2026最新】STARTO(旧ジャニーズ) CD売上枚数比較・歴代グラフ推移">
+  <meta property="og:image" content="https://fan-chart.com/ogp.png">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://docs.google.com">
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+  
+  <style>
+    :root {
+      --bg: #f1f5f9; 
+      --card: #ffffff;
+      --text: #334155;
+      --sub: #94a3b8;
+      --border: #e2e8f0;
+      --accent-teal: #5D9C9F;
+      --accent-pink: #eba0b8;
+      --accent-hot: #f97316;
+      --primary-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body { 
+      margin: 0; padding: 0; 
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif; 
+      background: var(--bg); color: var(--text); padding-bottom: 60px; overflow-x: hidden; line-height: 1.6; 
+    }
+
+    .utility-bar { background: #fff; border-bottom: 1px solid var(--border); padding: 10px 20px; display: flex; justify-content: flex-end; align-items: center; font-size: 12px; }
+    .utility-right { display: flex; gap: 15px; }
+    .utility-link { text-decoration: none; color: #64748b; font-weight: 600; display: flex; align-items: center; gap: 4px; position: relative; cursor: pointer; }
     
-    <link rel="canonical" href="https://fan-chart.com/howto.html">
+    .dropdown { position: relative; display: inline-block; }
+    .dropdown-content { display: none; position: absolute; right: 0; background-color: #fff; min-width: 140px; box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1); z-index: 101; border: 1px solid var(--border); border-radius: 8px; margin-top: 8px; }
+    @media (min-width: 1025px) { .dropdown:hover .dropdown-content { display: block; } }
+    .dropdown-content.is-active { display: block; }
+    .dropdown-content a { color: var(--text); padding: 10px 16px; text-decoration: none; display: block; font-size: 12px; border-bottom: 1px solid var(--border); }
+    .dropdown-content a:last-child { border-bottom: none; }
+    .dropdown-content a:hover { background-color: #f1f5f9; }
+
+    .sticky-header { position: relative; z-index: 100; background: #fff; box-shadow: var(--primary-shadow); padding: 12px 10px; border-bottom: 1px solid var(--border); }
+    .header-content { max-width: 1100px; margin: 0 auto; }
     
-    <title>使い方ガイド | STARTO(旧ジャニーズ) CD売上比較サイト</title>
-    <meta name="description" content="STARTO ENTERTAINMENT(旧ジャニーズ)所属グループのCD売上枚数比較グラフの使い方ガイド。Snow ManやSixTONESなどの最新・歴代売上推移の比較方法や、折れ線グラフ・棒グラフの切り替え方を詳しく解説。">
+    .site-title { text-align: center; margin-bottom: 0px; }
+    .site-title h1 { margin: 0; padding: 0; }
+    .site-title .sub-name { display: block; font-size: 13px; color: var(--accent-pink); font-weight: 800; margin-bottom: 0px; letter-spacing: 0.02em; }
+    .site-title .main-logo { display: block; font-family: "Georgia", serif; font-size: 32px; font-weight: 900; font-style: italic; color: #333; line-height: 1.1; margin: 2px 0 4px 0; }
+    .site-title .main-name { display: block; font-size: 12px; font-weight: 700; color: #64748b; line-height: 1.2; }
 
-    <style>
-        /* --- カラーパレット（青緑×トープ） --- */
-        :root {
-            --accent-teal: #5D9C9F;   /* メイン（青緑） */
-            --accent-taupe: #8c7e6f;  /* サブ（トープ） */
-            --text-color: #333333;
-            --bg-color: #FFFFFF;
-            --gray-light: #f9f9f9;
-            --border-color: #e2e8f0;
-        }
+    @media (min-width: 768px) {
+      .site-title .sub-name { font-size: 15px; }
+      .site-title .main-logo { font-size: 48px; }
+      .site-title .main-name { font-size: 15px; }
+    }
 
-        /* --- 基本設定 --- */
-        body {
-            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            line-height: 1.8;
-            color: var(--text-color);
-            background-color: var(--gray-light);
-            margin: 0;
-            padding: 0;
-        }
+    .chart-header-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 15px;
+      padding-bottom: 4px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-        /* --- ヘッダー --- */
-        header {
-            background: var(--bg-color);
-            border-bottom: 1px solid var(--border-color);
-            padding: 40px 20px 30px;
-            text-align: center;
-        }
+    .chart-tabs { display: flex; padding-left: 5px; }
+    .chart-tab { padding: 8px 14px; font-size: 13px; font-weight: 700; color: var(--sub); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s ease; }
+    .chart-tab.is-active { color: var(--accent-pink); border-bottom: 2px solid var(--accent-pink); }
 
-        .header-inner {
-            display: inline-block;
-            text-align: left;
-            position: relative;
-            padding-left: 25px;
-        }
+    /* トグルスイッチ (初日 / 初週) */
+    .toggle-switch-container {
+      display: inline-flex;
+      align-items: center;
+      background: #f1f5f9;
+      border: 1px solid var(--border);
+      border-radius: 99px;
+      padding: 3px;
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+    }
+    
+    .toggle-switch-slider {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: calc(50% - 3px);
+      height: calc(100% - 6px);
+      background-color: var(--accent-pink);
+      border-radius: 99px;
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+    }
 
-        /* 左側のアクセントライン */
-        .header-inner::before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 5px;
-            bottom: 5px;
-            width: 4px;
-            background: linear-gradient(to bottom, var(--accent-teal), var(--accent-taupe));
-            border-radius: 2px;
-        }
+    .toggle-switch-container.is-right .toggle-switch-slider {
+      transform: translateX(100%);
+    }
 
-        .en-title {
-            display: block;
-            color: var(--accent-taupe);
-            font-size: 13px;
-            font-weight: 600;
-            letter-spacing: 0.25em;
-            margin-bottom: 8px;
-            font-family: 'Georgia', serif;
-        }
+    .toggle-switch-btn {
+      position: relative;
+      z-index: 2;
+      padding: 4px 16px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #64748b;
+      border-radius: 99px;
+      transition: color 0.25s ease;
+    }
 
-        header h1 {
-            margin: 0;
-            font-size: 34px;
-            font-weight: bold;
-            color: var(--text-color);
-            letter-spacing: 0.05em;
-            line-height: 1.2;
-        }
+    .toggle-switch-btn.is-active {
+      color: #ffffff;
+    }
 
-        /* 戻るリンク */
-        .back-link {
-            display: inline-block;
-            margin-bottom: 20px;
-            color: var(--accent-teal);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
-        }
+    /* チェックボックス (シングル / アルバム) */
+    .filter-checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #475569;
+    }
+    .filter-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+    }
+    .filter-checkbox-label input[type="checkbox"] {
+      accent-color: #64748b;
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
 
-        /* --- メインコンテンツ --- */
-        .container {
-            max-width: 840px;
-            margin: 40px auto;
-            padding: 0 20px 60px;
-        }
+    .container { width: 100%; max-width: 1100px; margin: 20px auto; padding: 0 15px; box-sizing: border-box; display: flex; flex-direction: column; gap: 24px; }
+    .content-wrapper { display: flex; flex-direction: column; gap: 28px; width: 100%; }
+    .card { background: var(--card); border-radius: 16px; padding: 20px; box-shadow: var(--primary-shadow); border: 1px solid #fff; box-sizing: border-box; width: 100%; min-width: 0; }
 
-        /* --- ステップカード --- */
-        .step-card {
-            background: var(--bg-color);
-            border: 1px solid #f0f0f0;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-            border-radius: 8px;
-            padding: 45px;
-            margin-bottom: 50px;
-        }
+    .card-section-title { font-size: 15px; font-weight: 600; color: #475569; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+    .card-section-title::before { content: ""; width: 4px; height: 16px; background: var(--accent-pink); border-radius: 2px; }
 
-        .step-header {
-            display: flex;
-            align-items: baseline;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #eee;
-            padding-bottom: 15px;
-        }
+    .group-buttons-wrapper { margin-bottom: 8px; }
+    
+    .group-buttons { 
+      display: flex; 
+      gap: 6px; 
+      margin-bottom: 4px; 
+      padding: 0 4px 8px 4px; 
+    }
 
-        .step-number {
-            font-family: 'Georgia', serif;
-            font-size: 40px;
-            color: var(--accent-teal);
-            margin-right: 15px;
-            line-height: 1;
-            opacity: 0.8;
-        }
-        
-        .step-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin: 0;
-        }
+    @media (max-width: 767px) {
+      .group-buttons {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      .group-buttons::-webkit-scrollbar { display: none; }
+    }
+    @media (min-width: 768px) {
+      .group-buttons {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+    }
 
-        p {
-            margin-bottom: 25px;
-            font-size: 15px;
-        }
+    .group-btn { position: relative; padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: #fff; cursor: pointer; font-size: 11px; font-weight: 600; transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0; }
+    
+    .group-btn.active, .group-btn.is-selected-in-list { padding-right: 24px; }
+    .group-btn.active::after, .group-btn.is-selected-in-list::after { content: '×'; position: absolute; right: 8px; top: 50%; transform: translateY(-50%); font-size: 12px; font-weight: 800; opacity: 0.6; }
+    .group-btn.active { box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+    .group-btn.is-selected-in-list { background: #f8fafc !important; color: #cbd5e1 !important; border: 1px solid #e2e8f0 !important; box-shadow: none !important; opacity: 0.8; }
 
-        /* --- アイコン付きリスト --- */
-        .icon-list {
-            list-style: none;
-            padding: 0;
-            margin-bottom: 30px;
-        }
+    .selected-groups-row { 
+      display: flex; 
+      flex-wrap: wrap; 
+      gap: 10px; 
+      align-items: center; 
+      justify-content: flex-start; 
+      margin-top: 10px; 
+      padding: 10px 12px; 
+      background: #f8fafc; 
+      border-radius: 12px; 
+      min-height: 38px; 
+      border: 1px dashed var(--border); 
+    }
+    .selected-label { 
+      font-size: 11px; 
+      color: var(--sub); 
+      font-weight: 700; 
+      white-space: nowrap; 
+    }
 
-        .icon-list li {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 15px;
-            background: var(--gray-light);
-            padding: 18px;
-            border-radius: 6px;
-        }
+    .chart-wrapper { width: 100%; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 8px; }
+    .chart-body { position: relative; height: 300px; min-width: 100%; }
+    
+    .chart-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; min-height: 24px; flex-wrap: wrap; gap: 10px; }
+    .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
-        .icon-box {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 18px;
-            flex-shrink: 0;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-        }
+    /* 🔥おすすめ関連商品（最新掲載雑誌）エリアスタイル */
+    .magazine-scroll-container {
+      width: 100%;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      padding-top: 6px;
+      padding-bottom: 16px;
+      margin-bottom: 4px;
+    }
+    .magazine-list {
+      display: flex;
+      gap: 12px;
+      width: max-content;
+      align-items: stretch;
+    }
+    .magazine-item {
+      width: 125px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      background: #fff;
+      border: none;
+      padding: 0;
+      text-decoration: none;
+      color: inherit;
+      box-sizing: border-box;
+    }
+    .mag-thumb {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: #f1f5f9;
+      border-radius: 0px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .mag-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 0px;
+    }
+    .mag-date {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--accent-hot);
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
 
-        .icon-box svg {
-            width: 22px;
-            height: 22px;
-        }
+    .mag-group-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      color: #ffffff;
+      padding: 2px 8px;
+      border-radius: 99px;
+      margin-bottom: 6px;
+      width: fit-content;
+      line-height: 1.2;
+    }
 
-        /* 操作アイコン（青緑） */
-        .icon-box.action svg {
-            fill: var(--accent-teal);
-        }
-        /* 結果アイコン（トープ） */
-        .icon-box.result svg {
-            fill: var(--accent-taupe);
-        }
+    .mag-title {
+      font-size: 11px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: #64748b;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      word-break: break-all;
+    }
 
-        .list-text {
-            font-size: 15px;
-            line-height: 1.6;
-            padding-top: 5px;
-        }
-        
-        .list-label {
-            font-weight: bold;
-            font-size: 11px;
-            display: block;
-            margin-bottom: 4px;
-            color: var(--accent-taupe);
-            letter-spacing: 0.1em;
-        }
+    .magazine-more-card {
+      width: 125px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 12px 8px;
+      text-align: center;
+      box-sizing: border-box;
+    }
+    .mag-more-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1.5px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 6px;
+      color: var(--text);
+    }
+    .mag-more-text {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
 
-        /* --- 画像エリア --- */
-        .screenshot-area {
-            border-radius: 4px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-top: 10px;
-        }
-        
-        img {
-            max-width: 100%;
-            height: auto;
-            border-radius: 6px;
-            display: block;
-            border: 1px solid #eee;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-        }
+    @media (min-width: 768px) {
+      .magazine-item,
+      .magazine-more-card {
+        width: 165px;
+      }
+      .mag-title {
+        font-size: 12px;
+      }
+    }
 
-        /* SEO用非表示テキスト */
-        .sr-only {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            padding: 0;
-            margin: -1px;
-            overflow: hidden;
-            clip: rect(0,0,0,0);
-            border: 0;
-        }
+    .hot-area { padding: 12px 20px; }
+    .hot-list { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; }
+    .hot-label { font-size: 11px; font-weight: 800; color: var(--accent-hot); display: flex; align-items: center; gap: 4px; white-space: nowrap; border-right: 1px solid var(--border); padding-right: 12px; }
+    .hot-label svg { width: 14px; height: 14px; fill: currentColor; }
+    .hot-item { text-decoration: none; color: var(--text); font-size: 13px; font-weight: 400; transition: color 0.2s; display: flex; align-items: center; }
+    .hot-item:hover { color: var(--accent-hot); }
+    .hot-item::after { content: '>'; margin-left: 4px; font-size: 10px; opacity: 0.5; }
 
-        /* --- フッター --- */
-        footer {
-            text-align: center;
-            font-size: 12px;
-            color: var(--accent-taupe);
-            margin-top: 60px;
-            border-top: 1px solid #eee;
-            padding: 30px 0;
-            letter-spacing: 0.1em;
-        }
+    .split-area { display: grid; grid-template-columns: 1fr; gap: 24px; width: 100%; }
+    @media (min-width: 900px) { .split-area { grid-template-columns: 1fr 280px; align-items: start; } }
 
-        /* --- スマホ対応 --- */
-        @media (max-width: 600px) {
-            header { padding: 30px 20px 20px; }
-            header h1 { font-size: 26px; }
-            .step-card { padding: 25px; }
-            .icon-list li { padding: 15px; }
-            .icon-box { width: 36px; height: 36px; margin-right: 12px; }
-            .icon-box svg { width: 18px; height: 18px; }
-            .list-text { font-size: 14px; padding-top: 3px; }
-        }
-    </style>
+    .list-container { display: flex; flex-direction: column; gap: 24px; min-width: 0; width: 100%; }
+
+    .cd-list { display: grid; gap: 10px; }
+    .no-data-msg { font-size: 12px; color: var(--sub); text-align: center; padding: 20px 0; grid-column: 1 / -1; }
+    
+    .cd-item-base { 
+      display: grid; grid-template-columns: 1fr 90px; gap: 16px; padding: 14px 16px; 
+      border: 1px solid var(--border); border-radius: 12px; text-decoration: none; 
+      color: inherit; background: #fff; align-items: center; transition: all 0.2s ease; 
+    }
+
+    /* これから発売予定（カード型）用スタイル */
+    .upcoming-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px 14px;
+      width: 100%;
+    }
+    @media (min-width: 768px) {
+      .upcoming-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px 18px;
+      }
+    }
+
+    .upcoming-card-item {
+      display: flex;
+      flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease;
+      min-width: 0;
+    }
+    a.upcoming-card-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .upcoming-thumb-wrap {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      background-color: #f1f5f9;
+      border-radius: 6px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .upcoming-thumb-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .upcoming-no-img {
+      color: var(--sub);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .upcoming-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+    }
+    .upcoming-badge {
+      font-size: 9px;
+      padding: 1px 6px;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    .upcoming-date {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--sub);
+    }
+
+    .upcoming-card-title {
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1.35;
+      margin-bottom: 2px;
+      word-break: break-all;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .upcoming-group-name {
+      font-size: 11px;
+      color: var(--sub);
+      font-weight: 600;
+    }
+    .upcoming-status-row {
+      margin-top: 6px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+    }
+
+    a.cd-item-base:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); border-color: #cbd5e1; }
+
+    .show-more-btn {
+      width: 100%; padding: 12px; margin-top: 10px; background: #f8fafc; border: 1px solid var(--border);
+      border-radius: 12px; color: #64748b; font-size: 13px; font-weight: 700; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 6px; transition: 0.2s;
+    }
+    .show-more-btn:hover { background: #f1f5f9; color: var(--text); }
+    .hidden-item { display: none !important; }
+
+    @media (max-width: 767px) {
+      .cd-item-base { grid-template-columns: 1fr 80px; padding: 10px 12px; gap: 10px; }
+    }
+
+    .cd-thumb { width: 64px; height: 64px; border-radius: 6px; overflow: hidden; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    @media (max-width: 767px) { .cd-thumb { width: 50px; height: 50px; } }
+    .cd-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; border: 1px solid var(--border); border-radius: 6px; }
+
+    .cd-info-main { min-width: 0; } 
+    .cd-title { font-weight: 700; font-size: 14px; display: block; margin-bottom: 4px; line-height: 1.4; color: #1e293b; word-break: break-all; }
+    .meta { font-size: 10.5px; color: var(--sub); display: flex; align-items: center; flex-wrap: wrap; gap: 4px; }
+    .badge { font-size: 9px; padding: 1px 5px; border-radius: 4px; color: #fff; font-weight: 700; }
+    
+    .sales-box { text-align: right; display: flex; flex-direction: column; gap: 4px; align-items: flex-end; flex-shrink: 0; }
+    .sales-val { font-weight: 700; font-size: 14px; letter-spacing: -0.02em; white-space: nowrap; }
+    .countdown { font-size: 10px; font-weight: 700; color: #ea580c; background: #fff7ed; padding: 1px 6px; border-radius: 99px; border: 1px solid #ffedd5; width: fit-content; white-space: nowrap; }
+
+    .ext-link-icon { width: 11px; height: 11px; color: var(--sub); margin-left: 5px; vertical-align: middle; }
+    .buy-label { font-size: 10px; color: var(--sub); font-weight: 600; margin-left: 2px; vertical-align: middle; white-space: nowrap; }
+
+    .analysis-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
+    .analysis-grid { display: grid; grid-template-columns: 1fr; gap: 24px; }
+    @media (min-width: 768px) { .analysis-grid { grid-template-columns: repeat(2, 1fr); } }
+    
+    .analysis-block { 
+      background: #fff; 
+      border-radius: 4px; 
+      overflow: hidden; 
+      border: 1px solid var(--border); 
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+      display: flex; 
+      flex-direction: column;
+      transition: all 0.2s ease;
+    }
+
+    .analysis-header { padding: 10px 16px; font-size: 13px; font-weight: 600; color: #fff; }
+    .analysis-body { padding: 16px; font-size: 12.5px; line-height: 1.8; color: #475569; flex: 1; }
+
+    .more-link { display: block; text-align: right; font-size: 11px; font-weight: 700; text-decoration: none; margin-top: 4px; }
+    .more-link:hover { text-decoration: underline; }
+
+    .history-card .card-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px dotted var(--border); color: #475569; display: flex; align-items: center; gap: 6px; }
+    .history-list { list-style: none; padding: 0; margin: 0; }
+    .history-item { margin-bottom: 12px; padding-bottom: 12px; border-bottom: 1px dotted var(--border); }
+    .history-date { font-size: 10px; color: var(--sub); display: block; margin-bottom: 2px; font-weight: 600; }
+    .history-text { font-size: 12px; line-height: 1.4; color: #334155; }
+    
+    .back-to-top { position: fixed; bottom: 20px; right: 20px; background: var(--card); border: 1px solid var(--border); width: 44px; height: 44px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: var(--primary-shadow); cursor: pointer; z-index: 1000; opacity: 0; visibility: hidden; transition: 0.3s; text-decoration: none; color: var(--text); }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .spinner { width: 28px; height: 28px; border: 3px solid var(--border); border-top: 3px solid var(--accent-teal); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 12px; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .analysis-btn { text-decoration: none; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: 700; text-align: center; transition: all 0.2s; display: block; border: 1px solid; }
+    .analysis-btn:hover { opacity: 0.8; transform: translateY(-1px); }
+    .group-links-container { display: flex; flex-direction: column; gap: 8px; }
+
+    .inner-loading { text-align: center; padding: 40px 0; color: var(--sub); font-size: 12px; }
+  </style>
 </head>
 <body>
 
-    <div class="sr-only">
-        <h2>STARTO CD売上比較サイト グラフ操作マニュアル</h2>
-        <p>当サイトでは、STARTO ENTERTAINMENT（旧ジャニーズ）所属アーティストの最新および歴代シングル・アルバムの売上推移を簡単に比較できます。Snow Man, SixTONES, なにわ男子, King & Prince, timeleszなどの最新初動データを網羅。棒グラフと折れ線グラフの自動切り替え機能についても解説しています。</p>
+<a href="#" class="back-to-top" id="backToTop"><svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:none; stroke:currentColor; stroke-width:2.5;"><path d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg></a>
+
+<div class="utility-bar">
+  <div class="utility-right">
+    <div class="dropdown" id="groupDropdown">
+      <span class="utility-link">グループ別</span>
+      <div class="dropdown-content">
+        <a href="https://fan-chart.com/snowman">Snow Man</a>
+        <a href="https://fan-chart.com/sixtones">SixTONES</a>
+        <a href="https://fan-chart.com/king-and-prince">King & Prince</a>
+        <a href="https://fan-chart.com/naniwa-danshi">なにわ男子</a>
+      </div>
+    </div>
+    <a href="#analysis" class="utility-link">分析</a>
+    <a href="howto.html" class="utility-link">ガイド</a>
+    <a href="terms.html" class="utility-link">規約</a>
+  </div>
+</div>
+
+<header class="sticky-header">
+  <div class="header-content">
+    <div class="site-title">
+      <h1>
+        <span class="sub-name">STARTO ENTERTAINMENT(旧ジャニーズ)</span>
+        <span class="main-logo">Fan Chart</span>
+        <span class="main-name">【2026年最新】歴代シングル・アルバム売上枚数比較サイト</span>
+      </h1>
+    </div>
+    <!-- 内部データ動作用要素 -->
+    <div style="display:none;">
+      <select id="salesType"><option value="firstWeek" selected>初週</option><option value="firstDay">初日</option></select>
+      <select id="filter"><option value="all">シングル&アルバム</option><option value="single">シングル</option><option value="album">アルバム</option></select>
+      <select id="sortOrder"><option value="date" selected>発売日順</option><option value="salesDesc">売上順</option></select>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div id="mainContent" class="content-wrapper">
+    <div class="card">
+      <div class="chart-header-row">
+        <div class="chart-tabs">
+          <div class="chart-tab is-active" data-sort="date">発売日順</div>
+          <div class="chart-tab" data-sort="salesDesc">売上順</div>
+        </div>
+        <!-- グラフ枠内右上：初日 / 初週 トグルスイッチ -->
+        <div class="toggle-switch-container is-right" id="salesTypeToggle">
+          <div class="toggle-switch-slider"></div>
+          <div class="toggle-switch-btn" data-value="firstDay">初日</div>
+          <div class="toggle-switch-btn is-active" data-value="firstWeek">初週</div>
+        </div>
+      </div>
+
+      <div class="group-buttons-wrapper">
+        <div style="font-size: 11px; font-weight: 400; color: #64748b; margin-bottom: 6px; padding-left: 4px;">↓ 比較したいグループを選択（最大5つまで）</div>
+        <div class="group-buttons" id="groupButtons"></div>
+        <div id="selectedGroupsArea" class="selected-groups-row" style="display:none;">
+          <div class="selected-label">選択中のグループ</div>
+          <div id="selectedButtonsContainer" style="display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-start; align-items:center;"></div>
+        </div>
+      </div>
+      
+      <div class="chart-wrapper" id="chartWrapper">
+        <div class="chart-body" id="chartBody">
+          <div id="chartLoading" class="inner-loading"><div class="spinner"></div>グラフを作成中...</div>
+          <canvas id="salesChart"></canvas>
+        </div>
+      </div>
+      
+      <!-- スクロール読み込み案内 -->
+      <div id="mobileChartNotice" style="font-size:10px; color:#94a3b8; text-align:left; margin-top:6px; font-weight:700; padding-left:5px; height:15px;"></div>
+
+      <div class="chart-footer">
+        <!-- グラフ枠内左下：シングル / アルバム チェックボックス -->
+        <div id="chartBtnArea">
+          <div class="filter-checkbox-group">
+            <label class="filter-checkbox-label">
+              <input type="checkbox" id="chkSingle" checked> シングル
+            </label>
+            <label class="filter-checkbox-label">
+              <input type="checkbox" id="chkAlbum" checked> アルバム
+            </label>
+          </div>
+        </div>
+        <button onclick="copyShareUrl()" class="share-btn-mini" id="shareBtn">
+          <svg viewBox="0 0 24 24" id="shareIcon"><path d="M7.217 10.907a2.25 2.25 0 100 2.186m0-2.186c.18.324.283.696.283 1.093s-.103.77-.283 1.093m0-2.186l9.566-5.314m-9.566 7.5l9.566 5.314m0 0a2.25 2.25 0 103.935 2.186 2.25 2.25 0 00-3.935-2.186zm0-12.814a2.25 2.25 0 103.933-2.185 2.25 2.25 0 00-3.933 2.185z" fill="currentColor"/></svg>
+          <span id="shareBtnText">このグラフを共有</span>
+        </button>
+      </div>
     </div>
 
-    <header>
-        <a href="index.html" class="back-link">← グラフに戻る</a>
-        
-        <div style="text-align: center;">
-            <div class="header-inner">
-                <span class="en-title">HOW TO USE</span>
-                <h1>使い方ガイド</h1>
-            </div>
+    <div class="split-area">
+      <div class="list-container">
+        <!-- これから発売予定 枠 (0件時は自動で枠ごと非表示) -->
+        <div class="card" id="upcomingCard">
+          <div class="card-section-title">これから発売予定</div>
+          <div class="upcoming-grid" id="upcomingList">
+            <div class="inner-loading"><div class="spinner"></div>予定を取得中...</div>
+          </div>
         </div>
-    </header>
 
-    <main class="container">
-
-        <section class="step-card">
-            <div class="step-header">
-                <span class="step-number">01</span>
-                <h2 class="step-title">比較したいグループを複数選択する</h2>
+        <!-- 🔥おすすめ関連商品・最新雑誌 枠 -->
+        <div class="card" id="magazineCard">
+          <div class="card-section-title" style="margin-bottom: 12px;">🔥 おすすめ関連商品・最新雑誌</div>
+          <div class="magazine-scroll-container" id="magazineScrollContainer">
+            <div class="magazine-list" id="magazineList">
+              <div class="inner-loading"><div class="spinner"></div>雑誌情報を取得中...</div>
             </div>
-            <p>複数のグループの売上規模を比較したい場合の手順です。</p>
-            
-            <ul class="icon-list">
-                <li>
-                    <div class="icon-box action">
-                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                    </div>
-                    <div class="list-text">
-                        <span class="list-label">OPERATION</span>
-                        比較したいグループのボタンを<strong>複数選択</strong>します（例: Snow ManとSixTONES）。
-                    </div>
-                </li>
-                <li>
-                    <div class="icon-box result">
-                        <svg viewBox="0 0 24 24"><path d="M21 3H3C1.9 3 1 3.9 1 5V19C1 20.1 1.9 21 3 21H21C22.1 21 23 20.1 23 19V5C23 3.9 22.1 3 21 3ZM21 19H3V5H21V19ZM7 10H9V17H7V10ZM11 13H13V17H11V13ZM15 7H17V17H15V7Z" /></svg>
-                    </div>
-                    <div class="list-text">
-                        <span class="list-label">RESULT</span>
-                        データが<strong>棒グラフ</strong>で表示され、売上規模の違いを一目で比較できます。最新および歴代の売上順での並び替えも可能です。
-                    </div>
-                </li>
-            </ul>
+          </div>
+          <!-- 右下リンク（オレンジカラー指定） -->
+          <div style="margin-top: 8px; text-align: right;">
+            <a href="https://fan-chart.com/magazine/" style="color: var(--accent-hot); font-size: 11px; font-weight: 700; text-decoration: none;">雑誌掲載一覧はこちら&gt;&gt;</a>
+          </div>
+        </div>
 
-            <div class="screenshot-area">
-                <img src="01.png" alt="Snow ManとSixTONESを複数選択して売上規模を一目で比較できる棒グラフの表示例">
+        <div class="card hot-area">
+          <div class="hot-list">
+            <span class="hot-label"><svg viewBox="0 0 24 24"><path d="M15.312 11.424a5.5 5.5 0 01-9.201 2.466l-.312-.311L4.5 17c0 3.866 3.134 7 7 7s7-3.134 7-7c0-2.116-1.03-4.03-2.688-5.576zM13.5 0s-4 4.5-4 8c0 1.5 1 3.5 3 4.5.5-2.5 2-4.5 4-4.5.5 5-2.5 9.5-6 11-1-.5-3.5-2.5-3.5-6.5 0-3.5 3.5-12.5 6.5-12.5z"/></svg>HOT</span>
+            <a href="https://fan-chart.com/snowman" class="hot-item">Snow Man</a>
+            <a href="https://fan-chart.com/sixtones" class="hot-item">SixTONES</a>
+            <a href="https://fan-chart.com/king-and-prince" class="hot-item">King & Prince</a>
+            <a href="https://fan-chart.com/naniwa-danshi" class="hot-item">なにわ男子</a>
+          </div>
+        </div>
+
+        <div class="card" id="historyCard">
+          <div class="card-section-title">歴代シングル・アルバム売上</div>
+          <div id="listScrollArea">
+            <div class="cd-list" id="cdList">
+              <div class="inner-loading"><div class="spinner"></div>データを取得中...</div>
             </div>
+          </div>
+          <div id="showMoreArea"></div>
+          <div id="listBtnArea" style="text-align:center; margin-top:20px;"></div>
+        </div>
+
+        <section id="analysis" class="card analysis-card">
+          <div class="card-section-title">2026年最新の売上傾向分析</div>
+          <div class="analysis-grid">
+            <div class="analysis-block" style="border-color: #1b489d;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #1b489d, #3c6dbd);">Snow Man</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(27,72,157,0.03) 0%, #ffffff 100%);">最新アルバム『音故知新』で4作連続の初週ミリオンセラーを達成するなど、圧倒的な数字を記録しており、固定ファンの熱量の高さが売上に直結しています。バラエティ番組での露出や各メンバーの活躍によってライト層の取り込みにも成功。2025年には初となる国立競技場公演を成功に導き、「絶対王者」としての地位を盤石なものにしました。今後は国内での圧倒的な実績を武器に、音楽シーン全体の記録を塗り替えるフェーズへと突入しています。<a href="https://fan-chart.com/snowman" class="more-link" style="color:#1b489d;">もっと見る >></a></div>
+            </div>
+            <div class="analysis-block" style="border-color: #555555;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #555555, #888888);">SixTONES</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(85,85,85,0.03) 0%, #ffffff 100%);">デビュー6周年という節目を迎える2026年、初のベストアルバム『MILESixTONES -Best Tracks-』がビルボード初週57.7万枚を記録しました。これは前年アルバム『GOLD』の初動（約42万枚）を上回る数字であり、ベスト盤としての高い集客力を証明する形となりました。野田洋次郎氏による楽曲提供を受けた16thシングル『Stargaze』に象徴される高い音楽性と、圧倒的なライブパフォーマンスによって、独自の路線を貫いています。<a href="https://fan-chart.com/sixtones" class="more-link" style="color:#555555;">もっと見る >></a></div>
+            </div>
+            <div class="analysis-block" style="border-color: #de6d6d;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #de6d6d, #f2a2a2);">timelesz</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(222,109,109,0.03) 0%, #ffffff 100%);">新体制後初となるアルバム『FAM』が初週61.9万枚を売り上げました。オーディションプロジェクト、通称「タイプロ」の物語性が新規層を惹きつけ、大きな転換点となっています。今作では握手会特典が売上の牽引材料となった側面もあるため、真価が問われる次作の動向が注目されます。2026年は、この勢いをいかに持続させられるかが鍵となるでしょう。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #fab700;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #fab700, #ffdb70);">King & Prince</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(250,183,0,0.03) 0%, #ffffff 100%);">2025年12月に発売された7thアルバム『STARRING』は、オリコン初週25.0万枚で首位を獲得しました。SNSでのヒットも手伝い、Billboard Hot Albumsでは3週連続1位をマークするなどロングヒットを記録しています。2人体制移行後もシングル売上は30〜40万枚と安定した数字を維持しており、今後は『シンデレラガール』に続くような国民的楽曲を打ち出し、いかにライト層を拡大できるかが勝負所となります。<a href="https://fan-chart.com/king-and-prince" class="more-link" style="color:#fab700;">もっと見る >></a></div>
+            </div>
+            <div class="analysis-block" style="border-color: #eba0b8;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #eba0b8, #f5cad8);">なにわ男子</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(235,160,184,0.03) 0%, #ffffff 100%);">9thシングル『アシンメトリー / Black Nightmare』は、前作『Doki it』（初週33.6万枚）を上回る好スタートを切りました。デビュー時から一貫して「関西発の正統派アイドル」路線を堅持しており、若年層や関西圏における支持層の厚さは圧倒的です。メンバー各人の俳優活動がグループを牽引している現状から、今後グループ全体としていかにファン層を多角化していけるかが注目されます。<a href="https://fan-chart.com/naniwa-danshi" class="more-link" style="color:#eba0b8;">もっと見る >></a></div>
+            </div>
+            <div class="analysis-block" style="border-color: #5eb3bf;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #5eb3bf, #a3d9e0);">Aぇ! group</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(94,179,191,0.03) 0%, #ffffff 100%);">3rdシングル『Chameleon』が初週45.5万枚を記録し、関西ジュニアとして積み上げた実力と人気を背景に、デビュー後も順調な推移を見せています。2026年の動向は、彼らが目標とするトップグループの仲間入りを果たせるかどうかを占う重要な試金石となります。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #66b27e;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #66b27e, #a7d8b5);">Travis Japan</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(102,178,126,0.03) 0%, #ffffff 100%);">3rdアルバム『's travelers』が14.8万枚のセールスを記録. 国内のパッケージ販売以上に、YouTubeの再生回数や海外公演でのプレゼンスを重視しており、グローバルなファンベースを構築しているのが特徴です。国内のCD売上は比較的緩やかですが、ストリーミング市場での強さが際立つ, デジタルネイティブなグループといえます。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #1d9967;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #1d9967, #4fc092);">WEST.</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(29,153,103,0.03) 0%, #ffffff 100%);">CD売上は2025年以降、緩やかな下降傾向にありますが、初のデジタルシングル『愛執』がオリコン週間デジタルシングルランキングで1位（初週6.0万DL）を獲得するなど、新たな兆しを見せています。新アルバム『唯一無二』の発売とアリーナツアーの開催が決定しており、ライブを軸とした再加速が期待されます。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #39aeed;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #39aeed, #8ccdf5);">Hey! Say! JUMP</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(57,174,237,0.03) 0%, #ffffff 100%);">アルバム『S say』は初週20.1万枚を記録しました。大規模なイベント施策に頼らずとも安定した売上を維持しており、卓越したダンススキルとグループの結束力が大きな強みとなっています。中島裕翔氏の卒業後も最新作『ハニカミ』で売上規模を維持しており、グループ力を安定して維持しています。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #CFE394;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #CFE394, #e6f0c2);">Kis-My-Ft2</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(207,227,148,0.03) 0%, #ffffff 100%);">最新作『&Joy』が初週9.1万枚を売り上げ、オリコン週間シングルランキングでの連続1位記録を33作に更新しました。また、アルバム『MAGFACT』のリリース時には、ハイタッチ会の開催を企画。グループとしての強い覚悟と、それに応えるファンの熱い結束力が、30.9万枚という大きな数字となって結実しました。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #554435;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #554435, #8a7766);">DOMOTO</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(85,68,53,0.03) 0%, #ffffff 100%);">2025年にKinKi Kidsから「DOMOTO」へとグループ名を刷新しました。その象徴となった1stデジタルシングル『愛のかたまり』（セルフカバー版）は、オリコン週間デジタルシングルランキングで初登場1位を獲得。配信市場でも強さを見せたことは彼らの楽曲が世代を超えて愛されている証です。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #F7AF73;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #F7AF73, #ffd2ad);">SUPER EIGHT</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(247,175,115,0.03) 0%, #ffffff 100%);">2024年発売の最新アルバム『SUPER EIGHT』が初週18万枚超で1位を獲得しました。2024年以降、CDをコンスタントにリリースする形から、舞台や配信、ライブを主軸にするスタイルへとシフトしています。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #8170b2;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #8170b2, #b5abd1);">NEWS</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(129,112,178,0.03) 0%, #ffffff 100%);">2024年11月にリリースされたシングル『あっちむいてほい』は、初週13.3万枚を売り上げ、デビューからのシングル連続1位記録を「31作」に更新しました。2025年8月の最新アルバム『変身』では、前作を下回ったものの、今後の巻き返しが期待されます。</div>
+            </div>
+            <div class="analysis-block" style="border-color: #f0897c;">
+              <div class="analysis-header" style="background: linear-gradient(90deg, #f0897c, #f7b9b1);">A.B.C-Z</div>
+              <div class="analysis-body" style="background: linear-gradient(180deg, rgba(240,137,124,0.03) 0%, #ffffff 100%);">CDの純粋な売上枚数以上に、「アクロバット」を駆使したパフォーマンスへの評価が高いグループです. その特性から、他グループと比較してもCDより映像作品の売上比率が高い傾向にあり、コアなファンによる支持基盤を持っています。</div>
+            </div>
+          </div>
         </section>
-
-        <section class="step-card">
-            <div class="step-header">
-                <span class="step-number">02</span>
-                <h2 class="step-title">単一グループの推移を見る</h2>
-            </div>
-            <p>特定の1グループの売上推移（トレンド）を確認したい場合の手順です。</p>
-            
-            <ul class="icon-list">
-                <li>
-                    <div class="icon-box action">
-                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                    </div>
-                    <div class="list-text">
-                        <span class="list-label">OPERATION</span>
-                        見たいグループのボタンを<strong>1つだけ</strong>選択します（他の選択は外します）。
-                    </div>
-                </li>
-                <li>
-                    <div class="icon-box result">
-                        <svg viewBox="0 0 24 24"><path d="M21 3H3C1.9 3 1 3.9 1 5V19C1 20.1 1.9 21 3 21H21C22.1 21 23 20.1 23 19V5C23 3.9 22.1 3 21 3ZM21 19H3V5H21V19ZM7 10H9V17H7V10ZM11 13H13V17H11V13ZM15 7H17V17H15V7Z" /></svg>
-                    </div>
-                    <div class="list-text">
-                        <span class="list-label">RESULT</span>
-                        自動的に<strong>折れ線グラフ</strong>に切り替わり、最新から歴代までの時系列での売上変化（初動枚数の推移）が表示されます。
-                    </div>
-                </li>
-            </ul>
-
-            <div class="screenshot-area">
-                <img src="02.png" alt="Snow Manのみを選択して歴代シングルの売上推移を詳細に確認できる折れ線グラフの画面">
-            </div>
+      </div>
+      
+      <div class="side-content">
+        <section id="group-nav" class="card history-card" style="margin-bottom: 24px;">
+          <div class="card-title">各グループ別 詳細</div>
+          <div id="groupLinks" class="group-links-container">
+            <a href="https://fan-chart.com/snowman" class="analysis-btn" style="color: #1b489d; border-color: rgba(27, 72, 157, 0.3); background: rgba(27, 72, 157, 0.05);">Snow Man ></a>
+            <a href="https://fan-chart.com/sixtones" class="analysis-btn" style="color: #555555; border-color: rgba(85, 85, 85, 0.3); background: rgba(85, 85, 85, 0.05);">SixTONES ></a>
+            <a href="https://fan-chart.com/king-and-prince" class="analysis-btn" style="color: #fab700; border-color: rgba(250, 183, 0, 0.3); background: rgba(250, 183, 0, 0.05);">King & Prince ></a>
+            <a href="https://fan-chart.com/naniwa-danshi" class="analysis-btn" style="color: #eba0b8; border-color: rgba(235, 160, 184, 0.3); background: rgba(235, 160, 184, 0.05);">なにわ男子 ></a>
+          </div>
         </section>
+        <aside class="card history-card"><div class="card-title">更新履歴</div><ul class="history-list" id="historyList"></ul></aside>
+      </div>
+    </div>
+  </div>
+</div>
 
-        <section class="step-card">
-            <div class="step-header">
-                <span class="step-number">03</span>
-                <h2 class="step-title">CDを購入する・詳細を見る</h2>
-            </div>
-            <p>グラフの下にあるリストから、実際のCD購入ページや作品詳細ページへ移動できます。</p>
-            
-            <ul class="icon-list">
-                <li>
-                    <div class="icon-box action">
-                        <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                    </div>
-                    <div class="list-text">
-                        <span class="list-label">OPERATION</span>
-                        画面下のリストから、気になる作品（シングル・アルバム）のタイトルをクリックします。
-                    </div>
-                </li>
-                <li>
-                    <div class="icon-box result">
-                        <svg viewBox="0 0 24 24"><path d="M19 19H5V5H12V3H5C3.89 3 3 3.9 3 5V19C3 20.1 3.89 21 5 21H19C20.1 21 21 20.1 21 19V12H19V19ZM14 3V5H17.59L7.76 14.83L9.17 16.24L19 6.41V10H21V3H14Z"/></svg>
-                    </div>
-                    <div class="list-text">
-                        <span class="list-label">RESULT</span>
-                        最新CDの購入サイトや詳細情報ページへアクセスし、さらに詳しい情報を確認できます。
-                    </div>
-                </li>
-            </ul>
+<script>
+if(typeof ChartDataLabels !== 'undefined'){ Chart.register(ChartDataLabels); }
 
-            <div class="screenshot-area">
-                <img src="03.png" alt="King & PrinceのCD作品リストから外部販売サイトへ移動できるリンク付き一覧の表示例">
-            </div>
-        </section>
+// iPhone Safariのリダイレクト・キャッシュバグを回避するためタイムスタンプを付与
+const cacheBuster = "&t=" + new Date().getTime();
+const SHEET_DATA_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=0&single=true&output=csv" + cacheBuster;
+const SHEET_INFO_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=1448446296&single=true&output=csv" + cacheBuster;
 
-    </main>
+// 雑誌専用スプレッドシート（gid=2235118）
+const SHEET_MAGAZINE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=2235118&single=true&output=csv" + cacheBuster;
 
-    <footer>
-        &copy; 2026 STARTO CD売上枚数比較サイト DASHBOARD GUIDE
-    </footer>
+// 嵐とKAT-TUNを追加し、色の定義を行う
+const fixedGroupColors = { 
+  "嵐": "#4ba8d6",
+  "Snow Man": "#1b489d", 
+  "SixTONES": "#555555",
+  "timelesz": "#de6d6d", 
+  "King & Prince": "#fab700", 
+  "なにわ男子": "#eba0b8", 
+  "Aぇ! group": "#5eb3bf", 
+  "Travis Japan": "#66b27e",
+  "WEST.": "#1d9967", 
+  "Hey! Say! JUMP": "#39aeed", 
+  "Kis-My-Ft2": "#CFE394",
+  "DOMOTO": "#554435", 
+  "SUPER EIGHT": "#F7AF73", 
+  "NEWS": "#8170b2", 
+  "A.B.C-Z": "#f0897c",
+  "KAT-TUN": "#888888" 
+};
 
+// ボタンの並び順をご指定順に設定
+const fixedGroupOrder = [
+  "Snow Man", "SixTONES", "timelesz", "なにわ男子", "King & Prince", 
+  "Aぇ! group", "Travis Japan", "WEST.", "Hey! Say! JUMP", "Kis-My-Ft2", 
+  "DOMOTO", "SUPER EIGHT", "NEWS", "A.B.C-Z", "嵐", "KAT-TUN"
+];
+
+let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isFullDataLoaded = false;
+let currentGraphShowCount = 100; // グラフの初期表示件数
+let isFetchingGraph = false;
+window.hasMoreGraphData = false;
+let lastActiveIndex = null; // 前回タップしたインデックスを記憶する変数（トグル用）
+
+// 雑誌データ保持用
+let allMagazineData = [];
+let currentMagShowCount = 10; // 初期10冊
+
+// 絞り込みやタブ変更があった際に表示件数をリセットする関数
+function resetAndRender() {
+  currentGraphShowCount = 100;
+  currentMagShowCount = 10; // 雑誌表示件数を初期リセット
+  lastActiveIndex = null;
+  render(true);
+  renderMagazines(); // メインボタン選択変更時に雑誌一覧も同時に再描画
+}
+
+document.querySelectorAll('.chart-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.chart-tab').forEach(t => t.classList.remove('is-active'));
+    tab.classList.add('is-active');
+    document.getElementById('sortOrder').value = tab.dataset.sort;
+    resetAndRender();
+  });
+});
+
+// 固定順序で描画するように修正（メインボタン群）
+function renderGroupButtons() {
+  const listHtml = fixedGroupOrder.map(g => {
+    const isSelected = activeGroups.has(g);
+    const color = fixedGroupColors[g] || "#7f8c8d";
+    const extraClass = isSelected ? 'is-selected-in-list' : '';
+    return `<button class="group-btn ${extraClass}" data-group="${g}" style="border-color:${isSelected ? '#e2e8f0' : color}; color:${isSelected ? '#cbd5e1' : color}; background:#fff">${g}</button>`;
+  }).join("");
+  document.getElementById("groupButtons").innerHTML = listHtml;
+  
+  const selectedArea = document.getElementById("selectedGroupsArea");
+  const selectedContainer = document.getElementById("selectedButtonsContainer");
+  
+  if (activeGroups.size > 0) {
+    selectedArea.style.display = "flex";
+    selectedContainer.innerHTML = Array.from(activeGroups).map(g => {
+      const color = fixedGroupColors[g] || "#7f8c8d";
+      return `<button class="group-btn active" data-group="${g}" style="border-color:${color}; color:#fff; background:${color}">${g}</button>`;
+    }).join("");
+  } else {
+    selectedArea.style.display = "none";
+  }
+
+  document.querySelectorAll(".group-btn").forEach(btn => {
+    btn.onclick = () => {
+      const g = btn.dataset.group;
+      if (activeGroups.has(g)) { 
+        activeGroups.delete(g); 
+      } else { 
+        if (activeGroups.size >= 5) return alert("最大5グループまで"); 
+        activeGroups.add(g); 
+      }
+
+      if (!isFullDataLoaded) loadAllRecords();
+
+      const url = new URL(window.location.href);
+      if(activeGroups.size) url.searchParams.set('g', Array.from(activeGroups).join(',')); else url.searchParams.delete('g');
+      window.history.replaceState({}, '', url);
+      renderGroupButtons(); 
+      resetAndRender();
+    };
+  });
+}
+
+async function loadData() {
+  initSettingsByUrl();
+  renderGroupButtons();
+  loadMagazineData(); // 雑誌データ並行読み込み
+  try {
+    const fetchOpt = { cache: 'no-store', redirect: 'follow' };
+    const [resData, resInfo] = await Promise.all([
+      fetch(SHEET_DATA_URL, fetchOpt), 
+      fetch(SHEET_INFO_URL, fetchOpt)
+    ]);
+    const rawData = parseCSV(await resData.text());
+    allProcessedData = rawData.map(d => ({ 
+      title: d.title, group: d.group, releaseDate: d.releaseDate, category: d.category,
+      firstDay: isNaN(parseInt(d.firstDay)) ? null : parseInt(d.firstDay),
+      firstWeek: isNaN(parseInt(d.firstWeek)) ? null : parseInt(d.firstWeek),
+      seller: d.seller || "",
+      affiliate: d.affiliate || ""
+    }));
+    if(isFullDataLoaded) cds = allProcessedData;
+    else cds = allProcessedData.filter(c => new Date(c.releaseDate) >= new Date("2024-01-01"));
+    const chartLoading = document.getElementById('chartLoading');
+    if(chartLoading) chartLoading.style.display = 'none';
+    renderGroupButtons(); 
+    render();
+    if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
+  } catch (e) { 
+    console.error(e); 
+    const chartLoading = document.getElementById('chartLoading');
+    if(chartLoading) {
+      chartLoading.style.fontSize = "11px";
+      chartLoading.style.fontWeight = "400";
+      chartLoading.style.color = "#64748b";
+      chartLoading.innerHTML = "再度ページを更新してください";
+    }
+  }
+}
+
+// ------------------------------------
+// 最新雑誌データ管理・レンダリング（「もっと見る」カード方式・20件増加・グループバッジ付き）
+// ------------------------------------
+async function loadMagazineData() {
+  try {
+    const res = await fetch(SHEET_MAGAZINE_URL, { cache: 'no-store', redirect: 'follow' });
+    if (!res.ok) return;
+    const raw = parseCSV(await res.text());
+    allMagazineData = raw.map(d => ({
+      id: d.id,
+      group: d.group,
+      title: d.title,
+      releaseDate: d.releaseDate,
+      href: d.seller || "",       // E列：商品リンク
+      src: d.affiliate || "",     // F列：画像URL
+      isHot: (d.isHot || "").toUpperCase() === "TRUE"
+    }));
+    renderMagazines();
+  } catch (e) {
+    console.error("Magazine load error:", e);
+    const magList = document.getElementById("magazineList");
+    if(magList) magList.innerHTML = '<div class="no-data-msg">現在表示できる雑誌情報はありません</div>';
+  }
+}
+
+function renderMagazines() {
+  const container = document.getElementById("magazineList");
+  if (!container) return;
+
+  // メインのグループ選択ボタン（activeGroups）と完全連動
+  let filtered = [];
+  if (activeGroups.size === 0) {
+    // 未選択（デフォルト・全解除時）は isHot === TRUE のものを抽出
+    filtered = allMagazineData.filter(m => m.isHot);
+  } else {
+    // 選択されているグループのいずれかに該当する雑誌を抽出
+    filtered = allMagazineData.filter(m => activeGroups.has(m.group));
+  }
+
+  // 発売日降順ソート
+  filtered.sort((a, b) => (b.releaseDate || "").localeCompare(a.releaseDate || ""));
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-data-msg" style="width:100%;">該当する雑誌情報はありません</div>';
+    return;
+  }
+
+  const displayItems = filtered.slice(0, currentMagShowCount);
+  const hasMore = filtered.length > currentMagShowCount;
+
+  let html = displayItems.map((m, index) => {
+    const loadingAttr = index < 10 ? 'eager' : 'lazy';
+    const formattedDate = m.releaseDate ? m.releaseDate.replace(/-/g, '.') : '';
+    const imgHtml = m.src 
+      ? `<img src="${m.src}" alt="${m.title}" loading="${loadingAttr}">` 
+      : `<span style="font-size:10px;color:#94a3b8;">NO IMAGE</span>`;
+
+    // グループカラーの取得（白抜きバッジ用）
+    const groupColor = fixedGroupColors[m.group] || "#7f8c8d";
+
+    return `
+      <a href="${m.href}" target="_blank" rel="noopener noreferrer" class="magazine-item">
+        <div class="mag-thumb">${imgHtml}</div>
+        <div class="mag-date">${formattedDate}${formattedDate ? ' 発売' : ''}</div>
+        ${m.group ? `<div class="mag-group-badge" style="background:${groupColor};">${m.group}</div>` : ''}
+        <div class="mag-title">${m.title}</div>
+      </a>
+    `;
+  }).join("");
+
+  // まだ続きがある場合、横スクロール末尾に「もっと見る」カードを挿入（→ アイコン）
+  if (hasMore) {
+    html += `
+      <div class="magazine-more-card" id="magLoadMoreBtn">
+        <div class="mag-more-icon">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+        </div>
+        <div class="mag-more-text">もっと見る</div>
+      </div>
+    `;
+  }
+
+  container.innerHTML = html;
+
+  // 「もっと見る」カードタップ時のクリックイベント設定（＋20件追加）
+  const moreBtn = document.getElementById("magLoadMoreBtn");
+  if (moreBtn) {
+    moreBtn.onclick = () => {
+      currentMagShowCount += 20;
+      renderMagazines();
+    };
+  }
+}
+
+function loadAllRecords() {
+  if (isFullDataLoaded) return;
+  cds = allProcessedData; 
+  isFullDataLoaded = true;
+}
+
+function processInfo(data) {
+  const histories = data.filter(d => d.type === 'history');
+  document.getElementById('historyList').innerHTML = histories.map(h => `<li class="history-item"><span class="history-date">${h.date}</span><div class="history-text">${h.text}</div></li>`).join("");
+}
+
+// ------------------------------------
+// 左スクロール時の過去データ継ぎ足し読み込み
+// ------------------------------------
+const chartWrapperEl = document.getElementById("chartWrapper");
+chartWrapperEl.addEventListener('scroll', function() {
+  if (this.scrollLeft <= 50 && !isFetchingGraph && window.hasMoreGraphData) {
+    isFetchingGraph = true;
+    
+    if (!isFullDataLoaded) {
+      loadAllRecords();
+    }
+    
+    const oldScrollWidth = this.scrollWidth;
+    currentGraphShowCount += 100;
+    render(false, true);
+    
+    this.scrollLeft = this.scrollWidth - oldScrollWidth > 0 ? this.scrollWidth - oldScrollWidth : 0;
+    
+    setTimeout(() => { isFetchingGraph = false; }, 300);
+  }
+});
+
+function render(shouldAnimate = false, isScrollLoad = false) {
+  const type = document.getElementById("salesType").value;
+  const f = document.getElementById("filter").value;
+  const s = document.getElementById("sortOrder").value;
+  
+  if (!cds.length) return;
+  if (s === "salesDesc" && !isFullDataLoaded) loadAllRecords();
+
+  let filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
+  
+  let chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
+    if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
+    return (a[type] || 0) - (b[type] || 0); 
+  });
+  
+  if (chartSource.length === 0 && activeGroups.size > 0) {
+     loadAllRecords();
+     filtered = cds.filter(c => (activeGroups.size === 0 || activeGroups.has(c.group)) && (f === "all" || c.category === f));
+     chartSource = filtered.filter(c => c[type] !== null).sort((a, b) => {
+        if(s === "date") return a.releaseDate.localeCompare(b.releaseDate);
+        return (a[type] || 0) - (b[type] || 0);
+     });
+  }
+
+  const today = new Date(); today.setHours(0,0,0,0);
+  
+  // 初週(firstWeek)が未確定のものを「これから発売予定」として扱う
+  const upcoming = filtered.filter(c => c.firstWeek === null);
+  
+  const history = filtered.filter(c => c[type] !== null).sort((a, b) => {
+    if (s === "date") return b.releaseDate.localeCompare(a.releaseDate);
+    return (b[type] || -1) - (a[type] || -1); 
+  });
+
+  const isSingle = activeGroups.size === 1;
+  const chartBody = document.getElementById("chartBody");
+
+  window.currentFilteredChartLength = chartSource.length;
+  window.hasMoreGraphData = (!isFullDataLoaded || chartSource.length > currentGraphShowCount);
+  
+  const noticeEl = document.getElementById('mobileChartNotice');
+  if (noticeEl) {
+    noticeEl.innerText = window.hasMoreGraphData ? "※左にスクロールでさらに過去データを読み込みます" : "";
+  }
+
+  let displayChartSource = chartSource;
+  if (chartSource.length > currentGraphShowCount) {
+    displayChartSource = chartSource.slice(-currentGraphShowCount);
+  }
+
+  const minBarWidth = isSingle ? 60 : 45;
+  const finalWidth = Math.max(chartWrapperEl.clientWidth, displayChartSource.length * minBarWidth);
+  chartBody.style.width = `${finalWidth}px`;
+  
+  if (chart) chart.destroy();
+  let singleColor = "#5D9C9F";
+  if (isSingle) {
+    const groupName = Array.from(activeGroups)[0];
+    singleColor = fixedGroupColors[groupName] || "#5D9C9F";
+  }
+  
+  const isMobile = window.innerWidth < 768;
+
+  const ctx = document.getElementById("salesChart");
+  if (ctx) {
+    chart = new Chart(ctx, {
+      type: isSingle ? 'line' : 'bar',
+      data: {
+        labels: displayChartSource.map(c => c.title.substring(0, 7) + (c.title.length > 7 ? ".." : "")),
+        datasets: [{
+          data: displayChartSource.map(c => c[type]),
+          backgroundColor: isSingle ? singleColor + '33' : displayChartSource.map(c => (fixedGroupColors[c.group] || "#ddd")),
+          borderColor: singleColor,
+          borderWidth: isSingle ? 2 : 0, 
+          borderRadius: 4, 
+          fill: true, 
+          tension: 0.3, 
+          pointBackgroundColor: "#fff", 
+          pointBorderColor: singleColor, 
+          pointRadius: isSingle ? 4 : 0,
+          pointHoverRadius: isSingle ? 6 : 0,
+          pointHitRadius: isSingle ? 20 : 0,
+          pointBorderWidth: isSingle ? 2 : 0
+        }]
+      },
+      options: {
+        responsive: true, 
+        maintainAspectRatio: false,
+        animation: shouldAnimate ? { duration: 800 } : false,
+        interaction: {
+          mode: 'nearest',
+          intersect: true
+        },
+        onClick: (e, elements) => {
+          if (elements && elements.length > 0) {
+            const clickedIndex = elements[0].index;
+            if (lastActiveIndex === clickedIndex) {
+              chart.setActiveElements([]);
+              chart.tooltip.setActiveElements([], { x: 0, y: 0 });
+              chart.update();
+              lastActiveIndex = null;
+            } else {
+              lastActiveIndex = clickedIndex;
+            }
+          } else {
+            lastActiveIndex = null;
+          }
+        },
+        plugins: { 
+          legend: { display: false },
+          tooltip: {
+            animations: {
+              y: { duration: 200, easing: 'easeOutQuad' },
+              opacity: { duration: 200, easing: 'easeOutQuad' }
+            },
+            callbacks: {
+              title: (context) => { const d = displayChartSource[context[0].dataIndex]; return `${d.group} / ${d.title}`; },
+              label: (context) => `${(context.raw / 10000).toFixed(1)}万枚`
+            }
+          },
+          datalabels: { 
+            anchor: 'end', 
+            align: 'top', 
+            color: '#64748b', 
+            font: { size: isMobile ? 11 : 9, weight: '600' }, 
+            formatter: v => (v/10000).toFixed(1),
+            display: true
+          }
+        },
+        scales: { 
+          y: { ticks: { callback: v => (v/10000) + "万", font: {size: isMobile ? 11 : 9} }, grace: '15%' },
+          x: { ticks: { font: {size: isMobile ? 11 : 8}, maxRotation: 45, minRotation: 45 }, grid: { display: false } }
+        }
+      }
+    });
+  }
+  
+  if (!isScrollLoad) {
+    chartWrapperEl.scrollLeft = finalWidth;
+  }
+
+  const INITIAL_SHOW_COUNT = 10;
+  const STEP_SHOW_COUNT = 50; 
+  let currentListShowCount = INITIAL_SHOW_COUNT;
+
+  const getListItemHtml = (c, index) => {
+    const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
+    const color = fixedGroupColors[c.group] || "#7f8c8d";
+    const salesValExists = c[type] !== null;
+    const salesDisp = salesValExists ? (c[type]/10000).toFixed(1) + '万枚' : (days>0?'予約受付中':'売上集計中');
+    const countdownHtml = days>0 ? `<div class="countdown">あと${days}日</div>` : days===0 ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` : "";
+    const hideClass = (index >= currentListShowCount) ? 'hidden-item' : '';
+
+    const content = `
+      <div class="cd-info-main">
+        <span class="cd-title" style="color:${color}">
+          ${c.title}
+          ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
+        </span>
+        <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span></div>
+      </div>
+      <div class="sales-box">
+        <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDisp}</div>
+        ${countdownHtml}
+      </div>
+    `;
+    return c.seller 
+      ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="cd-item-base ${hideClass}">${content}</a>` 
+      : `<div class="cd-item-base ${hideClass}">${content}</div>`;
+  };
+
+  const getUpcomingCardHtml = (c) => {
+    const days = Math.ceil((new Date(c.releaseDate).setHours(0,0,0,0) - today) / 86400000);
+    const color = fixedGroupColors[c.group] || "#7f8c8d";
+    const formattedDate = c.releaseDate ? c.releaseDate.replace(/-/g, '.') : '';
+    const imgHtml = c.affiliate 
+      ? `<img src="${c.affiliate}" alt="${c.title}">` 
+      : `<div class="upcoming-no-img">🎵 RELEASE</div>`;
+
+    let salesDispText = '';
+    // firstDayに値がありfirstWeekがnullの場合
+    if (c.firstDay !== null && c.firstWeek === null) {
+      salesDispText = '初日売上速報中';
+    } else {
+      // firstDay・firstWeekともnullの場合
+      salesDispText = days > 0 ? '予約受付中' : '売上集計中';
+    }
+
+    // カウントダウンバッジ表示制御（発売前・当日のみ表示）
+    let countdownHtml = '';
+    if (days > 0) {
+      countdownHtml = `<div class="countdown">あと${days}日</div>`;
+    } else if (days === 0) {
+      countdownHtml = `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>`;
+    }
+
+    const content = `
+      <div class="upcoming-thumb-wrap">
+        ${imgHtml}
+      </div>
+      <div class="upcoming-meta-row">
+        <span class="upcoming-badge" style="background:${color}">${c.category ? c.category.toUpperCase() : 'CD'}</span>
+        <span class="upcoming-date">${formattedDate}</span>
+      </div>
+      <div class="upcoming-card-title" style="color:${color}">
+        ${c.title}
+        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
+      </div>
+      <div class="upcoming-group-name">${c.group}</div>
+      <div class="upcoming-status-row">
+        <div class="sales-val" style="color:${(days>0 || (c.firstDay !== null && c.firstWeek === null))?'#f97316':color}">${salesDispText}</div>
+        ${countdownHtml}
+      </div>
+    `;
+
+    return c.seller 
+      ? `<a href="${c.seller}" target="_blank" rel="noopener noreferrer" class="upcoming-card-item">${content}</a>`
+      : `<div class="upcoming-card-item">${content}</div>`;
+  };
+
+  // これから発売予定カードの非表示・表示切替ロジック
+  const upcomingCard = document.getElementById("upcomingCard");
+  if (upcoming.length === 0) {
+    if (upcomingCard) upcomingCard.style.display = "none";
+  } else {
+    if (upcomingCard) upcomingCard.style.display = "block";
+    document.getElementById("upcomingList").innerHTML = upcoming.map(getUpcomingCardHtml).join("");
+  }
+  
+  const updateList = () => {
+    const listArea = document.getElementById("cdList");
+    listArea.innerHTML = history.map((c, i) => getListItemHtml(c, i)).join("");
+    const showMoreArea = document.getElementById("showMoreArea");
+    
+    if (history.length > currentListShowCount) {
+      const remaining = history.length - currentListShowCount;
+      const nextStep = Math.min(STEP_SHOW_COUNT, remaining);
+      showMoreArea.innerHTML = `<button class="show-more-btn" id="btnShowMore">あと ${remaining} 件を表示（＋${nextStep}件）<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="3"><path d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg></button>`;
+      document.getElementById("btnShowMore").onclick = function() {
+        currentListShowCount += STEP_SHOW_COUNT;
+        updateList();
+      };
+    } else {
+      showMoreArea.innerHTML = "";
+    }
+  };
+
+  if (history.length) { updateList(); } else {
+    document.getElementById("cdList").innerHTML = '<div class="no-data-msg">該当するデータがありません</div>';
+    document.getElementById("showMoreArea").innerHTML = "";
+  }
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n'); if (lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h => {
+    const trimH = h.trim();
+    return trimH.startsWith('\uFEFF') ? trimH.slice(1) : trimH;
+  });
+  return lines.slice(1).map(line => {
+    const values = line.split(','); const obj = {};
+    headers.forEach((h, i) => { obj[h] = values[i] ? values[i].replace(/\r/g, '').trim() : ""; });
+    return obj;
+  });
+}
+
+function initSettingsByUrl() {
+    const params = new URLSearchParams(window.location.search);
+    if(params.get('t')) {
+      const t = params.get('t');
+      document.getElementById("salesType").value = t;
+      const toggleContainer = document.getElementById("salesTypeToggle");
+      document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(btn => {
+        const isActive = (btn.dataset.value === t);
+        btn.classList.toggle('is-active', isActive);
+      });
+      toggleContainer.classList.toggle('is-right', t === 'firstWeek');
+    }
+    if(params.get('f')) {
+      const f = params.get('f');
+      document.getElementById("filter").value = f;
+      document.getElementById("chkSingle").checked = (f === 'all' || f === 'single');
+      document.getElementById("chkAlbum").checked = (f === 'all' || f === 'album');
+    }
+    if(params.get('s')) {
+      const s = params.get('s');
+      document.getElementById("sortOrder").value = s;
+      document.querySelectorAll('.chart-tab').forEach(t => { t.classList.toggle('is-active', t.dataset.sort === s); });
+    }
+    if(params.get('g')) { params.get('g').split(',').forEach(g => activeGroups.add(decodeURIComponent(g))); isFullDataLoaded = true; }
+}
+
+function copyShareUrl() {
+  const groups = Array.from(activeGroups).join(',');
+  const type = document.getElementById("salesType").value;
+  const filter = document.getElementById("filter").value;
+  const sort = document.getElementById("sortOrder").value;
+  const url = new URL(window.location.href);
+  if(groups) url.searchParams.set('g', groups); else url.searchParams.delete('g');
+  url.searchParams.set('t', type); url.searchParams.set('f', filter); url.searchParams.set('s', sort);
+  navigator.clipboard.writeText(url.href).then(() => {
+    const btnText = document.getElementById('shareBtnText');
+    const originalText = btnText.innerText;
+    btnText.innerText = "コピーしました！";
+    setTimeout(() => btnText.innerText = originalText, 2000);
+  });
+}
+
+// ------------------------------------
+// UIイベントリスナー
+// ------------------------------------
+const salesTypeToggle = document.getElementById('salesTypeToggle');
+document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#salesTypeToggle .toggle-switch-btn').forEach(b => b.classList.remove('is-active'));
+    btn.classList.add('is-active');
+    const val = btn.dataset.value;
+    
+    if (val === 'firstWeek') {
+      salesTypeToggle.classList.add('is-right');
+    } else {
+      salesTypeToggle.classList.remove('is-right');
+    }
+    
+    document.getElementById('salesType').value = val;
+    resetAndRender();
+  });
+});
+
+function handleCheckboxChange(e) {
+  const chkSingle = document.getElementById('chkSingle');
+  const chkAlbum = document.getElementById('chkAlbum');
+
+  if (!chkSingle.checked && !chkAlbum.checked) {
+    e.preventDefault();
+    e.target.checked = true;
+    return;
+  }
+
+  let filterVal = 'all';
+  if (chkSingle.checked && !chkAlbum.checked) filterVal = 'single';
+  else if (!chkSingle.checked && chkAlbum.checked) filterVal = 'album';
+
+  document.getElementById('filter').value = filterVal;
+  resetAndRender();
+}
+
+document.getElementById('chkSingle').addEventListener('click', handleCheckboxChange);
+document.getElementById('chkAlbum').addEventListener('click', handleCheckboxChange);
+
+window.addEventListener('scroll', () => { document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 300); });
+const groupDropdown = document.getElementById('groupDropdown');
+const dropdownContent = groupDropdown.querySelector('.dropdown-content');
+groupDropdown.addEventListener('click', (e) => { e.stopPropagation(); dropdownContent.classList.toggle('is-active'); });
+window.addEventListener('click', () => { dropdownContent.classList.remove('is-active'); });
+
+loadData();
+</script>
 </body>
 </html>

@@ -6,6 +6,6 @@ https://www.fan-chart.com/* https://fan-chart.com/:splat  301!
 /sixtones           /sixtones/           301
 /naniwa-danshi      /naniwa-danshi/      301
 /snowman     /snowman/      301
-
+/magazine    /magazine/     301
 
 /* /index.html  200

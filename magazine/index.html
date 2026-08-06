@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="canonical" href="https://fan-chart.com/magazine/">
+	<title>STARTO 掲載雑誌一覧まとめ | Fan Chart</title>
+
+	<style>
+		:root {
+			--bg: #ffffff;
+			--card: #ffffff;
+			--text: #334155;
+			--sub: #94a3b8;
+			--border: #e2e8f0;
+			--accent-pink: #eba0b8;
+			--accent-hot: #f97316;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "Segoe UI", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", sans-serif;
+			background: var(--bg);
+			color: var(--text);
+			padding-bottom: 60px;
+			line-height: 1.6;
+			scroll-behavior: smooth;
+		}
+
+		/* --- ヘッダー --- */
+		.sticky-header {
+			background: #fff;
+			border-bottom: 3px solid var(--accent-pink);
+			padding: 20px 10px;
+		}
+
+		.header-content {
+			max-width: 1100px;
+			margin: 0 auto;
+		}
+
+		.site-title {
+			text-align: center;
+		}
+
+		.site-title h1 {
+			margin: 0;
+			padding: 0;
+		}
+
+		.site-title .sub-name {
+			display: block;
+			font-size: 16px;
+			color: var(--accent-pink);
+			font-weight: 800;
+			margin-bottom: 2px;
+			letter-spacing: 0.02em;
+		}
+
+		.site-title .main-logo {
+			display: block;
+			font-family: "Georgia", serif;
+			font-size: 32px;
+			font-weight: 900;
+			font-style: italic;
+			color: #333;
+			line-height: 1.1;
+			margin: 2px 0 4px 0;
+		}
+
+		.site-title .main-name {
+			display: block;
+			font-size: 11px;
+			font-weight: 700;
+			color: #64748b;
+			line-height: 1.2;
+		}
+
+		@media (min-width: 768px) {
+			.site-title .sub-name {
+				font-size: 20px;
+			}
+
+			.site-title .main-logo {
+				font-size: 48px;
+			}
+
+			.site-title .main-name {
+				font-size: 15px;
+			}
+		}
+
+		/* --- パンくずリスト帯（ヘッダー下） --- */
+		.breadcrumb-bar {
+			background: #f8fafc;
+			border-bottom: 1px solid var(--border);
+			padding: 8px 15px;
+		}
+
+		.breadcrumb-inner {
+			max-width: 1100px;
+			margin: 0 auto;
+			display: flex;
+			align-items: center;
+			gap: 6px;
+			font-size: 12px;
+			color: #64748b;
+		}
+
+		.breadcrumb-inner a {
+			color: #334155;
+			text-decoration: none;
+			display: flex;
+			align-items: center;
+			gap: 4px;
+		}
+
+		.breadcrumb-inner a:hover {
+			text-decoration: underline;
+		}
+
+		.breadcrumb-inner .home-icon {
+			width: 14px;
+			height: 14px;
+			fill: #64748b;
+		}
+
+		.breadcrumb-inner .separator {
+			color: #94a3b8;
+			font-size: 10px;
+		}
+
+		.breadcrumb-inner .current {
+			color: #64748b;
+			font-weight: 400;
+		}
+
+		/* --- コンテナ --- */
+		.container {
+			width: 100%;
+			max-width: 1100px;
+			margin: 20px auto;
+			padding: 0 15px;
+			box-sizing: border-box;
+		}
+
+		/* --- グループ絞り込みボタン --- */
+		.group-buttons-wrapper {
+			margin-bottom: 28px;
+		}
+
+		.group-buttons {
+			display: flex;
+			gap: 6px;
+			margin-bottom: 4px;
+			padding: 0 4px 8px 4px;
+		}
+
+		@media (max-width: 767px) {
+			.group-buttons {
+				flex-wrap: nowrap;
+				overflow-x: auto;
+				-webkit-overflow-scrolling: touch;
+				scrollbar-width: none;
+			}
+
+			.group-buttons::-webkit-scrollbar {
+				display: none;
+			}
+		}
+
+		@media (min-width: 768px) {
+			.group-buttons {
+				flex-wrap: wrap;
+				justify-content: flex-start;
+			}
+		}
+
+		.group-btn {
+			position: relative;
+			padding: 5px 12px;
+			border-radius: 99px;
+			border: 1px solid var(--border);
+			background: #fff;
+			cursor: pointer;
+			font-size: 11px;
+			font-weight: 600;
+			transition: all 0.2s ease;
+			white-space: nowrap;
+			flex-shrink: 0;
+		}
+
+		.group-btn.active,
+		.group-btn.is-selected-in-list {
+			padding-right: 24px;
+		}
+
+		.group-btn.active::after,
+		.group-btn.is-selected-in-list::after {
+			content: '×';
+			position: absolute;
+			right: 8px;
+			top: 50%;
+			transform: translateY(-50%);
+			font-size: 12px;
+			font-weight: 800;
+			opacity: 0.6;
+		}
+
+		.group-btn.is-selected-in-list {
+			background: #f8fafc !important;
+			color: #cbd5e1 !important;
+			border: 1px solid #e2e8f0 !important;
+			opacity: 0.8;
+		}
+
+		.selected-groups-row {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 10px;
+			align-items: center;
+			justify-content: flex-start;
+			margin-top: 10px;
+			padding: 10px 12px;
+			background: #f8fafc;
+			border-radius: 12px;
+			min-height: 38px;
+			border: 1px dashed var(--border);
+		}
+
+		.selected-label {
+			font-size: 11px;
+			color: var(--sub);
+			font-weight: 700;
+			white-space: nowrap;
+		}
+
+		/* --- 雑誌グリッド --- */
+		.magazine-grid {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: 28px 18px;
+			width: 100%;
+		}
+
+		@media (min-width: 768px) {
+			.magazine-grid {
+				grid-template-columns: repeat(5, 135px);
+				justify-content: space-between;
+				gap: 36px 20px;
+			}
+		}
+
+		.magazine-item {
+			display: flex;
+			flex-direction: column;
+			background: none;
+			border: none;
+			padding: 0;
+			text-decoration: none;
+			color: inherit;
+			box-sizing: border-box;
+			width: 100%;
+			max-width: 135px;
+			margin: 0 auto;
+		}
+
+		.mag-thumb {
+			width: 100%;
+			aspect-ratio: 3 / 4;
+			background: #f1f5f9;
+			border-radius: 0px;
+			overflow: hidden;
+			margin-bottom: 8px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.mag-thumb img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			display: block;
+			border-radius: 0px;
+		}
+
+		.mag-date {
+			font-size: 10px;
+			font-weight: 700;
+			color: var(--accent-hot);
+			margin-bottom: 4px;
+			line-height: 1.2;
+		}
+
+		.mag-group-badge {
+			display: inline-block;
+			font-size: 9px;
+			font-weight: 700;
+			color: #ffffff;
+			padding: 2px 8px;
+			border-radius: 99px;
+			margin-bottom: 6px;
+			width: fit-content;
+			line-height: 1.2;
+		}
+
+		.mag-title {
+			font-size: 11px;
+			font-weight: 400;
+			line-height: 1.4;
+			color: #64748b;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			overflow: hidden;
+			word-break: break-all;
+		}
+
+		@media (min-width: 768px) {
+			.mag-title {
+				font-size: 11.5px;
+			}
+		}
+
+		/* --- 最下部アフィリエイトバナーエリア --- */
+		.banner-area {
+			margin-top: 50px;
+			padding-top: 20px;
+			border-top: 1px solid var(--border);
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			box-sizing: border-box;
+		}
+
+		.banner-item {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			max-width: 100%;
+			overflow: hidden;
+		}
+
+		.banner-item img {
+			max-width: 100%;
+			height: auto;
+		}
+
+		.inner-loading {
+			text-align: center;
+			padding: 40px 0;
+			color: var(--sub);
+			font-size: 12px;
+			grid-column: 1 / -1;
+		}
+
+		.no-data-msg {
+			font-size: 12px;
+			color: var(--sub);
+			text-align: center;
+			padding: 40px 0;
+			grid-column: 1 / -1;
+		}
+
+		.spinner {
+			width: 28px;
+			height: 28px;
+			border: 3px solid var(--border);
+			border-top: 3px solid var(--accent-pink);
+			border-radius: 50%;
+			animation: spin 0.8s linear infinite;
+			margin: 0 auto 12px;
+		}
+
+		@keyframes spin {
+			0% {
+				transform: rotate(0deg);
+			}
+
+			100% {
+				transform: rotate(360deg);
+			}
+		}
+
+		#pageTopBtn {
+			position: fixed;
+			bottom: 20px;
+			right: 20px;
+			width: 44px;
+			height: 44px;
+			background: #fff;
+			border: 1px solid var(--border);
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			text-decoration: none;
+			color: var(--text);
+			opacity: 0;
+			visibility: hidden;
+			transition: 0.3s;
+			z-index: 1000;
+		}
+
+		#pageTopBtn.show {
+			opacity: 1;
+			visibility: visible;
+		}
+	</style>
+</head>
+
+<body>
+
+	<!-- ヘッダー -->
+	<header class="sticky-header">
+		<div class="header-content">
+			<div class="site-title">
+				<h1>
+					<span class="sub-name">STARTO 掲載雑誌一覧まとめ</span>
+					<span class="main-logo">Fan Chart</span>
+					<span class="main-name">【2026年最新】歴代シングル・アルバム売上枚数比較サイト</span>
+				</h1>
+			</div>
+		</div>
+	</header>
+
+	<!-- パンくずリスト帯（ヘッダー下） -->
+	<div class="breadcrumb-bar">
+		<div class="breadcrumb-inner">
+			<a href="https://fan-chart.com/">
+				<svg class="home-icon" viewBox="0 0 24 24">
+					<path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" /></svg>
+				トップ
+			</a>
+			<span class="separator">&gt;</span>
+			<span class="current">掲載雑誌一覧</span>
+		</div>
+	</div>
+
+	<!-- メインコンテンツ -->
+	<div class="container">
+
+		<!-- グループ絞り込み機能 -->
+		<div class="group-buttons-wrapper">
+			<div style="font-size: 11px; font-weight: 400; color: #64748b; margin-bottom: 6px; padding-left: 4px;">↓
+				比較したいグループを選択（最大5つまで）</div>
+			<div class="group-buttons" id="groupButtons"></div>
+			<div id="selectedGroupsArea" class="selected-groups-row" style="display:none;">
+				<div class="selected-label">選択中のグループ</div>
+				<div id="selectedButtonsContainer"
+					style="display:flex; flex-wrap:wrap; gap:6px; justify-content:flex-start; align-items:center;">
+				</div>
+			</div>
+		</div>
+
+		<!-- 雑誌グリッド表示領域 -->
+		<div class="magazine-grid" id="magazineGrid">
+			<div class="inner-loading">
+				<div class="spinner"></div>雑誌情報を取得中...
+			</div>
+		</div>
+
+		<!-- 最下部アフィリエイトバナーエリア（指定1点のみ配置） -->
+		<div class="banner-area">
+			<div class="banner-item">
+				<a
+					href="https://click.linksynergy.com/fs-bin/click?id=ATJ8gF76yVY&offerid=314039.10000221&subid=0&type=4"><IMG border="0" alt="HMV&BOOKS online" src="https://ad.linksynergy.com/fs-bin/show?id=ATJ8gF76yVY&bids=314039.10000221&subid=0&type=4&gridnum=3"></a>
+			</div>
+		</div>
+
+	</div>
+
+	<a href="#" id="pageTopBtn">▲</a>
+
+	<script>
+		const cacheBuster = "&t=" + new Date().getTime();
+const SHEET_MAGAZINE_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQxQ9MthYXl_ZlJ3cmbzAqJZHI4e_wACYUhpdqK0aoHuwUlodXL182IXNUt__rALT6JounkCi8PK7mS/pub?gid=2235118&single=true&output=csv" + cacheBuster;
+
+const fixedGroupColors = { 
+  "嵐": "#4ba8d6", "Snow Man": "#1b489d", "SixTONES": "#555555",
+  "timelesz": "#de6d6d", "King & Prince": "#fab700", "なにわ男子": "#eba0b8", 
+  "Aぇ! group": "#5eb3bf", "Travis Japan": "#66b27e", "WEST.": "#1d9967", 
+  "Hey! Say! JUMP": "#39aeed", "Kis-My-Ft2": "#CFE394", "DOMOTO": "#554435", 
+  "SUPER EIGHT": "#F7AF73", "NEWS": "#8170b2", "A.B.C-Z": "#f0897c", "KAT-TUN": "#888888" 
+};
+
+const fixedGroupOrder = [
+  "Snow Man", "SixTONES", "timelesz", "なにわ男子", "King & Prince", 
+  "Aぇ! group", "Travis Japan", "WEST.", "Hey! Say! JUMP", "Kis-My-Ft2", 
+  "DOMOTO", "SUPER EIGHT", "NEWS", "A.B.C-Z", "嵐", "KAT-TUN"
+];
+
+let allMagazineData = [];
+let activeGroups = new Set();
+
+function renderGroupButtons() {
+  const listHtml = fixedGroupOrder.map(g => {
+    const isSelected = activeGroups.has(g);
+    const color = fixedGroupColors[g] || "#7f8c8d";
+    const extraClass = isSelected ? 'is-selected-in-list' : '';
+    return `<button class="group-btn ${extraClass}" data-group="${g}" style="border-color:${isSelected ? '#e2e8f0' : color}; color:${isSelected ? '#cbd5e1' : color}; background:#fff">${g}</button>`;
+  }).join("");
+  document.getElementById("groupButtons").innerHTML = listHtml;
+  
+  const selectedArea = document.getElementById("selectedGroupsArea");
+  const selectedContainer = document.getElementById("selectedButtonsContainer");
+  
+  if (activeGroups.size > 0) {
+    selectedArea.style.display = "flex";
+    selectedContainer.innerHTML = Array.from(activeGroups).map(g => {
+      const color = fixedGroupColors[g] || "#7f8c8d";
+      return `<button class="group-btn active" data-group="${g}" style="border-color:${color}; color:#fff; background:${color}">${g}</button>`;
+    }).join("");
+  } else {
+    selectedArea.style.display = "none";
+  }
+
+  document.querySelectorAll(".group-btn").forEach(btn => {
+    btn.onclick = () => {
+      const g = btn.dataset.group;
+      if (activeGroups.has(g)) { 
+        activeGroups.delete(g); 
+      } else { 
+        if (activeGroups.size >= 5) return alert("最大5グループまで");
+        activeGroups.add(g); 
+      }
+      renderGroupButtons(); 
+      renderMagazines();
+    };
+  });
+}
+
+async function loadMagazineData() {
+  try {
+    const res = await fetch(SHEET_MAGAZINE_URL, { cache: 'no-store', redirect: 'follow' });
+    const raw = parseCSV(await res.text());
+    allMagazineData = raw.map(d => ({
+      id: d.id,
+      group: d.group,
+      title: d.title,
+      releaseDate: d.releaseDate,
+      href: d.seller || "",
+      src: d.affiliate || ""
+    }));
+    renderMagazines();
+  } catch (e) {
+    console.error(e);
+    document.getElementById("magazineGrid").innerHTML = '<div class="no-data-msg">現在表示できる雑誌情報はありません</div>';
+  }
+}
+
+function renderMagazines() {
+  const container = document.getElementById("magazineGrid");
+  if (!container) return;
+
+  let filtered = allMagazineData;
+  if (activeGroups.size > 0) {
+    filtered = allMagazineData.filter(m => activeGroups.has(m.group));
+  }
+
+  filtered.sort((a, b) => (b.releaseDate || "").localeCompare(a.releaseDate || ""));
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<div class="no-data-msg">該当する雑誌情報はありません</div>';
+    return;
+  }
+
+  container.innerHTML = filtered.map((m, index) => {
+    const loadingAttr = index < 10 ? 'eager' : 'lazy';
+    const groupColor = fixedGroupColors[m.group] || "#7f8c8d";
+    const formattedDate = m.releaseDate ? m.releaseDate.replace(/-/g, '.') : '';
+    const imgHtml = m.src 
+      ? `<img src="${m.src}" alt="${m.title}" loading="${loadingAttr}">` 
+      : `<span style="font-size:10px;color:#94a3b8;">NO IMAGE</span>`;
+
+    return `
+      <a href="${m.href}" target="_blank" rel="noopener noreferrer" class="magazine-item">
+        <div class="mag-thumb">${imgHtml}</div>
+        <div class="mag-date">${formattedDate}${formattedDate ? ' 発売' : ''}</div>
+        ${m.group ? `<div class="mag-group-badge" style="background:${groupColor};">${m.group}</div>` : ''}
+        <div class="mag-title">${m.title}</div>
+      </a>
+    `;
+  }).join("");
+}
+
+function parseCSV(text) {
+  const lines = text.trim().split('\n'); if (lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h => {
+    const trimH = h.trim();
+    return trimH.startsWith('\uFEFF') ? trimH.slice(1) : trimH;
+  });
+  return lines.slice(1).map(line => {
+    const values = line.split(','); const obj = {};
+    headers.forEach((h, i) => { obj[h] = values[i] ? values[i].replace(/\r/g, '').trim() : ""; });
+    return obj;
+  });
+}
+
+window.addEventListener('scroll', () => { 
+  document.getElementById('pageTopBtn').classList.toggle('show', window.scrollY > 300); 
+});
+
+renderGroupButtons();
+loadMagazineData();
+	</script>
+</body>
+
+</html>

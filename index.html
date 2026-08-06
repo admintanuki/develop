@@ -240,7 +240,6 @@
       width: max-content;
       align-items: stretch;
     }
-    /* スマホ画面で約2.5冊分見えるカード幅（125px）・1タップ遷移のためホバーアニメ削除 */
     .magazine-item {
       width: 125px;
       flex-shrink: 0;
@@ -253,14 +252,13 @@
       color: inherit;
       box-sizing: border-box;
     }
-    /* 画像を四角（角丸なし）に変更 */
     .mag-thumb {
       width: 100%;
       aspect-ratio: 3 / 4;
       background: #f1f5f9;
       border-radius: 0px;
       overflow: hidden;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -276,10 +274,10 @@
       font-size: 10px;
       font-weight: 700;
       color: var(--accent-hot);
-      margin-bottom: 2px;
+      margin-bottom: 4px;
+      line-height: 1.2;
     }
 
-    /* 雑誌枠内グループ名バッジ（完全角丸・楕円・白抜き文字） */
     .mag-group-badge {
       display: inline-block;
       font-size: 9px;
@@ -287,7 +285,7 @@
       color: #ffffff;
       padding: 2px 8px;
       border-radius: 99px;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
       width: fit-content;
       line-height: 1.2;
     }
@@ -295,7 +293,7 @@
     .mag-title {
       font-size: 11px;
       font-weight: 400;
-      line-height: 1.35;
+      line-height: 1.4;
       color: #64748b;
       display: -webkit-box;
       -webkit-line-clamp: 2;
@@ -304,7 +302,6 @@
       word-break: break-all;
     }
 
-    /* 雑誌枠内「もっと見る」カードスタイル（→ アイコン・固定表示） */
     .magazine-more-card {
       width: 125px;
       flex-shrink: 0;
@@ -337,6 +334,16 @@
       font-weight: 700;
       color: var(--text);
       line-height: 1.3;
+    }
+
+    @media (min-width: 768px) {
+      .magazine-item,
+      .magazine-more-card {
+        width: 165px;
+      }
+      .mag-title {
+        font-size: 12px;
+      }
     }
 
     .hot-area { padding: 12px 20px; }
@@ -772,11 +779,11 @@ const fixedGroupColors = {
   "KAT-TUN": "#888888" 
 };
 
-// ボタンの並び順を固定リストで定義（嵐 → 分析順 → KAT-TUN）
+// ボタンの並び順をご指定順に設定
 const fixedGroupOrder = [
-  "嵐", "Snow Man", "SixTONES", "timelesz", "King & Prince", "なにわ男子", 
+  "Snow Man", "SixTONES", "timelesz", "なにわ男子", "King & Prince", 
   "Aぇ! group", "Travis Japan", "WEST.", "Hey! Say! JUMP", "Kis-My-Ft2", 
-  "DOMOTO", "SUPER EIGHT", "NEWS", "A.B.C-Z", "KAT-TUN"
+  "DOMOTO", "SUPER EIGHT", "NEWS", "A.B.C-Z", "嵐", "KAT-TUN"
 ];
 
 let allProcessedData = [], cds = [], activeGroups = new Set(), chart = null, isFullDataLoaded = false;
@@ -1051,7 +1058,9 @@ function render(shouldAnimate = false, isScrollLoad = false) {
   }
 
   const today = new Date(); today.setHours(0,0,0,0);
-  const upcoming = filtered.filter(c => c[type] === null);
+  
+  // 初週(firstWeek)が未確定のものを「これから発売予定」として扱う
+  const upcoming = filtered.filter(c => c.firstWeek === null);
   
   const history = filtered.filter(c => c[type] !== null).sort((a, b) => {
     if (s === "date") return b.releaseDate.localeCompare(a.releaseDate);
@@ -1181,7 +1190,7 @@ function render(shouldAnimate = false, isScrollLoad = false) {
       <div class="cd-info-main">
         <span class="cd-title" style="color:${color}">
           ${c.title}
-          ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
+          ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
         </span>
         <div class="meta">${c.group} | ${c.releaseDate} <span class="badge" style="background:${color}">${c.category.toUpperCase()}</span></div>
       </div>
@@ -1203,12 +1212,22 @@ function render(shouldAnimate = false, isScrollLoad = false) {
       ? `<img src="${c.affiliate}" alt="${c.title}">` 
       : `<div class="upcoming-no-img">🎵 RELEASE</div>`;
 
-    const salesDispText = days > 0 ? '予約受付中' : '売上集計中';
-    const countdownHtml = days > 0 
-      ? `<div class="countdown">あと${days}日</div>` 
-      : days === 0 
-        ? `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>` 
-        : ``;
+    let salesDispText = '';
+    // firstDayに値がありfirstWeekがnullの場合
+    if (c.firstDay !== null && c.firstWeek === null) {
+      salesDispText = '初日売上速報中';
+    } else {
+      // firstDay・firstWeekともnullの場合
+      salesDispText = days > 0 ? '予約受付中' : '売上集計中';
+    }
+
+    // カウントダウンバッジ表示制御（発売前・当日のみ表示）
+    let countdownHtml = '';
+    if (days > 0) {
+      countdownHtml = `<div class="countdown">あと${days}日</div>`;
+    } else if (days === 0) {
+      countdownHtml = `<div class="countdown" style="background:#f97316;color:#fff;border:none;">本日</div>`;
+    }
 
     const content = `
       <div class="upcoming-thumb-wrap">
@@ -1220,11 +1239,11 @@ function render(shouldAnimate = false, isScrollLoad = false) {
       </div>
       <div class="upcoming-card-title" style="color:${color}">
         ${c.title}
-        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 005.25 21h10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
+        ${c.seller ? `<svg class="ext-link-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5 6H5.25A2.25 2.25 0 003 8.25v10.5A2.25 2.25 0 0018 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" /></svg>` : ''}
       </div>
       <div class="upcoming-group-name">${c.group}</div>
       <div class="upcoming-status-row">
-        <div class="sales-val" style="color:${days>0?'#f97316':color}">${salesDispText}</div>
+        <div class="sales-val" style="color:${(days>0 || (c.firstDay !== null && c.firstWeek === null))?'#f97316':color}">${salesDispText}</div>
         ${countdownHtml}
       </div>
     `;

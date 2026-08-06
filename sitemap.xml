@@ -6,23 +6,30 @@
     <changefreq>daily</changefreq>
   </url>
 
+  <!-- 💡 雑誌一覧ページを追加 -->
   <url>
-    <loc>https://fan-chart.com/snowman</loc>
+    <loc>https://fan-chart.com/magazine/</loc>
+    <priority>0.8</priority>
+    <changefreq>daily</changefreq>
+  </url>
+
+  <url>
+    <loc>https://fan-chart.com/snowman/</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://fan-chart.com/sixtones</loc>
+    <loc>https://fan-chart.com/sixtones/</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://fan-chart.com/king-and-prince</loc>
+    <loc>https://fan-chart.com/king-and-prince/</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://fan-chart.com/naniwa-danshi</loc>
+    <loc>https://fan-chart.com/naniwa-danshi/</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
@@ -34,6 +41,11 @@
   </url>
   <url>
     <loc>https://fan-chart.com/terms.html</loc>
+    <priority>0.3</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://fan-chart.com/privacy.html</loc>
     <priority>0.3</priority>
     <changefreq>monthly</changefreq>
   </url>
