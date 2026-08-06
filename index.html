@@ -6,12 +6,22 @@
   
   <link rel="canonical" href="https://fan-chart.com/">
   
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-PPEDDGQHPC"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'G-PPEDDGQHPC');
+  </script>
+
+  <!-- Microsoft Clarity -->
+  <script type="text/javascript">
+      (function(c,l,a,r,i,t,y){
+          c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+          t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+          y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "xxylh4n2u9");
   </script>
 
   <title>【2026最新】STARTO(旧ジャニーズ) CD売上枚数比較・歴代グラフ推移 | Snow Man・SixTONES・なにわ男子ほか</title>
@@ -224,13 +234,12 @@
     .share-btn-mini { background: none; border: none; padding: 0; color: var(--accent-teal); font-size: 11px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 6px; }
     .share-btn-mini svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 2.5; }
 
-    .load-more-text { background: none; border: none; padding: 0; color: var(--sub); font-size: 11px; font-weight: 600; cursor: pointer; text-decoration: underline; margin-bottom: 4px; }
-
     /* 🔥おすすめ関連商品（最新掲載雑誌）エリアスタイル */
     .magazine-scroll-container {
       width: 100%;
       overflow-x: auto;
       -webkit-overflow-scrolling: touch;
+      padding-top: 6px;
       padding-bottom: 16px;
       margin-bottom: 4px;
     }
@@ -640,11 +649,15 @@
 
         <!-- 🔥おすすめ関連商品・最新雑誌 枠 -->
         <div class="card" id="magazineCard">
-          <div class="card-section-title">🔥 おすすめ関連商品・最新雑誌</div>
+          <div class="card-section-title" style="margin-bottom: 12px;">🔥 おすすめ関連商品・最新雑誌</div>
           <div class="magazine-scroll-container" id="magazineScrollContainer">
             <div class="magazine-list" id="magazineList">
               <div class="inner-loading"><div class="spinner"></div>雑誌情報を取得中...</div>
             </div>
+          </div>
+          <!-- 右下リンク（オレンジカラー指定） -->
+          <div style="margin-top: 8px; text-align: right;">
+            <a href="https://fan-chart.com/magazine/" style="color: var(--accent-hot); font-size: 11px; font-weight: 700; text-decoration: none;">雑誌掲載一覧はこちら&gt;&gt;</a>
           </div>
         </div>
 
@@ -883,7 +896,6 @@ async function loadData() {
     renderGroupButtons(); 
     render();
     if (resInfo.ok) processInfo(parseCSV(await resInfo.text()));
-    if (!isFullDataLoaded && allProcessedData.length > cds.length) showLoadMoreButtons();
   } catch (e) { 
     console.error(e); 
     const chartLoading = document.getElementById('chartLoading');
@@ -994,16 +1006,6 @@ function loadAllRecords() {
   if (isFullDataLoaded) return;
   cds = allProcessedData; 
   isFullDataLoaded = true;
-  const btn = document.querySelector('.load-more-text'); 
-  if(btn) btn.remove();
-}
-
-function showLoadMoreButtons() {
-  if (isFullDataLoaded) return;
-  const btn = document.createElement('button');
-  btn.className = 'load-more-text'; btn.textContent = '<< 2024年以前のデータも読み込む';
-  btn.onclick = () => { loadAllRecords(); render(true); };
-  document.getElementById('chartBtnArea').appendChild(btn);
 }
 
 function processInfo(data) {
